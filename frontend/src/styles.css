@@ -1,0 +1,15 @@
+/* global styles, NOT module specific styles */
+
+html, body, app-root, div.row { 
+  margin:0; 
+  padding:0; 
+  height:100%; 
+}
+
+div.row {
+  padding-top: 50px;
+}
+
+.navbar {
+    margin-bottom: 0px;
+}

@@ -1,0 +1,14 @@
+#browser { 
+    background-color: #D0DAE5;
+    min-height: 100%;
+    height: 100%;
+    padding: 20px;
+    padding-right: 0;
+}
+
+#modules { 
+    background-color: #D0DAE5;
+    min-height: 100%;
+    height: 100%;
+    padding: 20px;
+}
