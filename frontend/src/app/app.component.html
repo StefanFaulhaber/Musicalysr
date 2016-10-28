@@ -12,12 +12,11 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a routerLink="/main">Start</a></li>
-        <li><a routerLink="/settings">Einstellungen</a></li>
+        <li [routerLinkActive]="['active']"> <a [routerLink]="['main']">Start</a></li>
+        <li [routerLinkActive]="['active']"> <a [routerLink]="['settings']">Einstellungen</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
 
-<!--<app-main></app-main>-->
 <router-outlet></router-outlet>

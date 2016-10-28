@@ -14,6 +14,8 @@ import { ModuleContainerComponent } from '../modulecontainer/modulecontainer.com
 export class BrowserComponent implements OnInit {
 
   artists: Artist[];
+  selectedArtist: Artist;
+  isActive: boolean = false;
 
   constructor(
     private browserService: BrowserService,
@@ -23,8 +25,9 @@ export class BrowserComponent implements OnInit {
     this.artists = this.browserService.getArtists();
   }
 
-  selectArtist(name: string): void {
-    this.sharedService.changeArtist(name);
+  selectArtist(artist: Artist): void {
+    this.selectedArtist = artist;
+    this.sharedService.changeArtist(artist);
   }
 
 }

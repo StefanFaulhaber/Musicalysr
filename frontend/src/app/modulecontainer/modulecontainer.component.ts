@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 import { SharedService } from '../shared.service';
-import {Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
+
+import { Artist } from '../models/artist';
 
 @Component({
   selector: 'app-modulecontainer',
@@ -10,14 +12,14 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class ModuleContainerComponent implements OnInit {
 
-  artist: string;
+  artist: Artist = new Artist();
   subscription: Subscription;
 
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService) {}
 
   ngOnInit() {
     this.subscription = this.sharedService.item
-       .subscribe(item => this.artist = item)
+      .subscribe(item => this.artist = item)
   }
 
   ngOnDestroy() {

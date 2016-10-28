@@ -1,6 +1,11 @@
-<ul class="browsertree">
-  Künstler:
-  <ul>
-    <li *ngFor="let artist of artists" (click)="selectArtist(artist.name)">{{artist.name}}</li>
-  </ul>
-</ul>
+<div class="browsertree">
+  Künstler:<br>
+  <div class="list-group">
+    <a class="list-group-item"
+      *ngFor="let artist of artists"
+      (click)="selectArtist(artist)"
+      [class.active]="artist === selectedArtist">
+      {{artist.name}}<br>{{artist.id}}
+    </a>
+  </div>
+</div>
