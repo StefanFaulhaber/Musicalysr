@@ -1,23 +1,6 @@
 <ul class="browsertree">
   Künstler:
   <ul>
-    <li>Metallica</li>
-    <li>Metallica</li>
-    <li>Metallica</li>
-    <li>...</li>
-  </ul>
-  Labels:
-  <ul>
-    <li>Universal Music</li>
-    <li>Universal Music</li>
-    <li>Universal Music</li>
-    <li>...</li>
-  </ul>
-  Studios
-  <ul>
-    <li>Sound City Studios</li>
-    <li>Sound City Studios</li>
-    <li>Sound City Studios</li>
-    <li>...</li>
+    <li *ngFor="let artist of artists" (click)="selectArtist(artist.name)">{{artist.name}}</li>
   </ul>
 </ul>

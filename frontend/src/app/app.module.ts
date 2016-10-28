@@ -8,7 +8,9 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BrowserComponent } from './browser/browser.component';
-import { ModulecontainerComponent } from './modulecontainer/modulecontainer.component';
+import { ModuleContainerComponent } from './modulecontainer/modulecontainer.component';
+
+import { SharedService } from './shared.service';
 
 import { FrontendRoutingModule } from './app-routing.module';
 
@@ -18,7 +20,7 @@ import { FrontendRoutingModule } from './app-routing.module';
     MainComponent,
     SettingsComponent,
     BrowserComponent,
-    ModulecontainerComponent
+    ModuleContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,7 @@ import { FrontendRoutingModule } from './app-routing.module';
     HttpModule,
     FrontendRoutingModule
   ],
-  providers: [],
+  providers: [SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { 
