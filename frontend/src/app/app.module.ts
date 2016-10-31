@@ -4,11 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { MaterialModule } from '@angular/material';
+
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BrowserComponent } from './browser/browser.component';
 import { ModuleContainerComponent } from './modulecontainer/modulecontainer.component';
+import { SearchPipe } from './search.pipe';
 
 import { SharedService } from './shared.service';
 
@@ -20,13 +23,15 @@ import { FrontendRoutingModule } from './app-routing.module';
     MainComponent,
     SettingsComponent,
     BrowserComponent,
-    ModuleContainerComponent
+    ModuleContainerComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    FrontendRoutingModule
+    FrontendRoutingModule,
+    MaterialModule.forRoot()
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

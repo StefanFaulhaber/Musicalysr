@@ -1,11 +1,20 @@
-<div class="browsertree">
-  Künstler:<br>
-  <div class="list-group">
-    <a class="list-group-item"
-      *ngFor="let artist of artists"
+<md-card class="browsertree">
+
+  <md-input 
+    placeholder="Künstler suchen" type="text"
+    [(ngModel)]="query">
+  </md-input>
+
+  <md-list>
+    <md-list-item
+      *ngFor="let artist of artists | search:query"
       (click)="selectArtist(artist)"
       [class.active]="artist === selectedArtist">
-      {{artist.name}}<br>{{artist.id}}
-    </a>
-  </div>
-</div>
+
+      <b md-line> {{artist.name}} </b>
+      <p md-line> {{artist.id}} </p>
+
+    </md-list-item>
+  </md-list>
+
+</md-card>

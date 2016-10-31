@@ -18,7 +18,8 @@ export class ModuleContainerComponent implements OnInit {
   constructor(private sharedService: SharedService) {}
 
   ngOnInit() {
-    this.subscription = this.sharedService.item
+    // subscribe to artist changes
+    this.subscription = this.sharedService.artistItem
       .subscribe(item => this.artist = item)
   }
 

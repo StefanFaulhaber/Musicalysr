@@ -8,11 +8,11 @@ import { Artist } from './models/artist';
 export class SharedService {
 
   artist: Artist = new Artist();
-  source = new BehaviorSubject<Artist>(this.artist);  // Observable item source
-  item = this.source.asObservable();                  // Observable item stream
+  artistSource = new BehaviorSubject<Artist>(this.artist);  // Observable item source
+  artistItem = this.artistSource.asObservable();                  // Observable item stream
 
   // service command
   changeArtist(a: Artist) {
-    this.source.next(a);
+    this.artistSource.next(a);
   }
 }
