@@ -1,0 +1,6 @@
+language: php
+php:
+  - nightly # We don't care what language this is against - we just want a box
+sudo: required
+script:
+  - sh provision.sh
