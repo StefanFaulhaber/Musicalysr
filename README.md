@@ -14,14 +14,14 @@ Ihr könnt nun mit `vagrant ssh` in die Box und dann durch `tmux at` zum laufend
 Im Browser erreicht ihr das Frontend unter [http://10.20.30.40:4200/].
 In der Box laufen zur Zeit neben Node noch ein MySQL Server und ein MongoDB Server.
 
-## Frontend
+## Workflow
 
-- Voraussetzungen: Node und NPM
-- Angular CLI installieren
-`npm install -g angular-cli`
-- in das Frontend Verzeichnis wechseln
-`cd frontend`
-- den Server lokal starten
-`ng serve`
-- das Frontend im Browser öffnen
-`http://localhost:4200/`
+### Start
+
+1. go to frontend directory
+2. `vagrant up`
+3. `http://10.20.30.40:4200/`
+
+### End
+
+`vagrant halt`
