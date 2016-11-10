@@ -62,7 +62,7 @@ app.get('/query/artists', function (req, res) {
   res.send(artistsDummy);
 });
 
-app.post('/query/artist/autocomplete/:name', function (req, res) {
+app.get('/query/artist/autocomplete/:name', function (req, res) {
   var name = req.params.name;
   /*var sql = "SELECT ??, ?? FROM ?? WHERE ?? = ?";
    var inserts = ['Name', 'id', 'Artists', 'Name', name + '%'];
