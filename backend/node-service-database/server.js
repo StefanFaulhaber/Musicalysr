@@ -85,7 +85,7 @@ app.get('/query/artist/autocomplete/:name', function (req, res) {
   var result = [];
   artistsDummy.forEach(function (artist) {
     if (artist.name.startsWith(name)) {
-      artist.push(result);
+      result.push(artist);
     }
   });
   res.setHeader('Content-Type', 'application/json');
