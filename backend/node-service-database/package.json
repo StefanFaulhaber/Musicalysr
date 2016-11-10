@@ -1,0 +1,26 @@
+{
+	"name": "node-service-database",
+	"version": "0.1.0",
+  "description": "Return artists and related data from the database and insert new artists and related data.",
+  "author": "Moritz Engelmann <moritz.engelmann@studserv.uni-leipzig.de>",
+  "main": "server.js",
+  "keywords": [
+    "node",
+    "database",
+    "mysql",
+    "artist",
+    "twitter",
+    "metadata",
+    "music",
+    "Musicalysr"
+  ],
+	"dependencies": {
+		"mysql": "^2.12.0",
+		"express": "^4.14.0",
+    "body-parser": "^1.15.2",
+    "command-line-args": "^3.0.3"
+  },
+  "engine": {
+    "node": ">=0.6"
+  }
+}
