@@ -2,10 +2,11 @@ import { Component, OnInit} from '@angular/core';
 
 import { SharedService } from '../shared.service';
 import { BrowserService } from '../browser.service';
-import { Artist } from '../models/artist';
 import { ModuleContainerComponent } from '../modulecontainer/modulecontainer.component';
 
 import { Subscription } from 'rxjs/Subscription';
+
+import { Artist } from '../models/artist';
 
 @Component({
   selector: 'app-browser',
@@ -15,7 +16,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class BrowserComponent implements OnInit {
 
-  artists: Artist[];
+  artists: Artist[] = new Array();
   selectedArtist: Artist;
   isActive: boolean = false;
 
@@ -27,7 +28,11 @@ export class BrowserComponent implements OnInit {
 
   ngOnInit() {
     // get artists from backend
-    this.artists = this.browserService.getArtists();
+    this.browserService
+        .getAll()
+        .subscribe(
+          (res: Artist[]) => this.artists = res,
+          error => console.log(error));
 
     // subscribe to artist changes
     this.subscription = this.sharedService.artistItem
@@ -36,6 +41,14 @@ export class BrowserComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  filterArtists(query: string) {
+    this.browserService
+        .getAllFiltered(query)
+        .subscribe(
+          (res: Artist[]) => this.artists = res,
+          error => console.log(error));
   }
 
   selectArtist(artist: Artist): void {

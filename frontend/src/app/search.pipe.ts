@@ -1,5 +1,7 @@
 import { Pipe, PipeTransform, Injectable } from '@angular/core';
 
+import { Artist } from './models/artist';
+
 /**
  *  <input [(model)]="query" type="text" />
  *  <ul>
@@ -13,26 +15,24 @@ import { Pipe, PipeTransform, Injectable } from '@angular/core';
 })
 @Injectable()
 export class SearchPipe implements PipeTransform {
-	 transform(items:any[], args:any):any[] {
-		var isSearch = (data:any): boolean => {
-			var isAll = false;
-			if(typeof data === 'object' ){
-				for (var z in data) {
-					if(isAll = isSearch(data[z]) ){
-						break;
-					}
-				}
-			} else {
-				if(typeof args === 'number'){
-					isAll = data === args;
-				} else {
-					isAll = data.toString().match( new RegExp(args, 'i') );
-				}
-			} 
+	transform(artists:Artist[], query:string):Artist[] {
 
-			return isAll;
-		};
+		let result: Artist[] = new Array();
+		let lName: string = '';					// lowercase name
+		let lQuery: string = '';				// lowercase query
 
-		return items.filter(isSearch);
+		if (query == '' || query == null)
+			return artists;
+		else {
+			for (let artist of artists) {
+				lName = artist.name.toLowerCase();
+				lQuery = query.toLowerCase();
+				
+				if (lName.indexOf(lQuery) !== -1)
+					result.push(artist);
+			}
+		}
+
+		return result;
 	}
 }

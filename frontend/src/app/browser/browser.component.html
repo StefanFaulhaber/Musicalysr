@@ -2,12 +2,15 @@
 
   <md-input 
     placeholder="Künstler suchen" type="text"
-    [(ngModel)]="query">
+    [(ngModel)]="query"
+    (keyup.enter)="filterArtists(query)">
   </md-input>
+
+  <!--  | search:query -->
 
   <md-list>
     <md-list-item
-      *ngFor="let artist of artists | search:query"
+      *ngFor="let artist of artists"
       (click)="selectArtist(artist)"
       [class.active]="artist === selectedArtist">
 
