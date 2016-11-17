@@ -16,7 +16,7 @@ export class WikipediaService {
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/javascript');
     this.headers.append('Accept', 'application/javascript');
-    this.headers.append('Origin', 'http://localhost:4200');
+    this.headers.append('Origin', 'http://10.20.30.40:4200');
   }
 
   public getEntry = (query: string): Observable<WikipediaEntry> => {

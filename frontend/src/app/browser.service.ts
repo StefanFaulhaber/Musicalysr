@@ -12,7 +12,7 @@ export class BrowserService {
   private headers: Headers;
 
   constructor(private _http: Http) {
-    this.actionUrl = 'http://localhost:2050/';
+    this.actionUrl = 'http://10.20.30.40:2050/';
  
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
