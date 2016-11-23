@@ -3,7 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Observable';
 
-import { Artist } from './models/artist';
+import { Artist } from '../models/artist';
 
 @Injectable()
 export class BrowserService {

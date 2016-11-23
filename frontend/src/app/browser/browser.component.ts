@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 
-import { SharedService } from '../shared.service';
-import { BrowserService } from '../browser.service';
+import { SharedService } from '../shared/shared.service';
+import { BrowserService } from '../browser/browser.service';
 import { ModuleContainerComponent } from '../modulecontainer/modulecontainer.component';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -47,7 +47,17 @@ export class BrowserComponent implements OnInit {
     this.browserService
         .getAllFiltered(query)
         .subscribe(
-          (res: Artist[]) => this.artists = res,
+          (res: Artist[]) => {
+            this.artists = res;
+
+            // reselect artist if filtered set contains it
+            if (this.selectedArtist != null) {
+              for (let artist of this.artists) {
+                if (artist.id == this.selectedArtist.id)
+                  this.selectArtist(artist); 
+              }
+            }
+          },
           error => console.log(error));
   }
 
