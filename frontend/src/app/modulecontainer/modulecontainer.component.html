@@ -1,7 +1,11 @@
-<md-card class="module" id="samplemodule">
-  {{artist.name}}<br>{{artist.id}}
-</md-card>
+<div class="modulecontainer">
 
-<md-card class="module" id="samplemodule">
-  Wikipedia
-</md-card>
+  <md-card class="module" id="samplemodule">
+    {{artist.name}}<br>{{artist.id}}
+  </md-card>
+
+  <md-card class="module" id="samplemodule">
+    <app-wikipedia></app-wikipedia>
+  </md-card>
+  
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SharedService } from '../shared.service';
+import { SharedService } from '../shared/shared.service';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Artist } from '../models/artist';
