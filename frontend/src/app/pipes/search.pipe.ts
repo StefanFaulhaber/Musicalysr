@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform, Injectable } from '@angular/core';
 
-import { Artist } from './models/artist';
+import { Artist } from '../models/artist';
 
 /**
  *  <input [(model)]="query" type="text" />

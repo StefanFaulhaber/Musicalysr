@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-import { Artist } from './models/artist';
+import { Artist } from '../models/artist';
 
 @Injectable()
 export class SharedService {

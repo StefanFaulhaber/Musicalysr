@@ -13,3 +13,15 @@ div.row {
 .navbar {
     margin-bottom: 0px;
 }
+
+.navbar-default {
+    background-color: #FFFFFF;
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-image: none;
+    background-repeat: no-repeat;
+    filter: none;
+}

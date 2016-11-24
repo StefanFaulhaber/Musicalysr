@@ -7,7 +7,9 @@
 }
 
 md-input {
-    width: 100%;
+    width: auto;
+    margin-left: 16px;
+    margin-right: 16px;
 }
 
 .active {

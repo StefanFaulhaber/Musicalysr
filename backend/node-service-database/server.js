@@ -64,8 +64,8 @@ app.get('/query/artists', function (req, res) {
   res.send(artistsDummy);
 });
 
-app.get('/query/artist/autocomplete/:name', function (req, res) {
-  var name = req.params.name;
+app.get('/query/artists/autocomplete/:name', function (req, res) {
+  var name = req.params.name.toUpperCase();
   /*var sql = "SELECT ??, ?? FROM ?? WHERE ?? = ?";
    var inserts = ['Name', 'id', 'Artists', 'Name', name + '%'];
    var query = mysql.format(sql, inserts);
@@ -84,7 +84,7 @@ app.get('/query/artist/autocomplete/:name', function (req, res) {
 
   var result = [];
   artistsDummy.forEach(function (artist) {
-    if (artist.name.startsWith(name)) {
+    if (artist.name.toUpperCase().startsWith(name)) { //TODO: maybe substring testing here instead
       result.push(artist);
     }
   });
@@ -92,8 +92,9 @@ app.get('/query/artist/autocomplete/:name', function (req, res) {
   res.send(result);
 });
 
-app.post('/insert/artist', function (req, res) {
+app.post('/insert/artists', function (req, res) {
   var artists = req.body;
+  var rows = [];
 
   connection.connect();
 
@@ -107,11 +108,12 @@ app.post('/insert/artist', function (req, res) {
         res.sendStatus(500);
         throw err;
       }
-      var rows = result.changedRows;
-      res.setHeader('Content-Type', 'application/json');
-      res.send({rows: rows});
+      rows.add(result.changedRows);
     });
   });
+
+  res.setHeader('Content-Type', 'application/json');
+  res.send({rows: rows});
 
   connection.disconnect(); // TODO: Check if all inserts are complete before disconnect!
 });
