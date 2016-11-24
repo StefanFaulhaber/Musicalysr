@@ -11,11 +11,12 @@ import { MainComponent } from './main/main.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BrowserComponent } from './browser/browser.component';
 import { ModuleContainerComponent } from './modulecontainer/modulecontainer.component';
-import { SearchPipe } from './search.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 
-import { SharedService } from './shared.service';
+import { SharedService } from './shared/shared.service';
 
 import { FrontendRoutingModule } from './app-routing.module';
+import { WikipediaComponent } from './wikipedia/wikipedia.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FrontendRoutingModule } from './app-routing.module';
     SettingsComponent,
     BrowserComponent,
     ModuleContainerComponent,
-    SearchPipe
+    SearchPipe,
+    WikipediaComponent
   ],
   imports: [
     BrowserModule,

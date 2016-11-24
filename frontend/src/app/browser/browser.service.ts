@@ -3,7 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Observable';
 
-import { Artist } from './models/artist';
+import { Artist } from '../models/artist';
 
 @Injectable()
 export class BrowserService {
@@ -12,7 +12,7 @@ export class BrowserService {
   private headers: Headers;
 
   constructor(private _http: Http) {
-    this.actionUrl = 'http://localhost:2050/';
+    this.actionUrl = 'http://10.20.30.40:2050/';
  
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
