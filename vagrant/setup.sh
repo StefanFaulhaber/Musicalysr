@@ -21,4 +21,4 @@ COUNTER=1
 #         let NPM=$?
 #         let COUNTER+=1
 #done
-tmux new-session -d -s backend-serve 'node server.js'
+tmux new-session -d -s backend-serve 'nodemon server.js'
