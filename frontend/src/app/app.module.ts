@@ -17,6 +17,8 @@ import { SharedService } from './shared.service';
 
 import { FrontendRoutingModule } from './app-routing.module';
 import { WikipediaComponent } from './wikipedia/wikipedia.component';
+import { PopularitygraphComponent } from './popularitygraph/popularitygraph.component';
+import {nvD3} from "ng2-nvd3";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { WikipediaComponent } from './wikipedia/wikipedia.component';
     BrowserComponent,
     ModuleContainerComponent,
     SearchPipe,
-    WikipediaComponent
+    WikipediaComponent,
+    PopularitygraphComponent,
+    nvD3
   ],
   imports: [
     BrowserModule,
@@ -38,6 +42,6 @@ import { WikipediaComponent } from './wikipedia/wikipedia.component';
   providers: [SharedService],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }
