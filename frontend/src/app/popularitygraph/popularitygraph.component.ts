@@ -41,7 +41,7 @@ export class PopularitygraphComponent implements OnInit {
         xAxis: {
           axisLabel: 'Time',
           tickFormat: function(d){
-            return d3.time.format('%b %d')(new Date(d));
+            return d3.time.format('%b %d \'%y')(new Date(d));
           }
         },
         yAxis: {
