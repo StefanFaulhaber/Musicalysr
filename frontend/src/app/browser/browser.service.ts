@@ -25,18 +25,7 @@ export class BrowserService {
   }
 
   public getAllFiltered = (query: string): Observable<Artist[]> => {
-    return this._http.get(this.actionUrl + 'query/artist/autocomplete/' + query, { headers: this.headers })
+    return this._http.get(this.actionUrl + 'query/artists/autocomplete/' + query, { headers: this.headers })
         .map((response: Response) => <Artist[]>response.json());
   }
-
-  /*
-  public Update = (id: string, itemToUpdate: Artist): Observable<Artist> => {
-      return this._http.put(this.actionUrl + id, JSON.stringify(itemToUpdate), { headers: this.headers })
-          .map((response: Response) => <Artist>response.json());
-  }
-
-  public Delete = (id: string): Observable<Response> => {
-      return this._http.delete(this.actionUrl + id);
-  }
-  */
 }
