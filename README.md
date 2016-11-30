@@ -32,5 +32,6 @@ In der Box laufen zur Zeit neben Node noch ein MySQL Server und ein MongoDB Serv
 
 1. go to vagrant directory
 2. `vagrant up`
-8. `http://10.20.30.40:4200/`
-9. `vagrant halt`
+3. `vagrant fsnotify`
+4. `http://10.20.30.40:4200/`
+5. `vagrant halt`

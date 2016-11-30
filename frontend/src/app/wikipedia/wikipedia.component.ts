@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { SharedService } from '../shared/shared.service';
 import { WikipediaService } from './wikipedia.service';
-import { MusicbrainzService } from './musicbrainz.service';
+import { MusicbrainzService } from '../shared/musicbrainz.service';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Artist } from '../models/artist';

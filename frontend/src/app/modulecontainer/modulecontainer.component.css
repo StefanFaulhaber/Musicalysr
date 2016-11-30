@@ -1,9 +1,11 @@
 .modulecontainer {
-    height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: auto;
     flex-grow: 1;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: flex-start;
 }
 
 .module {
