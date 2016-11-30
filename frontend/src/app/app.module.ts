@@ -17,6 +17,7 @@ import { SharedService } from './shared/shared.service';
 
 import { FrontendRoutingModule } from './app-routing.module';
 import { WikipediaComponent } from './wikipedia/wikipedia.component';
+import { ReleasesComponent } from './releases/releases.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { WikipediaComponent } from './wikipedia/wikipedia.component';
     BrowserComponent,
     ModuleContainerComponent,
     SearchPipe,
-    WikipediaComponent
+    WikipediaComponent,
+    ReleasesComponent
   ],
   imports: [
     BrowserModule,

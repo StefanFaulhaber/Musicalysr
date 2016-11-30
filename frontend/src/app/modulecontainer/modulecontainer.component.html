@@ -10,6 +10,10 @@
     <app-wikipedia></app-wikipedia>
   </md-card>
 
+  <md-card class="module" [hidden]="artist.id == null">
+    <app-releases></app-releases>
+  </md-card>
+
   <div class="hint" [hidden]="artist.id != null">
     Wähle einen Artist.
   </div>
