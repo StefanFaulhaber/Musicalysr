@@ -9,6 +9,7 @@ html, body, app-root, div.row {
 
 div.row {
   padding-top: 50px;
+  min-height: 100vh;
 }
 
 .navbar {

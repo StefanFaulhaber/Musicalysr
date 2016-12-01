@@ -21,8 +21,8 @@
 
 .hint {
     width: 100%;
-    height: 500px;
+    height: calc(100vh - 90px);
     text-align: center;
     vertical-align: middle;
-    line-height: 500px;
+    line-height: calc(100vh - 90px);
 }

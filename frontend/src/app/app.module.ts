@@ -19,7 +19,7 @@ import { FrontendRoutingModule } from './app-routing.module';
 import { WikipediaComponent } from './wikipedia/wikipedia.component';
 import { ReleasesComponent } from './releases/releases.component';
 import { PopularitygraphComponent } from './popularitygraph/popularitygraph.component';
-import {nvD3} from "ng2-nvd3";
+import { nvD3 } from "ng2-nvd3";
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import {nvD3} from "ng2-nvd3";
     ModuleContainerComponent,
     SearchPipe,
     WikipediaComponent,
-    ReleasesComponent
+    ReleasesComponent,
     PopularitygraphComponent,
     nvD3
   ],

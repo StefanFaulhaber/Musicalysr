@@ -14,12 +14,12 @@
     <app-releases></app-releases>
   </md-card>
 
+  <md-card class="module" [hidden]="artist.id == null">
+    <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
+  </md-card>
+
   <div class="hint" [hidden]="artist.id != null">
     Wähle einen Artist.
   </div>
-
-  <md-card class="module">
-    <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
-  </md-card>
 
 </div>
