@@ -92,32 +92,6 @@ app.get('/query/artists/autocomplete/:name', function (req, res) {
   res.send(result);
 });
 
-app.post('/insert/artists', function (req, res) {
-  var artists = req.body;
-  var rows = [];
-
-  connection.connect();
-
-  artists.forEach(function (artist) {
-    var sql = "INSERT INTO ?? (??, ??) VALUES (?, ?)";
-    var inserts = ['Artist', artist.name, artist.id, 'Name'];
-    var query = mysql.format(sql, inserts);
-
-    connection.query(query, function (err, result) {
-      if (err) {
-        res.sendStatus(500);
-        throw err;
-      }
-      rows.add(result.changedRows);
-    });
-  });
-
-  res.setHeader('Content-Type', 'application/json');
-  res.send({rows: rows});
-
-  connection.disconnect(); // TODO: Check if all inserts are complete before disconnect!
-});
-
 /**
  * Starts the server.
  */
