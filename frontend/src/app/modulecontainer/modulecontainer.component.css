@@ -1,10 +1,26 @@
-.module {
-    width: 100%;
-    height: 200px;
-    margin-bottom: 20px;
-    padding: 20px;
+.modulecontainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    flex-grow: 1;
 }
 
-#samplemodule {
-    background-color: #FFFFFF;
+.module {
+    width: 100%;
+    min-height: 100px;
+    padding: 20px;
+    background-color: white;
+}
+
+.module:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.hint {
+    width: 100%;
+    height: 500px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 500px;
 }

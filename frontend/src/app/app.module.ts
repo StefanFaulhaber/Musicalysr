@@ -11,11 +11,14 @@ import { MainComponent } from './main/main.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BrowserComponent } from './browser/browser.component';
 import { ModuleContainerComponent } from './modulecontainer/modulecontainer.component';
-import { SearchPipe } from './search.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 
-import { SharedService } from './shared.service';
+import { SharedService } from './shared/shared.service';
 
 import { FrontendRoutingModule } from './app-routing.module';
+import { WikipediaComponent } from './wikipedia/wikipedia.component';
+import { PopularitygraphComponent } from './popularitygraph/popularitygraph.component';
+import {nvD3} from "ng2-nvd3";
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { FrontendRoutingModule } from './app-routing.module';
     SettingsComponent,
     BrowserComponent,
     ModuleContainerComponent,
-    SearchPipe
+    SearchPipe,
+    WikipediaComponent,
+    PopularitygraphComponent,
+    nvD3
   ],
   imports: [
     BrowserModule,
@@ -36,6 +42,6 @@ import { FrontendRoutingModule } from './app-routing.module';
   providers: [SharedService],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }

@@ -1,7 +1,21 @@
-<md-card class="module" id="samplemodule">
-  {{artist.name}}<br>{{artist.id}}
-</md-card>
+<div class="modulecontainer">
 
-<md-card class="module" id="samplemodule">
-  Wikipedia
-</md-card>
+  <!-- DEV
+    <md-card class="module">
+      {{artist.name}}<br>{{artist.id}}
+    </md-card>
+  -->
+
+  <md-card class="module" [hidden]="artist.id == null">
+    <app-wikipedia></app-wikipedia>
+  </md-card>
+
+  <div class="hint" [hidden]="artist.id != null">
+    Wähle einen Artist.
+  </div>
+
+  <md-card class="module">
+    <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
+  </md-card>
+
+</div>

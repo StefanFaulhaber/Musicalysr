@@ -37,8 +37,8 @@ sudo apt-get install -y git
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ## Globally install angular-cli
-sudo npm install -g angular-cli
-
+sudo npm install -g angular-cli@1.0.0-beta.18
+sudo npm install -g nodemon
 
 ### Node 4.4.5
 # Download the binary
