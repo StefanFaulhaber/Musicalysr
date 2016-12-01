@@ -1,8 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnChanges} from '@angular/core';
 import * as d3 from 'd3';
 import 'nvd3';
 import * as moment from 'moment';
+import {ViewChild} from "@angular/core/src/metadata/di";
+import {nvD3} from "ng2-nvd3";
+import {Input} from "@angular/core/src/metadata/directives";
 
+
+let options = {
+  chart: {
+    type: 'lineChart',
+    height: 350,
+    margin : {
+      top: 20,
+      right: 20,
+      bottom: 40,
+      left: 55
+    },
+    x: function(d){ return d.x; },
+    y: function(d){ return d.y; },
+    useInteractiveGuideline: true,
+    dispatch: {
+      stateChange: function(e){ console.log("stateChange"); },
+      changeState: function(e){ console.log("changeState"); },
+      tooltipShow: function(e){ console.log("tooltipShow"); },
+      tooltipHide: function(e){ console.log("tooltipHide"); }
+    },
+    xAxis: {
+      axisLabel: 'Time',
+      tickFormat: function(d){
+        return d3.time.format('%b %d \'%y')(new Date(d));
+      }
+    },
+    yAxis: {
+      axisLabel: 'Popularity',
+      tickFormat: function(d){
+        return d3.format('.02f')(d);
+      },
+      axisLabelDistance: -10
+    },
+    callback: function(chart){
+      console.log("!!! lineChart callback !!!");
+    }
+  }
+};
 
 @Component({
   selector: 'app-popularitygraph',
@@ -11,87 +52,40 @@ import * as moment from 'moment';
     './popularitygraph.component.css'
   ]
 })
-export class PopularitygraphComponent implements OnInit {
+export class PopularitygraphComponent implements OnInit, OnChanges {
 
   options;
-  data;
+
+  @ViewChild('graph') nvD3: nvD3;
+  @Input() data: any;
 
   constructor() { }
 
   ngOnInit() {
-    this.options = {
-      chart: {
-        type: 'lineChart',
-        height: 350,
-        margin : {
-          top: 20,
-          right: 20,
-          bottom: 40,
-          left: 55
-        },
-        x: function(d){ return d.x; },
-        y: function(d){ return d.y; },
-        useInteractiveGuideline: true,
-        dispatch: {
-          stateChange: function(e){ console.log("stateChange"); },
-          changeState: function(e){ console.log("changeState"); },
-          tooltipShow: function(e){ console.log("tooltipShow"); },
-          tooltipHide: function(e){ console.log("tooltipHide"); }
-        },
-        xAxis: {
-          axisLabel: 'Time',
-          tickFormat: function(d){
-            return d3.time.format('%b %d \'%y')(new Date(d));
-          }
-        },
-        yAxis: {
-          axisLabel: 'Popularity',
-          tickFormat: function(d){
-            return d3.format('.02f')(d);
-          },
-          axisLabelDistance: -10
-        },
-        callback: function(chart){
-          console.log("!!! lineChart callback !!!");
-        }
-      }
-    };
-
-    this.data = sinAndCos();
-
-    function sinAndCos() {
-      var sin = [],sin2 = [],
-        cos = [];
-
-      //Data is represented as an array of {x,y} pairs.
-
-      for (var i = 0; i < 122; i++) {
-        sin.push({x: moment().add(i, 'days'), y: Math.sin(i/10)});
-        sin2.push({x: moment().add(i, 'days'), y: Math.sin(i/10) *0.25 + 0.5});
-        cos.push({x: moment().add(i, 'days'), y: .5 * Math.cos(i/10+ 2) + Math.random() / 10});
-      }
-      console.log(sin2);
-
-      //Line chart data should be sent as an array of series objects.
-      return [
-        // {
-        //   values: sin,      //values - represents the array of {x,y} data points
-        //   key: 'Sine Wave', //key  - the name of the series.
-        //   color: '#ff7f0e'  //color - optional: choose your own line color.
-        // },
-        // {
-        //   values: cos,
-        //   key: 'Cosine Wave',
-        //   color: '#2ca02c'
-        // },
-        {
-          values: sin2,
-          key: '@Madonna',
-          color: '#7777ff',
-          area: true      //area - set to true if you want this line to turn into a filled area chart.
-        }
-      ];
-    }
-
+    this.options = options;
+    // this.data = sinAndCos();
   }
+
+  ngOnChanges () {
+    if (this.options) {
+      this.nvD3.updateWithData(this.data);
+      console.log(this.nvD3);
+    }
+  }
+
+}
+
+export function sinAndCos(name : string) {
+  var sin = [];
+  for (var i = 0; i < 122; i++) {
+    sin.push({x: moment().add(i, 'days'), y: Math.sin(i/10) *0.25 + 0.5 + Math.random() / 15});
+  }
+  return [
+    {
+      values: sin,
+      key: name,
+      color: '#7777ff',
+      area: true      //area - set to true if you want this line to turn into a filled area chart.
+    }
+  ];
 }
