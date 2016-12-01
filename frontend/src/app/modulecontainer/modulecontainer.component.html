@@ -1,13 +1,20 @@
 <div class="modulecontainer">
-  <md-card class="module samplemodule">
-    {{artist.name}}<br>{{artist.id}}
-  </md-card>
 
-  <md-card class="module samplemodule">
+  <!-- DEV
+    <md-card class="module">
+      {{artist.name}}<br>{{artist.id}}
+    </md-card>
+  -->
+
+  <md-card class="module" [hidden]="artist.id == null">
     <app-wikipedia></app-wikipedia>
   </md-card>
 
-  <md-card class="module samplemodule">
+  <div class="hint" [hidden]="artist.id != null">
+    Wähle einen Artist.
+  </div>
+
+  <md-card class="module">
     <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
   </md-card>
 
