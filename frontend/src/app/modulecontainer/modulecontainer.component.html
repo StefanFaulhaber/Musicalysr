@@ -1,7 +1,7 @@
 <div class="modulecontainer">
 
   <!-- DEV
-    <md-card class="module" id="samplemodule">
+    <md-card class="module">
       {{artist.name}}<br>{{artist.id}}
     </md-card>
   -->
@@ -17,5 +17,9 @@
   <div class="hint" [hidden]="artist.id != null">
     Wähle einen Artist.
   </div>
-  
+
+  <md-card class="module">
+    <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
+  </md-card>
+
 </div>

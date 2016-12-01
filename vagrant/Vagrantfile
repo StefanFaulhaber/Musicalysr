@@ -23,7 +23,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         guest: 3306,
         host: 53306
 
-    config.vm.synced_folder "../", "/opt/dev", owner: "vagrant", group: "www-data", mount_options: ['dmode=777', 'fmode=666'], fsnotify: true
+    config.vm.synced_folder "../", "/opt/dev", owner: "vagrant", group: "www-data", mount_options: ['dmode=777', 'fmode=666'], fsnotify: true, exclude: ["*.git/", "*tmp/", "*cache/", "*node_modules/", "*bower_components/", "*.idea/", "*.vagrant", "vagrant", "meeting_notes"]
+
+    config.vm.synced_folder ".", "/vagrant", disabled: true
 
     config.vm.provider :virtualbox do |vb|
         vb.memory = 2048

@@ -18,6 +18,8 @@ import { SharedService } from './shared/shared.service';
 import { FrontendRoutingModule } from './app-routing.module';
 import { WikipediaComponent } from './wikipedia/wikipedia.component';
 import { ReleasesComponent } from './releases/releases.component';
+import { PopularitygraphComponent } from './popularitygraph/popularitygraph.component';
+import {nvD3} from "ng2-nvd3";
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { ReleasesComponent } from './releases/releases.component';
     SearchPipe,
     WikipediaComponent,
     ReleasesComponent
+    PopularitygraphComponent,
+    nvD3
   ],
   imports: [
     BrowserModule,
@@ -40,6 +44,6 @@ import { ReleasesComponent } from './releases/releases.component';
   providers: [SharedService],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }
