@@ -45,6 +45,7 @@ def process(*args):
     :return:
     """
     tweetArray = json.loads(json.dumps(args[0]))
+    numOfTweets = len(tweetArray['data'])
     f1,f2 = aggregatedExtractions(tweetArray['data'])
     # print(f1,"\n",f2)
 
@@ -52,6 +53,7 @@ def process(*args):
     jsonObjDictionary["time"] = helpers.createRoundedTimestamp(tweetArray["timeStamp"])
     jsonObjDictionary["frequencies"] = f1
     jsonObjDictionary["coocurences"] = f2
+    jsonObjDictionary["numberOfTweets"] = numOfTweets
 
     print(json.dumps(jsonObjDictionary),"\n")
     # js = json.loads(j)

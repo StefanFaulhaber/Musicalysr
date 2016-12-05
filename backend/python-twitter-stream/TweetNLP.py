@@ -89,16 +89,16 @@ class Tweet:
             Nothing
         """
         self.reset()
-        self.mTweet = fTweet["text"].lower().replace("&amp;", "and").replace("&amp ;", "and").replace("&", "and")
+        self.mTweet = fTweet["text"].upper().replace("&amp;", "and").replace("&amp ;", "and").replace("&", "and")
         try:
             for url in fTweet["entities"]["urls"]:
-                self.mTweet = self.mTweet.replace(url["url"].lower(), " ")
+                self.mTweet = self.mTweet.replace(url["url"].upper(), " ")
         except IndexError:
             pass
         self.mHashtags = []
         for hashtag in fTweet["entities"]["hashtags"]:
-            self.mHashtags.append(hashtag["text"].lower())
-            self.mTweet = self.mTweet.replace("#"+hashtag["text"].lower(), hashtag["text"].lower())
+            self.mHashtags.append(hashtag["text"].upper())
+            self.mTweet = self.mTweet.replace("#"+hashtag["text"].upper(), hashtag["text"].upper())
 
         try:
             for user in fTweet["entities"]["user_mentions"]:
@@ -106,7 +106,7 @@ class Tweet:
         except:
             pass
 
-        self.mTweet = self.mTweet.lower().replace("&amp;", "and").replace("&amp ;", "and").replace("&", "and")
+        self.mTweet = self.mTweet.upper().replace("&amp;", "and").replace("&amp ;", "and").replace("&", "and")
 
     def extract(self):
         """
