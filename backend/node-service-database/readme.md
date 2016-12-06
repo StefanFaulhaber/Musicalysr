@@ -16,6 +16,9 @@ rule with protocol: TCP, Host-IP: 127.0.0.1, Host-Port: 8888 and Guest-Port: 543
 9. Run `node server.js`
 **Commandline Options**
 -p, Port for the Server (default: 2050)
+-d, Selects the database, parameters (defaut: postgresql):
+* "mysql" for a MySQL database
+* "postgresql" for a PostgreSQL database
 
 Now the API is listening on the specified port or 2050 by default.
 
