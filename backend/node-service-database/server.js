@@ -11,7 +11,7 @@ const DATABASE_POSTGRESQL = "postgresql";
 
 const optionDefinitions = [
   {name: 'port', alias: 'p', type: String, defaultValue: DEFAULT_PORT},
-  {name: 'database', alias: 'd', type: String, defaultValue: DATABASE_POSTGRESQL}
+  {name: 'database', alias: 'd', type: String, defaultValue: DATABASE_MYSQL}
 ];
 
 var cmdOptions = commandLineArgs(optionDefinitions);
@@ -33,9 +33,9 @@ app.use(function(req, res, next) {
 if (database === DATABASE_MYSQL) {
   var configMySQL = {
     host: 'localhost',
-    user: 'musicbrainz',
-    password: 'musicbrainz',
-    database: 'musicbrainz'
+    user: 'root',
+    password: 'password',
+    database: 'mbdb'
   };
 
   var connection = mysql.createConnection(configMySQL);
