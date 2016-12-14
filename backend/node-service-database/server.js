@@ -57,7 +57,7 @@ else {
 
 
 app.get('/query/artists', function(req, res) {
-  var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 50'
+  var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 500';
 
   if (database === DATABASE_MYSQL) {
     connection.connect();
@@ -101,7 +101,7 @@ app.get('/query/artists/autocomplete/:name', function(req, res) {
       res.setHeader('Content-Type', 'application/json');
       res.send(rows);
 
-      connection.disconnect();
+      connection.end();
     });
   }
   else {
@@ -115,10 +115,6 @@ app.get('/query/artists/autocomplete/:name', function(req, res) {
 
         res.setHeader('Content-Type', 'application/json');
         res.send(result.rows);
-
-        client.end(function(err) {
-          if (err) throw err;
-        });
       });
     });
   }
@@ -173,7 +169,7 @@ app.get('/query/labels/autocomplete/:name', function(req, res) {
       res.setHeader('Content-Type', 'application/json');
       res.send(rows);
 
-      connection.disconnect();
+      connection.end();
     });
   }
   else {
@@ -216,7 +212,7 @@ app.get('/query/artist/labels/:id', function(req, res) {
       res.setHeader('Content-Type', 'application/json');
       res.send(rows);
 
-      connection.disconnect();
+      connection.end();
     });
   }
   else {
