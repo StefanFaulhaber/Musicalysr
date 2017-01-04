@@ -68,7 +68,7 @@ app.get('/query/artists', function(req, res) {
       res.setHeader('Content-Type', 'application/json');
       res.send(rows);
 
-      connection.end();
+     //connection.end();
     });
   }
   else {
@@ -101,7 +101,7 @@ app.get('/query/artists/autocomplete/:name', function(req, res) {
       res.setHeader('Content-Type', 'application/json');
       res.send(rows);
 
-      connection.end();
+      //connection.end();
     });
   }
   else {

@@ -9,8 +9,8 @@ class Configuration:
 
     # MySQL Access Data
     mMusicBrainzDatabaseHost = "localhost"
-    mMusicBrainzDatabaseUser = "mbdb"
-    mMusicBrainzDatabasePW   = ""
+    mMusicBrainzDatabaseUser = "root"
+    mMusicBrainzDatabasePW   = "password"
     mMusicBrainzDatabaseDB  = "mbdb"
 
     # Redis Access Data

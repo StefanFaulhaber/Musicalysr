@@ -35,7 +35,8 @@ class REDISinit:
 
         self.mMySQLConn = connector.connect(host=Configuration.mMusicBrainzDatabaseHost,
                                             user=Configuration.mMusicBrainzDatabaseUser,
-                                            database=Configuration.mMusicBrainzDatabaseDB)
+                                            database=Configuration.mMusicBrainzDatabaseDB,
+                                            password=Configuration.mMusicBrainzDatabasePW)
 
     def initializeREDIS(self):
         """ Building a Redis index for quickly identifying Instances in Tweets. (May take a long time
