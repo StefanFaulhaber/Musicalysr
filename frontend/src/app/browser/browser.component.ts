@@ -28,11 +28,13 @@ export class BrowserComponent implements OnInit {
 
   ngOnInit() {
     // get artists from backend
-    this.browserService
-        .getAll()
-        .subscribe(
-          (res: Artist[]) => this.artists = res,
-          error => console.log(error));
+    // this.browserService
+    //     .getAll()
+    //     .subscribe(
+    //       (res: Artist[]) => this.artists = res,
+    //       error => console.log(error));
+
+    this.artists = this.browserService.getArtists();
 
     // subscribe to artist changes
     this.subscription = this.sharedService.artistItem
@@ -43,23 +45,23 @@ export class BrowserComponent implements OnInit {
     this.subscription.unsubscribe();
   }
 
-  filterArtists(query: string) {
-    this.browserService
-        .getAllFiltered(query)
-        .subscribe(
-          (res: Artist[]) => {
-            this.artists = res;
+  // filterArtists(query: string) {
+  //   this.browserService
+  //       .getAllFiltered(query)
+  //       .subscribe(
+  //         (res: Artist[]) => {
+  //           this.artists = res;
 
-            // reselect artist if filtered set contains it
-            if (this.selectedArtist != null) {
-              for (let artist of this.artists) {
-                if (artist.id == this.selectedArtist.id)
-                  this.selectArtist(artist); 
-              }
-            }
-          },
-          error => console.log(error));
-  }
+  //           // reselect artist if filtered set contains it
+  //           if (this.selectedArtist != null) {
+  //             for (let artist of this.artists) {
+  //               if (artist.id == this.selectedArtist.id)
+  //                 this.selectArtist(artist); 
+  //             }
+  //           }
+  //         },
+  //         error => console.log(error));
+  // }
 
   selectArtist(artist: Artist): void {
     this.sharedService.changeArtist(artist);

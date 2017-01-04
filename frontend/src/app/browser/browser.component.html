@@ -3,14 +3,15 @@
   <md-input 
     placeholder="Suchen" type="text"
     [(ngModel)]="query"
-    (keyup.enter)="filterArtists(query)">
+    >
   </md-input>
 
   <!--  | search:query -->
+  <!--(keyup.enter)="filterArtists(query)"-->
 
   <md-list>
     <md-list-item
-      *ngFor="let artist of artists"
+      *ngFor="let artist of artists | search:query"
       (click)="selectArtist(artist)"
       [class.active]="artist === selectedArtist">
 

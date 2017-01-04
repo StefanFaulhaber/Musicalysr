@@ -1,0 +1,3 @@
+<h2 (window:resize)="onResize($event)">Youtube</h2>
+
+<iframe *ngIf="artist.name" type="text/html" width="640" height="320" [src]="getUrl()" frameborder="0"></iframe>
