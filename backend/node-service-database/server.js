@@ -63,8 +63,17 @@ app.get('/query/artists', function(req, res) {
 
    connection.connect();
 
+<<<<<<< HEAD
    connection.query(query, function(err, rows, fields) {
    if (err) throw err;
+=======
+     //connection.end();
+    });
+  }
+  else {
+    client.connect(function(err) {
+      if (err) throw err;
+>>>>>>> dbf2b12117c290553d1f0b6b869d285b81fb1f40
 
    res.setHeader('Content-Type', 'application/json');
    res.send(rows);
@@ -104,7 +113,16 @@ app.get('/query/artists/autocomplete/:name', function(req, res) {
    var parameters = [name];
    var sql = mysql.format(query, parameters);
 
+<<<<<<< HEAD
    connection.connect();
+=======
+      //connection.end();
+    });
+  }
+  else {
+    client.connect(function(err) {
+      if (err) throw err;
+>>>>>>> dbf2b12117c290553d1f0b6b869d285b81fb1f40
 
    connection.query(sql, function(err, rows, fields) {
    if (err) throw err;
