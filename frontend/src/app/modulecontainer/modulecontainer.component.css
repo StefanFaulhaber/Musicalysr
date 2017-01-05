@@ -11,12 +11,13 @@
 .module {
     width: 100%;
     min-height: 100px;
+    margin-bottom: 20px;
     padding: 20px;
     background-color: white;
 }
 
-.module:not(:last-child) {
-    margin-bottom: 20px;
+.module:last-child {
+    margin-bottom: 0px;
 }
 
 .hint {

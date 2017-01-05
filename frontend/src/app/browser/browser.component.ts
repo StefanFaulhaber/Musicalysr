@@ -34,6 +34,9 @@ export class BrowserComponent implements OnInit {
           (res: Artist[]) => this.artists = res,
           error => console.log(error));
 
+    // Mock Backend
+    // this.artists = this.browserService.getArtists();
+
     // subscribe to artist changes
     this.subscription = this.sharedService.artistItem
       .subscribe(item => this.selectedArtist = item)

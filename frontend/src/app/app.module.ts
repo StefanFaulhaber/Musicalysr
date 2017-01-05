@@ -20,6 +20,7 @@ import { WikipediaComponent } from './wikipedia/wikipedia.component';
 import { ReleasesComponent } from './releases/releases.component';
 import { PopularitygraphComponent } from './popularitygraph/popularitygraph.component';
 import { nvD3 } from "ng2-nvd3";
+import { YoutubeComponent } from './youtube/youtube.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { nvD3 } from "ng2-nvd3";
     WikipediaComponent,
     ReleasesComponent,
     PopularitygraphComponent,
-    nvD3
+    nvD3,
+    YoutubeComponent
   ],
   imports: [
     BrowserModule,

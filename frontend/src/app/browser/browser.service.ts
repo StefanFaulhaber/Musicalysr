@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Observable';
 
 import { Artist } from '../models/artist';
+import { ARTISTS } from '../mockartists';
 
 @Injectable()
 export class BrowserService {
@@ -27,5 +28,9 @@ export class BrowserService {
   public getAllFiltered = (query: string): Observable<Artist[]> => {
     return this._http.get(this.actionUrl + 'query/artists/autocomplete/' + query, { headers: this.headers })
         .map((response: Response) => <Artist[]>response.json());
+  }
+
+  public getArtists(): Artist[] {
+    return ARTISTS;
   }
 }

@@ -1,10 +1,12 @@
 <div class="modulecontainer">
 
-  <!-- DEV
-    <md-card class="module">
-      {{artist.name}}<br>{{artist.id}}
-    </md-card>
-  -->
+  <div class="hint" [hidden]="artist.id != null">
+    Wähle einen Artist.
+  </div>
+
+  <!--<md-card class="module">
+    {{artist.name}}<br>{{artist.id}}
+  </md-card>-->
 
   <md-card class="module" [hidden]="artist.id == null">
     <app-wikipedia></app-wikipedia>
@@ -18,8 +20,8 @@
     <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
   </md-card>
 
-  <div class="hint" [hidden]="artist.id != null">
-    Wähle einen Artist.
-  </div>
+  <md-card class="module" [hidden]="artist.id == null">
+    <app-youtube></app-youtube>
+  </md-card>
 
 </div>
