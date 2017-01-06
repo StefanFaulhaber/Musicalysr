@@ -8,19 +8,19 @@
     {{artist.name}}<br>{{artist.id}}
   </md-card>-->
 
-  <md-card class="module" [hidden]="artist.id == null">
+  <md-card class="module" [hidden]="artist.id == null || !sharedService.isWikipediaEnabled">
     <app-wikipedia></app-wikipedia>
   </md-card>
 
-  <md-card class="module" [hidden]="artist.id == null">
+  <md-card class="module" [hidden]="artist.id == null || !sharedService.isDiscographyEnabled">
     <app-releases></app-releases>
   </md-card>
 
-  <md-card class="module" [hidden]="artist.id == null">
+  <md-card class="module" [hidden]="artist.id == null || !sharedService.isPopularityEnabled">
     <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
   </md-card>
 
-  <md-card class="module" [hidden]="artist.id == null">
+  <md-card class="module" [hidden]="artist.id == null || !sharedService.isYoutubeEnabled">
     <app-youtube></app-youtube>
   </md-card>
 
