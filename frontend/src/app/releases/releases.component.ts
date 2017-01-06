@@ -36,16 +36,30 @@ export class ReleasesComponent implements OnInit {
       })
   }
 
-  getReleases() {
+  private getReleases() {
     if (this.artist.id != null) {
       this.musicbrainzService
         .getMbReleases(this.artist.id)
         .subscribe(
           (res: MB_Artist) => {
-            this.releases = res['releases'];     
+            this.filterReleases(res['releases']);
           },
           error => console.log(error));
     }
+  }
+
+  private filterReleases(res: MB_Release[]) {
+    let seen: string[] = new Array();
+    let result: MB_Release[] = new Array();
+
+    for (let release of res) {
+      if (seen.indexOf(release.title) < 0) {
+        seen.push(release.title)
+        result.push(release)
+      }
+    }
+
+    this.releases = result;
   }
 
 }
