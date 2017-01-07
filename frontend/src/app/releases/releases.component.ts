@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import * as moment from 'moment';
+
 import { SharedService } from '../shared/shared.service';
 import { MusicbrainzService } from '../shared/musicbrainz.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -55,6 +57,11 @@ export class ReleasesComponent implements OnInit {
     for (let release of res) {
       if (seen.indexOf(release.title) < 0) {
         seen.push(release.title)
+
+        // format date
+        if (release.date.length > 4)
+          release.date = moment(release.date).format('DD.MM.YYYY')
+
         result.push(release)
       }
     }

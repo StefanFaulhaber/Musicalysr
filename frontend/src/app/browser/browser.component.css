@@ -18,10 +18,9 @@ md-input {
 
 .active {
     color: blue;
-    background-color: red;
+    /*background-color: red;*/
 }
 
 md-list {
     overflow: auto;
-    
 }
