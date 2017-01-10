@@ -7,6 +7,7 @@
   </md-input>
 
   <!--  | search:query -->
+  <!--(keyup.enter)="filterArtists(query)"-->
 
   <md-list>
     <md-list-item
@@ -14,8 +15,8 @@
       [routerLink]="['/main/', artist.id]"
       [class.active]="artist.id == selectedId">
 
-      <b md-line> {{artist.name}} </b>
-      <p md-line> {{artist.id}} </p>
+      <b md-line class="artistItem"> {{artist.name}} </b>
+      <!--<p md-line> {{artist.id}} </p>-->
 
     </md-list-item>
   </md-list>

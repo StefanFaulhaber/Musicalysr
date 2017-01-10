@@ -1,3 +1,5 @@
+import 'hammerjs';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -18,6 +20,7 @@ import { WikipediaComponent } from './wikipedia/wikipedia.component';
 import { ReleasesComponent } from './releases/releases.component';
 import { PopularitygraphComponent } from './popularitygraph/popularitygraph.component';
 import { nvD3 } from "ng2-nvd3";
+import { YoutubeComponent } from './youtube/youtube.component';
 import {MainRoutingComponent} from "./main/main-routing.module";
 import {PlaceholderComponent} from "./placeholder/placeholder.component";
 import { MainComponent } from './main/main.component';
@@ -34,7 +37,8 @@ import { MainComponent } from './main/main.component';
     PopularitygraphComponent,
     PlaceholderComponent,
     nvD3,
-    MainComponent
+    MainComponent,
+    YoutubeComponent
   ],
   imports: [
     BrowserModule,

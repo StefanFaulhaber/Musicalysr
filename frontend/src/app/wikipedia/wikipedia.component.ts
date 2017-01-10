@@ -19,6 +19,7 @@ export class WikipediaComponent implements OnInit {
 
   artist: Artist = new Artist();
   text: string = '';
+  linkSuffix: string = 'http://de.wikipedia.org';
   subscription: Subscription;
 
   constructor(
@@ -79,6 +80,9 @@ export class WikipediaComponent implements OnInit {
               this.text = this.text.replace(/<\/?[^>]+(>|$)/g, "");
               this.text = this.text.replace(/\[(.*?)\]/g, "");
               this.text = this.text.replace(/\&(.*?)\;/g, " ");
+              this.text = this.text.substring(0,500)
+
+              this.linkSuffix = link;
             } catch (e) {
               this.text = 'Keine Daten vorhanden.';
               console.log(e);

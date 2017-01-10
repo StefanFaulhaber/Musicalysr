@@ -6,6 +6,10 @@
     flex-direction: column;
 }
 
+.artistItem {
+    max-width: 300px;
+}
+
 md-input {
     width: auto;
     margin-left: 16px;
@@ -14,10 +18,9 @@ md-input {
 
 .active {
     color: blue;
-    background-color: red;
+    /*background-color: red;*/
 }
 
 md-list {
     overflow: auto;
-    flex-grow: 1;
 }

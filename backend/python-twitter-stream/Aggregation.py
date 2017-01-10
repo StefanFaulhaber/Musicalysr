@@ -9,6 +9,8 @@ import logging
 from collections import Counter
 import helpers
 from Configuration import Configuration
+from itertools import chain
+import requests
 
 def aggregatedExtractions(aTweetArray=[]):
     """
@@ -26,16 +28,14 @@ def aggregatedExtractions(aTweetArray=[]):
         fTweet.extract()
 
         fExtraction = set(fTweet.getExtractedGoods())
-        fAllExtractions += list(fExtraction)
-        for elem in fExtraction:
-            fAgregatedResults[elem] = fAgregatedResults.get(elem, 0)+1
+        if fExtraction:
+            fAllExtractions.append(fExtraction)
+            fCooccurences += list(itertools.combinations(set(fExtraction), 2))
 
-        fCooccurences += list(itertools.combinations(fExtraction, 2))
-
-    fdist1 = Counter(fAllExtractions)
+    fdist1 = Counter(list(chain.from_iterable(fAllExtractions)))
     fdist2 = Counter(fCooccurences)
 
-    return dict(fdist1), helpers.generateCoocurenceJSON(helpers.convert(fdist2))
+    return helpers.invertDict(dict(fdist1)), helpers.generateCoocurenceJSONNew(helpers.convert(fdist2))
 
 
 def process(*args):
@@ -56,8 +56,8 @@ def process(*args):
     jsonObjDictionary["numberOfTweets"] = numOfTweets
 
     print(json.dumps(jsonObjDictionary),"\n")
-    # js = json.loads(j)
-    # print(j['data'][0]['entities']['hashtags'])
+    r = requests.post(Configuration.mDatabaseEndpointURL, requests.urlencode(json.dumps(jsonObjDictionary)).encode())
+
 
 def main():
     """

@@ -1,20 +1,23 @@
 <div class="modulecontainer">
 
-  <!-- DEV
-    <md-card class="module">
-      {{artist.name}}<br>{{artist.id}}
-    </md-card>
-  -->
+  <!--<md-card class="module">
+    {{artist.name}}<br>{{artist.id}}
+  </md-card>-->
 
-  <md-card class="module">
+  <md-card class="module" *ngIf="sharedService.isWikipediaEnabled">
     <app-wikipedia></app-wikipedia>
   </md-card>
 
-  <md-card class="module">
+  <md-card class="module" *ngIf="sharedService.isDiscographyEnabled">
     <app-releases></app-releases>
   </md-card>
 
-  <md-card class="module">
+  <md-card class="module" *ngIf="sharedService.isPopularityEnabled">
     <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
   </md-card>
+
+  <md-card class="module" *ngIf="sharedService.isYoutubeEnabled">
+    <app-youtube></app-youtube>
+  </md-card>
+
 </div>

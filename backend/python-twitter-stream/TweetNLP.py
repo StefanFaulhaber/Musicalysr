@@ -25,6 +25,8 @@ from EntityMatchingREDIS import EntitySets
 
 import logging
 import sys
+from HashtagPlugins import HashtagPlugins
+from helpers import generateCoocurenceJSONNew
 
 
 class Tweet:
@@ -45,12 +47,14 @@ class Tweet:
     mHashtags = []               # contained Hashtags from Twitter
     mAssociatedUsers = []        # Mentioned users from Twitter
     mEntityMatcher = EntitySets  # An Entitity Matcher Instance to Match de Candidates to the Database
+    mPluginManager = HashtagPlugins
 
     mCandidateList = []
     mNGrams = set()
     mLogger = logging.Logger
 
-    mExtractedGoods = []         # The extracted Entities
+
+    mExtractedGoods = []        # The extracted Entities
 
     def __init__(self):
         """Initialize the Instance.
@@ -62,6 +66,7 @@ class Tweet:
         self.mLogger = logging.getLogger("TweetNLP")
         self.mEntityMatcher = EntitySets()
         self.mLogger.setLevel(logging.WARN)
+        self.mPluginManager = HashtagPlugins()
         self.mLogger.info("Initialization of Tweet completed.")
 
     def reset(self):
@@ -98,7 +103,7 @@ class Tweet:
         self.mHashtags = []
         for hashtag in fTweet["entities"]["hashtags"]:
             self.mHashtags.append(hashtag["text"].upper())
-            self.mTweet = self.mTweet.replace("#"+hashtag["text"].upper(), hashtag["text"].upper())
+            self.mTweet = self.mTweet.replace(hashtag["text"].upper(), hashtag["text"].upper())
 
         try:
             for user in fTweet["entities"]["user_mentions"]:
@@ -123,29 +128,39 @@ class Tweet:
 
 
         """
-        # Username Branch
+
+        # Special Hashtags
+        self.mExtractedGoods += self.mPluginManager.extract(self.mHashtags, self.mTweet)
+        # if len(self.mExtractedGoods) > 0 :
+        #     return "relevant"
+
+        # # Username Branch
         fRecognizedUsers = self.mEntityMatcher.recognizeUsername(self.mAssociatedUsers)
+        # print(self.mAssociatedUsers)
+
         if fRecognizedUsers:
             self.mLogger.info("Username Branch")
-            self.mExtractedGoods += list(fRecognizedUsers)
-            # fC = self.getCandidateList()
-            # ToDo:  Further Filtering of the List with regards to the Username(s) found
-            #
-            # self.mExtractedGoods += list(fC.keys())
-            # return "relevant"
-        #
-        # Look for known Artists as Hastags by searching an alias List
+            for artist in fRecognizedUsers:
+                self.mExtractedGoods += [(artist, "artist")]
+
+
+
+        #     # fC = self.getCandidateList()
+        #     # ToDo:  Further Filtering of the List with regards to the Username(s) found
+        #     #
+        #     # self.mExtractedGoods += list(fC.keys())
+        #     # return "relevant"
+        # #
+        # # Look for known Artists as Hastags by searching an alias List
         fRecognizedUsersInHashtags = self.mEntityMatcher.recognizeAlias(self.mHashtags)
         if fRecognizedUsersInHashtags:
-            self.mLogger.info("Users in Hashtag Branch")
-            self.mExtractedGoods += list(fRecognizedUsersInHashtags)
+            # self.mLogger.info("Users in Hashtag Branch")
+            for artist in fRecognizedUsersInHashtags:
+                self.mExtractedGoods += [(artist,"artist")]
 
-         # if bool(set(self.mHashtags) & set(Configuration.mMusicCategorizationHashtagList)):
-        #     self.mLogger.info("Hashtag Branch")
-        #     fC = self.getCandidateList()
-        #     self.mLogger.debug(fC)
-        #     # ToDo: Further Filtering of the List with regards to the extracted Entities themselves,
-        #     # ToDo: Maybe special Treatment for known Hashtags (#NowPlaying)
+        # print(self.mExtractedGoods)
+        if len(self.mExtractedGoods) != 0:
+            return "relevant"
 
         return "unlabelled"
 
@@ -155,7 +170,7 @@ class Tweet:
         Returns:    List of extracted Entities
 
         """
-        return self.mExtractedGoods
+        return list(set(self.mExtractedGoods))
 
     def getCandidateList(self):
         """ Compile a Candidatelist for the current Tweet of possible instances.
@@ -191,3 +206,46 @@ class Tweet:
 
         self.mNGrams = set([x.strip(" ,.") for x in self.mNGrams])
         self.mNGrams = set([x.strip(" ,.") for x in self.mNGrams if len(x) > 1])
+
+
+from pymongo import MongoClient
+import itertools
+from collections import Counter
+from itertools import chain
+import helpers
+
+def main():
+    client = MongoClient()
+    db = client.test_database
+    tweets = db.TestRelevance
+
+    fT = Tweet()
+    fAllExtractions = []
+    fCooccurences = []
+
+    for tweet in tweets.find() :
+        # print(tweet["text"])
+        fT.setTweet(tweet)
+        fT.extract()
+        if fT.getExtractedGoods():
+            fAllExtractions.append(fT.getExtractedGoods())
+            fCooccurences += list(itertools.combinations(set(fT.getExtractedGoods()), 2))
+    tweets = db.TestSongExtraction
+    for tweet in tweets.find() :
+        # print(tweet["text"])
+        fT.setTweet(tweet)
+        fT.extract()
+        if fT.getExtractedGoods():
+            fAllExtractions.append(fT.getExtractedGoods())
+            fCooccurences += list(itertools.combinations(set(fT.getExtractedGoods()), 2))
+    # print("\n\n")
+
+
+    # print(fAllExtractions)
+    fdist1 = Counter(list(chain.from_iterable(fAllExtractions)))
+    fdist2 = Counter(fCooccurences)
+
+    # print(helpers.invertDict(dict(fdist1)),"\n\n",fdist2,"\n\n",helpers.generateCoocurenceJSONNew(helpers.convert(fdist2)))
+
+if __name__ == "__main__":
+    main()

@@ -1,4 +1,4 @@
-div {
+#bg {
     background-color: #EEEEEE;
 }
 
@@ -7,4 +7,28 @@ div {
     min-height: 200px;
     padding: 20px;
     margin: 20px;
+}
+
+.settingscontainer1 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.setting {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    width: 100%;
+}
+
+.cb {
+    margin-right: 10px;
 }

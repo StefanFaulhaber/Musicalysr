@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import * as moment from 'moment';
+
 import { SharedService } from '../shared/shared.service';
 import { MusicbrainzService } from '../shared/musicbrainz.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -36,16 +38,35 @@ export class ReleasesComponent implements OnInit {
       })
   }
 
-  getReleases() {
+  private getReleases() {
     if (this.artist.id != null) {
       this.musicbrainzService
         .getMbReleases(this.artist.id)
         .subscribe(
           (res: MB_Artist) => {
-            this.releases = res['releases'];     
+            this.filterReleases(res['releases']);
           },
           error => console.log(error));
     }
+  }
+
+  private filterReleases(res: MB_Release[]) {
+    let seen: string[] = new Array();
+    let result: MB_Release[] = new Array();
+
+    for (let release of res) {
+      if (seen.indexOf(release.title) < 0) {
+        seen.push(release.title)
+
+        // format date
+        if (release.date.length > 4)
+          release.date = moment(release.date).format('DD.MM.YYYY')
+
+        result.push(release)
+      }
+    }
+
+    this.releases = result;
   }
 
 }

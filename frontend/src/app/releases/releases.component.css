@@ -1,0 +1,33 @@
+.releaseContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.release {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
+
+    width: 100%;
+}
+
+.title {
+    margin-right: 10px;
+    width: 400px;
+}
+
+.year {
+    margin-right: 10px;
+    width: 100px;
+}
+
+.status {
+    width: auto;
+}
