@@ -7,10 +7,16 @@
 
 class Configuration:
 
+
+
+    mMusicCategorizationHashtagList = ["NowPlaying", "NewRelease"]
+
+
+
     # MySQL Access Data
     mMusicBrainzDatabaseHost = "localhost"
     mMusicBrainzDatabaseUser = "root"
-    mMusicBrainzDatabasePW   = "password"
+    mMusicBrainzDatabasePW   = ""
     mMusicBrainzDatabaseDB  = "mbdb"
 
     # Redis Access Data
@@ -20,6 +26,10 @@ class Configuration:
 
 
 
-    #Twitter Streaming socket
+    # Twitter Endpoint
     mStreamingHost = "localhost"
     mStreamingPort = 2049
+    mSizeOfNGramsForMatching= 5
+
+    #Database Endpoint
+    mDatabaseEndpointURL = "http://localhost:3000"
