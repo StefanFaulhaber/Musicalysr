@@ -1,6 +1,6 @@
 <md-card class="browsertree">
 
-  <md-input 
+  <md-input
     placeholder="Suchen" type="text"
     [(ngModel)]="query"
     (keyup.enter)="filterArtists(query)">
@@ -11,8 +11,8 @@
   <md-list>
     <md-list-item
       *ngFor="let artist of artists"
-      (click)="selectArtist(artist)"
-      [class.active]="artist === selectedArtist">
+      [routerLink]="['/main/', artist.id]"
+      [class.active]="artist.id == selectedId">
 
       <b md-line> {{artist.name}} </b>
       <p md-line> {{artist.id}} </p>

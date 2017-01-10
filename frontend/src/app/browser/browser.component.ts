@@ -1,12 +1,9 @@
 import { Component, OnInit} from '@angular/core';
-
-import { SharedService } from '../shared/shared.service';
-import { BrowserService } from '../browser/browser.service';
-import { ModuleContainerComponent } from '../modulecontainer/modulecontainer.component';
-
+import { ActivatedRoute, Params } from "@angular/router";
+import { BrowserService } from './browser.service';
 import { Subscription } from 'rxjs/Subscription';
-
 import { Artist } from '../models/artist';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-browser',
@@ -16,15 +13,14 @@ import { Artist } from '../models/artist';
 })
 export class BrowserComponent implements OnInit {
 
-  artists: Artist[] = new Array();
-  selectedArtist: Artist;
-  isActive: boolean = false;
+  artists: Artist[] = [];
+  selectedId: Number;
 
   subscription: Subscription;
 
   constructor(
     private browserService: BrowserService,
-    private sharedService: SharedService) {}
+    private route: ActivatedRoute) {}
 
   ngOnInit() {
     // get artists from backend
@@ -34,9 +30,13 @@ export class BrowserComponent implements OnInit {
           (res: Artist[]) => this.artists = res,
           error => console.log(error));
 
+    console.log(this.route);
     // subscribe to artist changes
-    this.subscription = this.sharedService.artistItem
-      .subscribe(item => this.selectedArtist = item)
+    this.subscription = this.route.params
+      .subscribe((params: Params) => {
+      this.selectedId = +params['id'];
+      console.log(+params['id']);
+    });
   }
 
   ngOnDestroy() {
@@ -46,23 +46,10 @@ export class BrowserComponent implements OnInit {
   filterArtists(query: string) {
     this.browserService
         .getAllFiltered(query)
-        .subscribe(
-          (res: Artist[]) => {
-            this.artists = res;
-
-            // reselect artist if filtered set contains it
-            if (this.selectedArtist != null) {
-              for (let artist of this.artists) {
-                if (artist.id == this.selectedArtist.id)
-                  this.selectArtist(artist); 
-              }
-            }
+        .subscribe((artists: Artist[]) => {
+            this.artists = artists;
           },
           error => console.log(error));
-  }
-
-  selectArtist(artist: Artist): void {
-    this.sharedService.changeArtist(artist);
   }
 
 }
