@@ -5,7 +5,7 @@ from Configuration import Configuration
 import redis
 from mysql import connector
 from helpers import printProgress
-
+import re
 
 class EntitySets:
     """
@@ -19,16 +19,20 @@ class EntitySets:
 
     lastMatch = str
 #
-    mRedisConn = redis.Redis
+    mRedisConn_Releases = redis.Redis
     mRedisConn_Usernames = redis.Redis
     mRedisConn_Alias = redis.Redis
-
+    mRedisConn_Work = redis.Redis
+    mRedisConn_Artist = redis.Redis
+    mRedisConn_AritstIDs = redis.Redis
+    mRedisConn_ReleaseIDs = redis.Redis
+    mRedisConn_WorkIDs = redis.Redis
 
     def __init__(self):
         """
         Setting up the Redis-Connection
         """
-        self.mRedisConn = redis.Redis(host=Configuration.mRedisHost,
+        self.mRedisConn_Releases = redis.Redis(host=Configuration.mRedisHost,
                                       port=Configuration.mRedisPort,
                                       password=Configuration.mRedisPW,
                                       db=0)
@@ -40,7 +44,27 @@ class EntitySets:
                                             port=Configuration.mRedisPort,
                                             password=Configuration.mRedisPW,
                                             db=2)
+        self.mRedisConn_Work = redis.Redis(host=Configuration.mRedisHost,
+                                            port=Configuration.mRedisPort,
+                                            password=Configuration.mRedisPW,
+                                            db=3)
+        self.mRedisConn_Artist = redis.Redis(host=Configuration.mRedisHost,
+                                             port=Configuration.mRedisPort,
+                                             password=Configuration.mRedisPW,
+                                             db=4)
 
+        self.mRedisConn_ArtistIDs = redis.Redis(host=Configuration.mRedisHost,
+                                                port=Configuration.mRedisPort,
+                                                password=Configuration.mRedisPW,
+                                                db=5)
+        self.mRedisConn_WorkIDs = redis.Redis(host=Configuration.mRedisHost,
+                                              port=Configuration.mRedisPort,
+                                              password=Configuration.mRedisPW,
+                                              db=6)
+        self.mRedisConn_ReleaseIDs = redis.Redis(host=Configuration.mRedisHost,
+                                                 port=Configuration.mRedisPort,
+                                                 password=Configuration.mRedisPW,
+                                                 db=7)
 
     def recognizeUsername(self, query=[]):
         """
@@ -50,9 +74,9 @@ class EntitySets:
         """
         fRedisResult = []
         for q in query:
-            redisReturnValue = self.mRedisConn_Usernames.get(q)
+            redisReturnValue = self.mRedisConn_Usernames.get(q.upper())
             if redisReturnValue != None:
-                fRedisResult.append(redisReturnValue.decode('unicode-escape'))
+                fRedisResult.append(redisReturnValue.decode('utf8'))
         return fRedisResult
 
     def recognizeAlias(self, query=[]):
@@ -65,7 +89,66 @@ class EntitySets:
         for q in query:
             redisReturnValue = self.mRedisConn_Alias.get(q)
             if redisReturnValue != None:
-                fRedisResult.append(redisReturnValue.decode('unicode-escape'))
+                fRedisResult.append(redisReturnValue.decode('utf8'))
         return fRedisResult
 
 
+    def recognizeRelease(self, query=[]):
+        """
+            Check if any of the given query in a list are artist aliases
+        :param query: list of queries
+        :return: list of artist ids if found
+        """
+        fRedisResult = []
+        fRedisDict = {}
+        for q in query:
+            redisReturnValue = self.mRedisConn_Releases.smembers(q)
+            if len(redisReturnValue) :
+                fRedisResult.append(q.upper())
+                redisReturnValue = set([x.decode('utf8') for x in redisReturnValue])
+                fRedisDict[q] = redisReturnValue
+
+        return fRedisResult, fRedisDict
+
+
+    def recognizeWork(self, query=[]):
+        """
+            Check if any of the given query in a list are artist works
+        :param query: list of queries
+        :return: list of artist ids if found
+        """
+        fRedisResult = []
+        fRedisDict = {}
+        for q in query:
+            redisReturnValue = self.mRedisConn_Work.smembers(q.upper())
+            if len(redisReturnValue):
+                fRedisResult.append(q.upper())
+                redisReturnValue = set([x.decode('utf8') for x in redisReturnValue])
+                fRedisDict[q] = redisReturnValue
+        return fRedisResult, fRedisDict
+
+
+    def recognizeArtists(self, query=[]):
+        """
+            Check if any of the given query in a list are artist aliases
+        :param query: list of queries
+        :return: list of artist ids if found
+        """
+        fRedisResult = []
+        for q in query:
+            redisReturnValue = self.mRedisConn_Artist.get(q)
+            if redisReturnValue != None:
+                fRedisResult.append(redisReturnValue.decode('utf-8'))
+        return fRedisResult
+
+
+    def getID(self,type, key):
+
+        key= re.sub(r'[\W]+', '', key).upper()
+
+        if type== "artist":
+            return self.mRedisConn_ArtistIDs.get(key)
+        if type== "work":
+            return self.mRedisConn_WorkIDs.get(key)
+        if type== "release":
+            return self.mRedisConn_ReleaseIDs.get(key)

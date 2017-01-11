@@ -80,3 +80,50 @@ def createRoundedTimestamp(timestring):
     timeSQLFormat = tmp [0]+"-"+tmp[1]+"-"+tmp[2]+" "+tmp[3]+":"+minutes
     return timeSQLFormat
 
+from itertools import chain
+
+def generateCoocurenceJSONNew( c = Counter ):
+    """
+
+    :param c: Counter with a pair of Stringsd as key
+    :return:  JSON like Dictionary With all ordered Coocurences
+    """
+    """
+
+      :param c: Counter with a pair of Stringsd as key
+      :return:  JSON like Dictionary With all ordered Coocurences
+      """
+    jsonCoocurences = {"artist": {}, "work": {}, "release": {}}
+
+
+    for elem in c.keys():
+        # print(elem[0])
+        entity1 = elem[0][0]
+        entity2 = elem[1][0]
+        type1   = elem[0][1]
+        type2   = elem[1][1]
+
+        if entity1 not in jsonCoocurences[type1]:
+            jsonCoocurences[type1][entity1] = {}
+        if int(c[elem]) not in jsonCoocurences[type1][entity1]:
+            jsonCoocurences[type1][entity1][int(c[elem])] = []
+        jsonCoocurences[type1][entity1][int(c[elem])] += [elem[1]]
+
+        if entity2 not in jsonCoocurences[type2]:
+            jsonCoocurences[type2][entity2] = {}
+        if int(c[elem]) not in jsonCoocurences[type2][entity2]:
+            jsonCoocurences[type2][entity2][int(c[elem])] = []
+        jsonCoocurences[type2][entity2][int(c[elem])] += [elem[0]]
+
+    return jsonCoocurences
+
+
+def invertDict(d = {}):
+
+    invertedD = {}
+    for elem in d.keys():
+        if d[elem] not in invertedD:
+            invertedD[d[elem]] = []
+        invertedD[d[elem]] += [elem]
+
+    return invertedD
