@@ -21,7 +21,7 @@ export class BrowserService {
   }
 
   public getAll = (): Observable<Artist[]> => {
-    return this._http.get(this.actionUrl + 'query/artists/', {})
+    return this._http.get(this.actionUrl + 'query/artists/1', {})
         .map((response: Response) => <Artist[]>response.json());
   }
 
