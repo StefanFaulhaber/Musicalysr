@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 import { Artist } from '../models/artist';
+import { Label } from '../models/label';
 
 @Injectable()
 export class SharedService {
@@ -12,9 +13,15 @@ export class SharedService {
   isPopularityEnabled: boolean = true;
   isYoutubeEnabled: boolean = true;
 
+  isChoiceArtists: boolean = true;
+
   artist: Artist = new Artist();
   artistSource = new BehaviorSubject<Artist>(this.artist);  // Observable item source
   artistItem = this.artistSource.asObservable();            // Observable item stream
+
+  label: Label = new Label();
+  labelSource = new BehaviorSubject<Artist>(this.label);  // Observable item source
+  labelItem = this.labelSource.asObservable();            // Observable item stream
 
   constructor() {
     if (localStorage.getItem('isWikipediaEnabled'))
@@ -30,6 +37,10 @@ export class SharedService {
   // service command
   changeArtist(a: Artist) {
     this.artistSource.next(a);
+  }
+
+  changeLabel(l: Label) {
+    this.labelSource.next(l);
   }
 
   writeSettings() {

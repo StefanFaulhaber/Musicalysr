@@ -1,27 +1,39 @@
 <div class="modulecontainer">
 
-  <div class="hint" [hidden]="artist.id != null">
-    Wähle einen Artist.
+  <div *ngIf="sharedService.isChoiceArtists">
+
+    <div class="hint" [hidden]="!noArtistSelected">
+      Wähle einen Artist.
+    </div>
+
+    <md-card class="module" [hidden]="noArtistSelected || !sharedService.isWikipediaEnabled">
+      <app-wikipedia></app-wikipedia>
+    </md-card>
+
+    <md-card class="module" [hidden]="noArtistSelected || !sharedService.isDiscographyEnabled">
+      <app-releases></app-releases>
+    </md-card>
+
+    <md-card class="module" [hidden]="noArtistSelected || !sharedService.isPopularityEnabled">
+      <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
+    </md-card>
+
+    <md-card class="module" [hidden]="noArtistSelected || !sharedService.isYoutubeEnabled">
+      <app-youtube></app-youtube>
+    </md-card>
+
   </div>
 
-  <!--<md-card class="module">
-    {{artist.name}}<br>{{artist.id}}
-  </md-card>-->
+  <div *ngIf="!sharedService.isChoiceArtists">
 
-  <md-card class="module" [hidden]="artist.id == null || !sharedService.isWikipediaEnabled">
-    <app-wikipedia></app-wikipedia>
-  </md-card>
+    <div class="hint" [hidden]="!noLabelSelected">
+      Wähle ein Label.
+    </div>
 
-  <md-card class="module" [hidden]="artist.id == null || !sharedService.isDiscographyEnabled">
-    <app-releases></app-releases>
-  </md-card>
+    <md-card class="module" [hidden]="noLabelSelected">
+      <h2>Labelmodul-Platzhalter</h2>
+    </md-card>
 
-  <md-card class="module" [hidden]="artist.id == null || !sharedService.isPopularityEnabled">
-    <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
-  </md-card>
-
-  <md-card class="module" [hidden]="artist.id == null || !sharedService.isYoutubeEnabled">
-    <app-youtube></app-youtube>
-  </md-card>
+  </div>
 
 </div>

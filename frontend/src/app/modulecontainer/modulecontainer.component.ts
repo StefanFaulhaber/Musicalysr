@@ -13,23 +13,41 @@ import { sinAndCos } from '../popularitygraph/popularitygraph.component';
 })
 export class ModuleContainerComponent implements OnInit {
 
-  artist: Artist = new Artist();
   popularityGraphData: any = [];
-  subscription: Subscription;
+
+  artistSubscription: Subscription;
+  labelSubscription: Subscription;
+  selectedItem: any;
+
+  noArtistSelected: boolean = true;
+  noLabelSelected: boolean = true;
 
   constructor(private sharedService: SharedService) {}
 
   ngOnInit() {
     // subscribe to artist changes
-    this.subscription = this.sharedService.artistItem
+    this.artistSubscription = this.sharedService.artistItem
       .subscribe(item => {
-        this.artist = item;
+        this.selectedItem = item;
         this.popularityGraphData = sinAndCos(item.name);
+
+        if (Object.keys(this.selectedItem).length > 0)
+          this.noArtistSelected = false;
+      })
+
+    // subscribe to label changes
+    this.labelSubscription = this.sharedService.labelItem
+      .subscribe(item => {
+        this.selectedItem = item;
+
+        if (Object.keys(this.selectedItem).length > 0)
+          this.noLabelSelected = false;
       })
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.artistSubscription.unsubscribe();
+    this.labelSubscription.unsubscribe();
   }
 
 }

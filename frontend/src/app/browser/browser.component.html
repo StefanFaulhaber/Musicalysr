@@ -1,9 +1,23 @@
 <md-card class="browsertree">
 
+  <div class="chipContainer">
+    <div class="chip"
+        [class.chipActive]="sharedService.isChoiceArtists"
+        (click)="changeSearch(true)">
+          Künstler
+        </div>
+
+    <div class="chip"
+        [class.chipActive]="!sharedService.isChoiceArtists"
+        (click)="changeSearch(false)">
+          Labels
+        </div>
+  </div>
+
   <md-input 
     placeholder="Suchen" type="text"
     [(ngModel)]="query"
-    (keyup.enter)="filterArtists(query)">
+    (keyup.enter)="searchQuery(query)">
   </md-input>
 
   <!--  | search:query -->
@@ -11,12 +25,11 @@
 
   <md-list>
     <md-list-item
-      *ngFor="let artist of artists"
-      (click)="selectArtist(artist)"
-      [class.active]="artist === selectedArtist">
+      *ngFor="let item of items"
+      (click)="selectItem(item)"
+      [class.active]="item.id == selectedItem.id">
 
-      <b md-line class="artistItem"> {{artist.name}} </b>
-      <!--<p md-line> {{artist.id}} </p>-->
+      <b md-line class="listItem"> {{item.name}} </b>
 
     </md-list-item>
   </md-list>

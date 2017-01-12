@@ -12,6 +12,23 @@ div.row {
   min-height: 100vh;
 }
 
+.chip {
+    display: inline-block;
+    padding: 0 15px;
+    margin: 5px 5px;
+    width: 80px;
+    height: 30px;
+    font-size: 12px;
+    line-height: 30px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+}
+
+.chipActive {
+    background-color: steelblue;
+    color: white;
+}
+
 .navbar {
     margin-bottom: 0px;
 }

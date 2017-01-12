@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Observable';
 
 import { Artist } from '../models/artist';
+import { Label } from '../models/label';
+
 import { ARTISTS } from '../mockartists';
 
 @Injectable()
@@ -20,17 +22,38 @@ export class BrowserService {
     this.headers.append('Accept', 'application/json');
   }
 
-  public getAll = (): Observable<Artist[]> => {
+  // Artists
+
+  public getAllArtists = (): Observable<Artist[]> => {
     return this._http.get(this.actionUrl + 'query/artists/1', {})
         .map((response: Response) => <Artist[]>response.json());
   }
 
-  public getAllFiltered = (query: string): Observable<Artist[]> => {
+  public getArtists = (query: string): Observable<Artist[]> => {
     return this._http.post(this.actionUrl + 'query/artists/autocomplete/name', { 'name' : query } , { headers: this.headers })
         .map((response: Response) => <Artist[]>response.json());
   }
 
-  public getArtists(): Artist[] {
+  // Labels
+
+  public getAllLabels = (): Observable<Label[]> => {
+    return this._http.get(this.actionUrl + 'query/labels/1', {})
+        .map((response: Response) => <Label[]>response.json());
+  }
+
+  public getLabels = (query: string): Observable<Label[]> => {
+    return this._http.post(this.actionUrl + 'query/labels/autocomplete/name', { 'name' : query } , { headers: this.headers })
+        .map((response: Response) => <Label[]>response.json());
+  }
+
+  public getLabelsOfArtist = (query: string): Observable<Label[]> => {
+    return this._http.get(this.actionUrl + '/query/artist/labels/' + query, { headers: this.headers })
+        .map((response: Response) => <Label[]>response.json());
+  }
+
+  // MockBackend
+
+  public getMockArtists(): Artist[] {
     return ARTISTS;
   }
 }
