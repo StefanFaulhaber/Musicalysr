@@ -26,7 +26,7 @@ export class BrowserService {
   }
 
   public getAllFiltered = (query: string): Observable<Artist[]> => {
-    return this._http.get(this.actionUrl + 'query/artists/autocomplete/' + query, { headers: this.headers })
+    return this._http.post(this.actionUrl + 'query/artists/autocomplete/name', { 'name' : query } , { headers: this.headers })
         .map((response: Response) => <Artist[]>response.json());
   }
 

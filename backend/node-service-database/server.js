@@ -46,7 +46,7 @@ app.get('/query/artists/:offset', function(req, res) {
     }
     else {
       var offset = req.params.offset;
-      var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 500 OFFSET ?';
+      var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 500 OFFSET ' + offset;
       var parameters = [offset];
       var sql = mysql.format(query, parameters);
 
