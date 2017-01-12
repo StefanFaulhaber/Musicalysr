@@ -6,19 +6,19 @@
     <div class="settingsContainer1">
       <div class="setting">
         <input type="checkbox" class="cb" name="wiki" [(ngModel)]="sharedService.isWikipediaEnabled">
-        <span (click)="sharedService.isWikipediaEnabled = !sharedService.isWikipediaEnabled">Wikipedia-Modul anzeigen</span>
+        <span (click)="setWikipedia()">Wikipedia-Modul anzeigen</span>
       </div>
       <div class="setting">
         <input type="checkbox" class="cb" name="disc" [(ngModel)]="sharedService.isDiscographyEnabled">
-        <span (click)="sharedService.isDiscographyEnabled = !sharedService.isDiscographyEnabled">Diskographie-Modul anzeigen</span>
+        <span (click)="setDiscography()">Diskographie-Modul anzeigen</span>
       </div>
       <div class="setting">
         <input type="checkbox" class="cb" name="popu" [(ngModel)]="sharedService.isPopularityEnabled">
-        <span (click)="sharedService.isPopularityEnabled = !sharedService.isPopularityEnabled">Popularitäts-Modul anzeigen</span>
+        <span (click)="setPopularity()">Popularitäts-Modul anzeigen</span>
       </div>
       <div class="setting">
         <input type="checkbox" class="cb" name="disc" [(ngModel)]="sharedService.isYoutubeEnabled">
-        <span (click)="sharedService.isYoutubeEnabled = !sharedService.isYoutubeEnabled">isYoutubeEnabled-Modul anzeigen</span>
+        <span (click)="setYoutube()">isYoutubeEnabled-Modul anzeigen</span>
       </div>
     </div>
 
