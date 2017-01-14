@@ -2,31 +2,20 @@
 
 ## Installation
 
-1. Install [VirtualBox](https://www.virtualbox.org/)
-2. Install the [Musicbrainz VM](https://musicbrainz.org/doc/MusicBrainz_Server/Setup)
-3. In the network section of the Musicbrainz VM settings add a port mapping
-rule with protocol: TCP, Host-IP: 127.0.0.1, Host-Port: 8888 and Guest-Port: 5432
-4. Start the Musicbrainz VM
-5. In the VM uncomment and change `listen_addresses = '*'` in
-`/etc/postgresql/*/main/postgresql.conf` and add
-`host all all 10.0.2.2/24 trust` to `/etc/postgresql/*/main/pg_hba.conf`
-6. Restart Postgresql with `sudo /etc/init.d/postgresql restart`
-7. Install [node.js](https://nodejs.org)
-8. Run `npm install`
-9. Run `node server.js`
+1. Install [node.js](https://nodejs.org)
+2. Run `npm install`
+3. Run `node server.js`
 **Commandline Options**
 -p, Port for the Server (default: 2050)
--d, Selects the database, parameters (defaut: postgresql):
-* "mysql" for a MySQL database
-* "postgresql" for a PostgreSQL database
 
 Now the API is listening on the specified port or 2050 by default.
 
 ## API
 
-### GET /query/artists
+### GET /query/artists/:offset
 
-Get all artists from the database.
+Get all artists from the database from a given offset with default limit
+ordered by name ascending.
 
 Returns application/json array in the following form:
 ```
@@ -40,10 +29,17 @@ Returns application/json array in the following form:
 }]
 ```
 
-### GET /query/artists/autocomplete/:name
+### POST /query/artists/autocomplete/name
 
 Get all artists from the database, where the name starts with the String
-given with :name.
+given in the request body.
+
+Takes a json body in the follwing form:
+```
+{
+  "name": "Artist"
+}
+```
 
 Returns application/json array in the following form:
 ```
@@ -57,11 +53,99 @@ Returns application/json array in the following form:
 }]
 ```
 
-### GET /query/labels
+### GET /query/labels/:offset
 
-Get all labels from the database.
+Get all labels from the database from a given offset with default limit
+ordered by name ascending.
 
-### GET /query/labels/autocomplete/:name
+Returns application/json array in the following form:
+```
+[{
+  "id": "1",
+  "name": "Label 1"
+},
+{
+  "id": "2",
+  "name": "Label 2"
+}]
+```
+
+### POST /query/labels/autocomplete/name
 
 Get all labels from the database, where the name starts with the String
-given with :name.
+given in the request body.
+
+Takes a json body in the follwing form:
+```
+{
+  "name": "Label"
+}
+```
+
+Returns application/json array in the following form:
+```
+[{
+  "id": "1",
+  "name": "Label 1"
+},
+{
+  "id": "2",
+  "name": "Label 2"
+}]
+```
+
+### GET /query/artist/labels/:id
+
+Get all labels where a artist, represented by its id, has published music.
+
+Returns application/json array in the following form:
+```
+[{
+  "id": "1",
+  "name": "Label 1"
+},
+{
+  "id": "2",
+  "name": "Label 2"
+}]
+```
+
+### GET /query/artist/albums/:id
+
+Get all releases released by a given artists represented by its id.
+
+Returns application/json array in the following form:
+```
+[{
+  "id": 1,
+  "name": "Release 1"
+},
+{
+  "id": 2,
+  "name": "Release 2"
+}]
+```
+
+### GET /query/release/track/:id
+
+Get all tracks for a given release represented by its id.
+
+Returns application/json array in the following form:
+```
+[{
+  "id": 1,
+  "name": "Track 1",
+  "number": 1,
+  "length": "1:25"
+},
+{
+  "id": 2,
+  "name": "Track 2",
+  "number": 1,
+  "length": "2:55"
+}]
+```
+
+### POST /insert/twitter
+
+Insert Twitter data into the database.Insert Twitter data into the database.

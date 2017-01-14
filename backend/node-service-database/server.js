@@ -3,12 +3,12 @@ var bodyParser = require('body-parser');
 var commandLineArgs = require('command-line-args');
 var express = require('express');
 var mysql = require('mysql');
-var pg = require('pg');
 
+const DEFAULT_LIMIT = 50;
 const DEFAULT_PORT = 2050;
 
 const optionDefinitions = [
-  {name: 'port', alias: 'p', type: String, defaultValue: DEFAULT_PORT},
+  {name: 'port', alias: 'p', type: String, defaultValue: DEFAULT_PORT}
 ];
 
 var cmdOptions = commandLineArgs(optionDefinitions);
@@ -33,19 +33,24 @@ var config = {
   database: 'mbdb'
 };
 
-var connection = mysql.createConnection(config);
 var pool = mysql.createPool(config);
 
-app.get('/query/artists', function(req, res) {
+/**
+ * Get artists from a given offset and limit.
+ */
+app.get('/query/artists/:offset', function(req, res) {
   pool.getConnection(function(err, connection) {
     if (err) {
       console.error(err);
       res.sendStatus(500);
     }
     else {
-      var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 500';
+      var offset = req.params.offset;
+      var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 500 OFFSET ' + offset; 
+      var parameters = [offset];
+      var sql = mysql.format(query, parameters);
 
-      connection.query(query, function(err, rows, fields) {
+      connection.query(sql, function(err, rows, fields) {
         if (err) {
           console.error(err);
           res.sendStatus(500);
@@ -58,38 +63,19 @@ app.get('/query/artists', function(req, res) {
       });
     }
   });
-
-  /*var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 500';
-
-   connection.connect();
-
-<<<<<<< HEAD
-   connection.query(query, function(err, rows, fields) {
-   if (err) throw err;
-=======
-     //connection.end();
-    });
-  }
-  else {
-    client.connect(function(err) {
-      if (err) throw err;
->>>>>>> dbf2b12117c290553d1f0b6b869d285b81fb1f40
-
-   res.setHeader('Content-Type', 'application/json');
-   res.send(rows);
-
-   connection.end();
-   });*/
 });
 
-app.get('/query/artists/autocomplete/:name', function(req, res) {
+/**
+ * Get artists where the name starts with a given string.
+ */
+app.post('/query/artists/autocomplete/name', function(req, res) {
   pool.getConnection(function(err, connection) {
     if (err) {
       console.error(err);
       res.sendStatus(500);
     }
     else {
-      var name = req.params.name.toUpperCase() + '%';
+      var name = req.body.name.toUpperCase() + '%';
       var query = 'SELECT id, name FROM artist WHERE UPPER(name) LIKE ? ORDER BY name ASC LIMIT 500';
       var parameters = [name];
       var sql = mysql.format(query, parameters);
@@ -107,87 +93,203 @@ app.get('/query/artists/autocomplete/:name', function(req, res) {
       });
     }
   });
-  /*var name = req.params.name.toUpperCase() + '%';
-
-   var query = 'SELECT id, name FROM artist WHERE UPPER(name) LIKE ? ORDER BY name ASC LIMIT 50';
-   var parameters = [name];
-   var sql = mysql.format(query, parameters);
-
-<<<<<<< HEAD
-   connection.connect();
-=======
-      //connection.end();
-    });
-  }
-  else {
-    client.connect(function(err) {
-      if (err) throw err;
->>>>>>> dbf2b12117c290553d1f0b6b869d285b81fb1f40
-
-   connection.query(sql, function(err, rows, fields) {
-   if (err) throw err;
-
-   res.setHeader('Content-Type', 'application/json');
-   res.send(rows);
-
-   connection.end();
-   });*/
 });
 
-app.get('/query/labels', function(req, res) {
-  var query = 'SELECT id, name FROM label ORDER BY name ASC LIMIT 50';
+/**
+ * Get labels from a given offset and limit.
+ */
+app.get('/query/labels/:offset', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    else {
+      var offset = req.params.offset;
+      var query = 'SELECT id, name FROM label ORDER BY name ASC LIMIT 500 OFFSET ' + offset;
+      var parameters = [offset];
+      var sql = mysql.format(query, parameters);
 
-  connection.connect();
-
-  connection.query(query, function(err, rows, fields) {
-    if (err) throw err;
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(rows);
-
-    connection.end();
+      connection.query(sql, function(err, rows, fields) {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(rows);
+        }
+        connection.release();
+      });
+    }
   });
 });
 
-app.get('/query/labels/autocomplete/:name', function(req, res) {
-  var name = req.params.name.toUpperCase() + '%';
+/**
+ * Get labels where the name starts with a given string.
+ */
+app.post('/query/labels/autocomplete/name', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    else {
+      var name = req.body.name.toUpperCase() + '%';
+      var query = 'SELECT id, name FROM label WHERE UPPER(name) LIKE ? ORDER BY name ASC LIMIT 500';
+      var parameters = [name];
+      var sql = mysql.format(query, parameters);
 
-  var query = 'SELECT id, name FROM label WHERE UPPER(name) LIKE ? ORDER BY name ASC LIMIT 50';
-  var parameters = [name];
-  var sql = mysql.format(query, parameters);
-
-  connection.connect();
-
-  connection.query(sql, function(err, rows, fields) {
-    if (err) throw err;
-
-    res.setHeader('Content-Type', 'application/json');
-    res.send(rows);
-
-    connection.end();
+      connection.query(sql, function(err, rows, fields) {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(rows);
+        }
+        connection.release();
+      });
+    }
   });
 });
 
+/**
+ * Get all labels associated with a given artists by its id.
+ */
 app.get('/query/artist/labels/:id', function(req, res) {
-  var id = req.params.id;
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    else {
+      var id = req.params.id;
+      var query = 'SELECT label.id, label.name ' +
+        'FROM label NATURAL JOIN area NATURAL JOIN artist ' +
+        'WHERE artist.id = ? ' +
+        'ORDER BY name ASC ' +
+        'LIMIT 500';
+      var parameters = [id];
+      var sql = mysql.format(query, parameters);
 
-  var query = 'SELECT label.id, label.name ' +
-    'FROM label NATURAL JOIN area NATURAL JOIN artist ' +
-    'WHERE artist.id = ? ' +
-    'ORDER BY name ASC ' +
-    'LIMIT 50';
-  var parameters = [id];
-  var sql = mysql.format(query, parameters);
+      connection.query(sql, function(err, rows, fields) {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(rows);
+        }
+        connection.release();
+      });
+    }
+  });
+});
 
-  connection.connect();
+/**
+ * Get all releases associated with a given artists by its id.
+ */
+app.get('/query/artist/albums/:id', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    else {
+      var id = req.params.id;
+      var query = 'SELECT release.id, release.name ' +
+        'FROM artist NATURAL JOIN ' +
+        'artist_credit_name NATURAL JOIN ' +
+        'artist_credit NATURAL JOIN ' +
+        'release_group NATURAL JOIN ' +
+        'release ' +
+        'WHERE artist.id = ? ' +
+        'ORDER BY name ASC ' +
+        'LIMIT 500';
+      var parameters = [id];
+      var sql = mysql.format(query, parameters);
 
-  connection.query(sql, function(err, rows, fields) {
-    if (err) throw err;
+      connection.query(sql, function(err, rows, fields) {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(rows);
+        }
+        connection.release();
+      });
+    }
+  });
+});
 
-    res.setHeader('Content-Type', 'application/json');
-    res.send(rows);
+/**
+ * Get all tracks for a given release by its id.
+ */
+app.get('/query/release/track/:id', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    else {
+      var id = req.params.id;
+      var query = 'SELECT track.id, track.name, track.number, track.length ' +
+        'FROM track NATURAL JOIN ' +
+        'recording NATURAL JOIN ' +
+        'artist_credit NATURAL JOIN ' +
+        'release_group NATURAL JOIN ' +
+        'release ' +
+        'WHERE release.id = ? ' +
+        'ORDER BY name ASC ' +
+        'LIMIT 500';
+      var parameters = [id];
+      var sql = mysql.format(query, parameters);
 
-    connection.end();
+      connection.query(sql, function(err, rows, fields) {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(rows);
+        }
+        connection.release();
+      });
+    }
+  });
+});
+
+/**
+ * Insert Twitter data into the database.
+ */
+app.post('/insert/twitter', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    else {
+      var json = req.body;
+      var query = 'INSERT INTO Placeholder VALUES()';
+
+      connection.query(query, function(err, result) {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(200);
+        }
+        connection.release();
+      });
+    }
   });
 });
 

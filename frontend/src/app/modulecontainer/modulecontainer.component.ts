@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SharedService } from '../shared/shared.service';
 import { Subscription } from 'rxjs/Subscription';
-
 import { Artist } from '../models/artist';
 import { sinAndCos } from '../popularitygraph/popularitygraph.component';
 import {ActivatedRoute, Params} from "@angular/router";

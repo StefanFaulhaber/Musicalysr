@@ -1,8 +1,9 @@
 import { Component, OnInit} from '@angular/core';
-import { ActivatedRoute, Params } from "@angular/router";
+import { SharedService } from '../shared/shared.service';
 import { BrowserService } from './browser.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Artist } from '../models/artist';
+import { Label } from '../models/label';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
@@ -13,43 +14,109 @@ import 'rxjs/add/operator/switchMap';
 })
 export class BrowserComponent implements OnInit {
 
-  artists: Artist[] = [];
-  selectedId: Number;
+  artists: Artist[] = new Array();
+  artistSubscription: Subscription;
 
-  subscription: Subscription;
+  labels: Label[] = new Array();
+  labelSubscription: Subscription;
+
+  items: any[] = new Array();
+  selectedItem: any;
 
   constructor(
     private browserService: BrowserService,
-    private route: ActivatedRoute) {}
+    private sharedService: SharedService) {}
 
   ngOnInit() {
     // get artists from backend
     this.browserService
-        .getAll()
+        .getAllArtists()
         .subscribe(
-          (res: Artist[]) => this.artists = res,
+          (res: Artist[]) => {
+            this.artists = res;
+            this.displayItems();
+          },
           error => console.log(error));
 
-    console.log(this.route);
+    // get labels from backend
+    this.browserService
+        .getAllLabels()
+        .subscribe(
+          (res: Label[]) => {
+            this.labels = res;
+            this.displayItems();
+          },
+          error => console.log(error));
+
+    // Mock Backend
+    // this.artists = this.browserService.getArtists();
+
+    this.sharedService.isChoiceArtists = true;
+
     // subscribe to artist changes
-    this.subscription = this.route.params
-      .subscribe((params: Params) => {
-      this.selectedId = +params['id'];
-      console.log(+params['id']);
-    });
+    this.artistSubscription = this.sharedService.artistItem
+      .subscribe(item => this.selectedItem = item)
+
+    // subscribe to label changes
+    this.labelSubscription = this.sharedService.labelItem
+      .subscribe(item => this.selectedItem = item)
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.artistSubscription.unsubscribe();
+    this.labelSubscription.unsubscribe();
   }
 
-  filterArtists(query: string) {
+  displayItems() {
+    if (this.sharedService.isChoiceArtists)
+      this.items = this.artists;
+    else
+      this.items = this.labels;
+  }
+
+  getArtists(query: string) {
     this.browserService
-        .getAllFiltered(query)
-        .subscribe((artists: Artist[]) => {
-            this.artists = artists;
+        .getArtists(query)
+        .subscribe(
+          (res: Artist[]) => {
+            this.artists = res;
+            this.displayItems();
           },
           error => console.log(error));
   }
 
+  getLabels(query: string) {
+    this.browserService
+        .getLabels(query)
+        .subscribe(
+          (res: Label[]) => {
+            this.labels = res;
+            this.displayItems();
+          },
+          error => console.log(error));
+  }
+
+  selectItem(item: any): void {
+    if (this.sharedService.isChoiceArtists)
+      this.sharedService.changeArtist(item);
+    else
+      this.sharedService.changeLabel(item);
+  }
+
+  searchQuery(query) {
+    if (this.sharedService.isChoiceArtists)
+      this.getArtists(query);
+    else
+      this.getLabels(query);
+  }
+
+  changeSearch(b: boolean) {
+    if (b) {
+      this.sharedService.isChoiceArtists = true;
+      this.items = this.artists;
+    } else {
+      this.sharedService.isChoiceArtists = false;
+      this.items = this.labels;
+    }
+  }
 }
