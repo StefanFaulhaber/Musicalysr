@@ -1,10 +1,10 @@
 /* global styles, NOT module specific styles */
 
-html, body, app-root, div.row { 
-  margin:0; 
-  padding:0; 
+html, body, app-root, div.row {
+  margin:0;
+  padding:0;
   min-height: 100%;
-  height: auto; 
+  height: auto;
 }
 
 div.row {
@@ -34,13 +34,63 @@ div.row {
 }
 
 .navbar-default {
-    background-color: #FFFFFF;
-    background-image: none;
-    background-image: none;
-    background-image: none;
-    background-image: none;
-    background-image: none;
-    background-image: none;
-    background-repeat: no-repeat;
-    filter: none;
+  background: #FFFFFF none no-repeat;
+  filter: none;
+}
+
+.container {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#parent {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+}
+
+#browser {
+  background-color: #EEEEEE;
+  flex-grow: 1;
+  padding: 20px 10px 20px 20px;
+}
+
+#modules {
+  background-color: #EEEEEE;
+  min-height: 100%;
+  flex-grow: 5;
+  padding: 20px 20px 20px 10px;
+}
+
+.modulecontainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: flex-start;
+}
+
+.module {
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: white;
+}
+
+.module:last-child {
+  margin-bottom: 0px;
+}
+
+.hint {
+  width: 100%;
+  height: calc(100vh - 90px);
+  text-align: center;
+  vertical-align: middle;
+  line-height: calc(100vh - 90px);
 }

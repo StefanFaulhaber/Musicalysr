@@ -1,15 +1,15 @@
 import { Component, OnInit} from '@angular/core';
-import { SharedService } from '../shared/shared.service';
+import { SharedService } from '../shared.service';
 import { BrowserService } from './browser.service';
 import { Subscription } from 'rxjs/Subscription';
-import { Artist } from '../models/artist';
-import { Label } from '../models/label';
+import { Artist } from '../../models/artist';
+import { Label } from '../../models/label';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-browser',
-  templateUrl: './browser.component.html',
-  styleUrls: ['./browser.component.css'],
+  templateUrl: 'browser.component.html',
+  styleUrls: ['browser.component.css'],
   providers: [BrowserService]
 })
 export class BrowserComponent implements OnInit {

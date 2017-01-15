@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { SharedService } from '../shared/shared.service';
-import { MusicbrainzService } from '../shared/musicbrainz.service';
+import { SharedService } from '../../shared/shared.service';
+import { MusicbrainzService } from '../../shared/musicbrainz.service';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Artist } from '../models/artist';
-import { MB_Artist } from '../models/mb_artist';
-import { MB_Release } from '../models/mb_release';
+import { Artist } from '../../models/artist';
+import { MB_Artist } from '../../models/mb_artist';
+import { MB_Release } from '../../models/mb_release';
 
 @Component({
   selector: 'app-releases',
-  templateUrl: './releases.component.html',
-  styleUrls: ['./releases.component.css'],
+  templateUrl: 'releases.component.html',
+  styleUrls: ['releases.component.css'],
   providers: [MusicbrainzService]
 })
 export class ReleasesComponent implements OnInit {

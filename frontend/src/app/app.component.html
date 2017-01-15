@@ -1,4 +1,3 @@
-<!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -15,8 +14,15 @@
         <li [routerLinkActive]="['active']"> <a [routerLink]="['main']">Start</a></li>
         <li [routerLinkActive]="['active']"> <a [routerLink]="['settings']">Einstellungen</a></li>
       </ul>
-    </div><!--/.nav-collapse -->
+    </div>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="row" id="parent">
+  <div id="browser">
+    <app-browser></app-browser>
+  </div>
+  <div id="modules">
+    <router-outlet></router-outlet>
+  </div>
+</div>

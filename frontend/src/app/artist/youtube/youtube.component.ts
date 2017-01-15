@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl} from '@angular/platform-browser';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Artist } from '../models/artist';
-import { SharedService } from '../shared/shared.service';
+import { Artist } from '../../models/artist';
+import { SharedService } from '../../shared/shared.service';
 
 @Component({
   selector: 'app-youtube',
-  templateUrl: './youtube.component.html',
-  styleUrls: ['./youtube.component.css']
+  templateUrl: 'youtube.component.html',
+  styleUrls: ['youtube.component.css']
 })
 export class YoutubeComponent implements OnInit {
 

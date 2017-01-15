@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SharedService } from '../shared/shared.service';
-import { WikipediaService } from './wikipedia.service';
-import { MusicbrainzService } from '../shared/musicbrainz.service';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Artist } from '../models/artist';
-import { WikipediaEntry } from '../models/wikipediaentry';
-import { MB_Artist } from '../models/mb_artist';
+import { SharedService } from '../../shared/shared.service';
+import { MusicbrainzService } from '../../shared/musicbrainz.service';
+import { WikipediaService } from './wikipedia.service';
+import { Artist } from '../../models/artist';
+import { WikipediaEntry } from '../../models/wikipediaentry';
+import { MB_Artist } from '../../models/mb_artist';
 
 @Component({
   selector: 'app-wikipedia',
-  templateUrl: './wikipedia.component.html',
-  styleUrls: ['./wikipedia.component.css'],
+  templateUrl: 'wikipedia.component.html',
+  styleUrls: ['wikipedia.component.css'],
   providers: [WikipediaService, MusicbrainzService]
 })
 export class WikipediaComponent implements OnInit {
@@ -58,7 +57,7 @@ export class WikipediaComponent implements OnInit {
             } else {
               this.text = 'Keine Daten vorhanden.';
             }
-            
+
           },
           error => console.log(error));
     }
