@@ -2,16 +2,16 @@
 
   <div class="chipContainer">
     <div class="chip"
-        [class.chipActive]="sharedService.isChoiceArtists"
-        (click)="changeSearch(true)">
-          Künstler
-        </div>
+         [class.chipActive]="sharedService.isChoiceArtists"
+         (click)="changeSearch(true)">
+      Künstler
+    </div>
 
     <div class="chip"
-        [class.chipActive]="!sharedService.isChoiceArtists"
-        (click)="changeSearch(false)">
-          Labels
-        </div>
+         [class.chipActive]="!sharedService.isChoiceArtists"
+         (click)="changeSearch(false)">
+      Labels
+    </div>
   </div>
 
   <md-input
@@ -22,14 +22,14 @@
 
   <!--  | search:query -->
   <!--(keyup.enter)="filterArtists(query)"-->
-
-  <md-list>
-    <md-list-item
-      *ngFor="let item of items"
-      [routerLink]="[sharedService.isChoiceArtists ? '/artist/' : '/label/', item.id]"
-      [class.active]="item.id == selectedId">
-      <b md-line class="listItem"> {{item.name}} </b>
-    </md-list-item>
-  </md-list>
-
+  <div id="scroll-container">
+    <md-list>
+      <md-list-item
+        *ngFor="let item of items"
+        [routerLink]="[sharedService.isChoiceArtists ? '/artist/' : '/label/', item.id]"
+        [class.active]="item.id == selectedId">
+        <b md-line class="listItem"> {{item.name}} </b>
+      </md-list-item>
+    </md-list>
+  </div>
 </md-card>

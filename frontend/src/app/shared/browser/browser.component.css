@@ -10,6 +10,10 @@
     margin-bottom: 5px;
 }
 
+#scroll-container {
+  position: relative;
+}
+
 .listItem {
     min-width: 200px;
     max-width: 300px;
@@ -26,5 +30,6 @@ md-input {
 }
 
 md-list {
+    max-height: 80vh;
     overflow: auto;
 }

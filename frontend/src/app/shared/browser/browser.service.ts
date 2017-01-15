@@ -14,7 +14,6 @@ export class BrowserService {
 
   constructor(private _http: Http) {
     this.actionUrl = 'http://10.20.30.40:2050/';
-
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');
