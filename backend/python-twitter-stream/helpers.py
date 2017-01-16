@@ -119,6 +119,11 @@ def generateCoocurenceJSONNew( c = Counter ):
 
 
 def invertDict(d = {}):
+    """
+    Dictionary inversion. Key is all values and keys with the same value are grouped into one array
+    :param d: Dictionary to ivert
+    :return: inverted Dictionary
+    """
 
     invertedD = {}
     for elem in d.keys():
