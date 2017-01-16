@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 import * as moment from 'moment';
 
-import { SharedService } from '../../shared/shared.service';
 import { MusicbrainzService } from '../../shared/musicbrainz.service';
-import { Subscription } from 'rxjs/Subscription';
-
 import { Artist } from '../../models/artist';
 import { MB_Artist } from '../../models/mb_artist';
 import { MB_Release } from '../../models/mb_release';
@@ -16,26 +13,20 @@ import { MB_Release } from '../../models/mb_release';
   styleUrls: ['releases.component.css'],
   providers: [MusicbrainzService]
 })
-export class ReleasesComponent implements OnInit {
+export class ReleasesComponent implements OnChanges {
 
-  artist: Artist = new Artist();
+  @Input() artist: Artist = new Artist();
   releases: MB_Release[] = new Array();
-  subscription: Subscription;
 
   constructor(
-    private sharedService: SharedService,
     private musicbrainzService: MusicbrainzService) { }
 
-  ngOnInit() {
+  ngOnChanges () {
     // subscribe to artist changes
-    this.subscription = this.sharedService.artistItem
-      .subscribe(item => {
-        this.artist = item;
-        if (this.artist != null)
-          this.getReleases();
-        else
-          this.releases = new Array();
-      })
+    if (this.artist != null)
+      this.getReleases();
+    else
+      this.releases = [];
   }
 
   private getReleases() {

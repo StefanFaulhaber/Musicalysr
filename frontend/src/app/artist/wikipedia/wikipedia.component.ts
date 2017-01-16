@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
-import { SharedService } from '../../shared/shared.service';
 import { MusicbrainzService } from '../../shared/musicbrainz.service';
 import { WikipediaService } from './wikipedia.service';
 import { Artist } from '../../models/artist';
@@ -14,26 +13,20 @@ import { MB_Artist } from '../../models/mb_artist';
   styleUrls: ['wikipedia.component.css'],
   providers: [WikipediaService, MusicbrainzService]
 })
-export class WikipediaComponent implements OnInit {
+export class WikipediaComponent implements OnChanges {
 
-  artist: Artist = new Artist();
+  @Input() artist: Artist = new Artist();
   text: string = '';
   linkSuffix: string = 'http://de.wikipedia.org';
   subscription: Subscription;
 
   constructor(
-    private sharedService: SharedService,
     private wikipediaService: WikipediaService,
     private musicbrainzService: MusicbrainzService) {}
 
-  ngOnInit() {
-    // subscribe to artist changes
-    this.subscription = this.sharedService.artistItem
-      .subscribe(item => {
-        this.artist = item;
+  ngOnChanges() {
         if (this.artist != null)
           this.getLink();
-      })
   }
 
   getLink() {

@@ -5,11 +5,11 @@
   </md-card>-->
 
   <md-card class="module" *ngIf="sharedService.isWikipediaEnabled">
-    <app-wikipedia></app-wikipedia>
+    <app-wikipedia [artist]="artist"></app-wikipedia>
   </md-card>
 
   <md-card class="module" *ngIf="sharedService.isDiscographyEnabled">
-    <app-releases></app-releases>
+    <app-releases [artist]="artist"></app-releases>
   </md-card>
 
   <md-card class="module" *ngIf="sharedService.isPopularityEnabled">
@@ -17,6 +17,6 @@
   </md-card>
 
   <md-card class="module" *ngIf="sharedService.isYoutubeEnabled">
-    <app-youtube></app-youtube>
+    <app-youtube [artist]="artist"></app-youtube>
   </md-card>
 </div>

@@ -30,6 +30,11 @@ export class BrowserService {
         .map((response: Response) => <Artist[]>response.json());
   };
 
+  public getArtist = (id: Number): Observable<Artist> => {
+    return this._http.get(this.actionUrl + 'query/artist/' + id)
+        .map((response: Response) => <Artist>response.json());
+  };
+
   // Labels
   public getAllLabels = (): Observable<Label[]> => {
     return this._http.get(this.actionUrl + 'query/labels/1', {})
