@@ -31,11 +31,16 @@ export class MusicbrainzService {
 
   public getMbData = (query: string): Observable<MB_Artist> => {
     return this._http.get(this.actionUrl + query + this.UrlParameters, {})
-        .map((response: Response) => <MB_Artist>response.json());
+      .map((response: Response) => <MB_Artist>response.json());
+  };
+
+  public getMbLabelData = (query: string): Observable<MB_Label> => {
+    return this._http.get(this.labelUrl + query + this.UrlParameters, {})
+      .map((response: Response) => <MB_Label>response.json());
   };
 
   public getMbReleases = (query: string): Observable<MB_Release> => {
     return this._http.get(this.actionUrl + query + this.ReleaseParameters, {})
-        .map((response: Response) => <MB_Release>response.json());
+      .map((response: Response) => <MB_Release>response.json());
   };
 }

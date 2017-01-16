@@ -3,13 +3,12 @@ import { Subscription } from 'rxjs/Subscription';
 import { Artist } from '../models/artist';
 import { sinAndCos } from './popularitygraph/popularitygraph.component';
 import { ActivatedRoute, Params } from "@angular/router";
-import { BrowserService } from "../shared/browser/browser.service";
 import { SharedService } from "../shared/shared.service";
+import { ArtistService } from "./artist.service";
 
 @Component({
   templateUrl: './artist.component.html',
-  styleUrls: ['./artist.component.css'],
-  providers: [BrowserService]
+  styleUrls: ['./artist.component.css']
 })
 export class ArtistComponent implements OnInit {
 
@@ -20,14 +19,14 @@ export class ArtistComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private browserService: BrowserService,
+    private artistService: ArtistService,
     private sharedService: SharedService) {}
 
   ngOnInit() {
     // subscribe to artist changes
     this.subscription = this.route.params
       .subscribe((params: Params) => {
-        this.artistSubscription = this.browserService.getArtist(params['id'])
+        this.artistSubscription = this.artistService.getArtist(params['id'])
           .subscribe((artist : Artist) => {
             this.artist = artist;
             this.popularityGraphData = sinAndCos(artist.name);
