@@ -18,9 +18,10 @@ export class ArtistComponent implements OnInit {
   subscription: Subscription;
   artistSubscription: Subscription;
 
-  constructor(private route: ActivatedRoute,
-              private browserService: BrowserService,
-              private sharedService: SharedService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private browserService: BrowserService,
+    private sharedService: SharedService) {}
 
   ngOnInit() {
     // subscribe to artist changes
@@ -33,12 +34,4 @@ export class ArtistComponent implements OnInit {
         this.popularityGraphData = sinAndCos(params['id']);
       })
   }
-
-  ngOnDestroy() {
-    // if (this.subscription)
-    //   this.subscription.unsubscribe();
-    // if (this.artistSubscription)
-    //   this.artistSubscription.unsubscribe();
-  }
-
 }

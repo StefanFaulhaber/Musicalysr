@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { SharedService } from '../shared/shared.service';
 
@@ -7,11 +7,11 @@ import { SharedService } from '../shared/shared.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent {
 
   constructor(private sharedService: SharedService) { }
 
-  ngOnInit() {}
+  // Artist settings
 
   setWikipedia() {
     this.sharedService.isWikipediaEnabled = !this.sharedService.isWikipediaEnabled;
@@ -33,4 +33,10 @@ export class SettingsComponent implements OnInit {
     this.sharedService.writeSettings();
   }
 
+  // Label settings
+
+  setLabelLinks() {
+    this.sharedService.isLabelLinksEnabled = !this.sharedService.isLabelLinksEnabled;
+    this.sharedService.writeSettings();
+  }
 }

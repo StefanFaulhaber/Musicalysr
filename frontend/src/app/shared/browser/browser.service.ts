@@ -46,6 +46,11 @@ export class BrowserService {
         .map((response: Response) => <Label[]>response.json());
   };
 
+  public getLabel = (id: Number): Observable<Label> => {
+    return this._http.get(this.actionUrl + 'query/label/' + id)
+        .map((response: Response) => <Label>response.json());
+  };
+
   public getLabelsOfArtist = (query: string): Observable<Label[]> => {
     return this._http.get(this.actionUrl + '/query/artist/labels/' + query, { headers: this.headers })
         .map((response: Response) => <Label[]>response.json());

@@ -126,6 +126,36 @@ app.get('/query/artist/:id', function(req, res) {
 });
 
 /**
+ * Get label for a given id.
+ */
+app.get('/query/label/:id', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    else {
+      var id = req.params.id;
+      var query = 'SELECT id, name FROM label WHERE id = ?';
+      var parameters = [id];
+      var sql = mysql.format(query, parameters);
+
+      connection.query(sql, function(err, rows, fields) {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(rows[0]);
+        }
+        connection.release();
+      });
+    }
+  });
+});
+
+/**
  * Get labels from a given offset and limit.
  */
 app.get('/query/labels/:offset', function(req, res) {

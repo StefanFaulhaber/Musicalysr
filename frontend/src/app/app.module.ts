@@ -21,6 +21,7 @@ import { PlaceholderComponent } from "./shared/placeholder/placeholder.component
 import { ArtistComponent } from './artist/artist.component';
 import { LabelComponent } from './label/label.component';
 import { BrowserService } from "./shared/browser/browser.service";
+import { LabelLinksComponent } from './label/labellinks/labellinks.component';
 
 // routes declarations
 
@@ -67,7 +68,8 @@ const routes: Routes = [
     nvD3,
     YoutubeComponent,
     ArtistComponent,
-    LabelComponent
+    LabelComponent,
+    LabelLinksComponent
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,10 @@
 <div class="modulecontainer">
 
-    <md-card class="module">
-      <h2>Labelmodul-Platzhalter</h2>
+    <md-card class="module" *ngIf="sharedService.isLabelLinksEnabled">
+      <md-card-title>Links</md-card-title>
+      <md-card-content>
+        <label-links [label]="label"></label-links>
+      </md-card-content>
     </md-card>
 
 </div>

@@ -23,8 +23,8 @@ export class WikipediaComponent implements OnChanges {
     private musicbrainzService: MusicbrainzService) {}
 
   ngOnChanges() {
-        if (this.artist != null)
-          this.getLink();
+    if (this.artist != null)
+      this.getLink();
   }
 
   getLink() {
@@ -79,9 +79,6 @@ export class WikipediaComponent implements OnChanges {
             }
           },
           error => console.log(error));
-  }
-
-  ngOnDestroy() {
   }
 
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { SharedService } from '../shared.service';
 import { BrowserService } from './browser.service';
-import { Subscription } from 'rxjs/Subscription';
 import { Artist } from '../../models/artist';
 import { Label } from '../../models/label';
 import 'rxjs/add/operator/switchMap';
@@ -15,10 +14,7 @@ import 'rxjs/add/operator/switchMap';
 export class BrowserComponent implements OnInit {
 
   artists: Artist[] = new Array();
-  artistSubscription: Subscription;
-
   labels: Label[] = new Array();
-  labelSubscription: Subscription;
 
   items: any[] = new Array();
   selectedItem: any;
@@ -52,19 +48,6 @@ export class BrowserComponent implements OnInit {
     // this.artists = this.browserService.getArtists();
 
     this.sharedService.isChoiceArtists = true;
-
-    // subscribe to artist changes
-    this.artistSubscription = this.sharedService.artistItem
-      .subscribe(item => this.selectedItem = item)
-
-    // subscribe to label changes
-    this.labelSubscription = this.sharedService.labelItem
-      .subscribe(item => this.selectedItem = item)
-  }
-
-  ngOnDestroy() {
-    this.artistSubscription.unsubscribe();
-    this.labelSubscription.unsubscribe();
   }
 
   displayItems() {
@@ -94,13 +77,6 @@ export class BrowserComponent implements OnInit {
             this.displayItems();
           },
           error => console.log(error));
-  }
-
-  selectItem(item: any): void {
-    if (this.sharedService.isChoiceArtists)
-      this.sharedService.changeArtist(item);
-    else
-      this.sharedService.changeLabel(item);
   }
 
   searchQuery(query) {

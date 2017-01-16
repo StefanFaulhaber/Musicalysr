@@ -1,27 +1,15 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-
-import { Artist } from '../models/artist';
-import { Label } from '../models/label';
-
 @Injectable()
 export class SharedService {
 
-  isWikipediaEnabled: boolean = true;
-  isDiscographyEnabled: boolean = true;
-  isPopularityEnabled: boolean = true;
-  isYoutubeEnabled: boolean = true;
+  isWikipediaEnabled: boolean;
+  isDiscographyEnabled: boolean;
+  isPopularityEnabled: boolean;
+  isYoutubeEnabled: boolean;
+  isLabelLinksEnabled: boolean;
 
   isChoiceArtists: boolean = true;
-
-  artist: Artist = new Artist();
-  artistSource = new BehaviorSubject<Artist>(this.artist);  // Observable item source
-  artistItem = this.artistSource.asObservable();            // Observable item stream
-
-  label: Label = new Label();
-  labelSource = new BehaviorSubject<Artist>(this.label);  // Observable item source
-  labelItem = this.labelSource.asObservable();            // Observable item stream
 
   constructor() {
     if (localStorage.getItem('isWikipediaEnabled'))
@@ -32,15 +20,9 @@ export class SharedService {
       this.isPopularityEnabled = (localStorage.getItem('isPopularityEnabled') === 'true');
     if (localStorage.getItem('isYoutubeEnabled'))
       this.isYoutubeEnabled = (localStorage.getItem('isYoutubeEnabled') === 'true');
-  }
 
-  // service command
-  changeArtist(a: Artist) {
-    this.artistSource.next(a);
-  }
-
-  changeLabel(l: Label) {
-    this.labelSource.next(l);
+    if (localStorage.getItem('isLabelLinksEnabled'))
+      this.isLabelLinksEnabled = (localStorage.getItem('isLabelLinksEnabled') === 'true');
   }
 
   writeSettings() {
@@ -48,5 +30,7 @@ export class SharedService {
     localStorage.setItem('isDiscographyEnabled', this.isDiscographyEnabled.toString());
     localStorage.setItem('isPopularityEnabled', this.isPopularityEnabled.toString());
     localStorage.setItem('isYoutubeEnabled', this.isYoutubeEnabled.toString());
+
+    localStorage.setItem('isLabelLinksEnabled', this.isLabelLinksEnabled.toString());
   }
 }
