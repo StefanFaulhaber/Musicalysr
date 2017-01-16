@@ -5,29 +5,29 @@
     <md-card-content>
       <h4>Künstlermodule</h4>
       <div class="settingsContainer1">
-        <div class="setting">
-          <input type="checkbox" class="cb" name="wiki" [(ngModel)]="sharedService.isWikipediaEnabled">
-          <span (click)="setWikipedia()">Wikipedia-Modul anzeigen</span>
+        <div class="setting" (click)="sharedService.setSetting(0)">
+          <input type="checkbox" class="cb" name="wiki" [checked]="sharedService.getSetting(0)">
+          <span>Wikipedia-Modul anzeigen</span>
         </div>
-        <div class="setting">
-          <input type="checkbox" class="cb" name="disc" [(ngModel)]="sharedService.isDiscographyEnabled">
-          <span (click)="setDiscography()">Diskographie-Modul anzeigen</span>
+        <div class="setting" (click)="sharedService.setSetting(1)">
+          <input type="checkbox" class="cb" name="disc" [checked]="sharedService.getSetting(1)">
+          <span>Diskographie-Modul anzeigen</span>
         </div>
-        <div class="setting">
-          <input type="checkbox" class="cb" name="popu" [(ngModel)]="sharedService.isPopularityEnabled">
-          <span (click)="setPopularity()">Popularitäts-Modul anzeigen</span>
+        <div class="setting" (click)="sharedService.setSetting(2)">
+          <input type="checkbox" class="cb" name="popu" [checked]="sharedService.getSetting(2)">
+          <span>Popularitäts-Modul anzeigen</span>
         </div>
-        <div class="setting">
-          <input type="checkbox" class="cb" name="disc" [(ngModel)]="sharedService.isYoutubeEnabled">
-          <span (click)="setYoutube()">Youtube-Modul anzeigen</span>
+        <div class="setting" (click)="sharedService.setSetting(3)">
+          <input type="checkbox" class="cb" name="disc" [checked]="sharedService.getSetting(3)">
+          <span>Youtube-Modul anzeigen</span>
         </div>
       </div>
 
       <h4>Labelmodule</h4>
       <div class="settingsContainer1">
-        <div class="setting">
-          <input type="checkbox" class="cb" name="wiki" [(ngModel)]="sharedService.isLabelLinksEnabled">
-          <span (click)="setLabelLinks()">Labellink-Modul anzeigen</span>
+        <div class="setting" (click)="sharedService.setSetting(4)">
+          <input type="checkbox" class="cb" name="wiki" [checked]="sharedService.getSetting(4)">
+          <span>Labellink-Modul anzeigen</span>
         </div>
       </div>
     </md-card-content>

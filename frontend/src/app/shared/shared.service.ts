@@ -3,34 +3,33 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class SharedService {
 
-  isWikipediaEnabled: boolean;
-  isDiscographyEnabled: boolean;
-  isPopularityEnabled: boolean;
-  isYoutubeEnabled: boolean;
-  isLabelLinksEnabled: boolean;
+  private settingKeys: string[] = [
+    'isWikipediaEnabled', 
+    'isDiscographyEnabled', 
+    'isPopularityEnabled', 
+    'isYoutubeEnabled', 
+    'isLabelLinksEnabled'];
 
   isChoiceArtists: boolean = true;
 
   constructor() {
-    if (localStorage.getItem('isWikipediaEnabled'))
-      this.isWikipediaEnabled = (localStorage.getItem('isWikipediaEnabled') === 'true');
-    if (localStorage.getItem('isDiscographyEnabled'))
-      this.isDiscographyEnabled = (localStorage.getItem('isDiscographyEnabled') === 'true');
-    if (localStorage.getItem('isPopularityEnabled'))
-      this.isPopularityEnabled = (localStorage.getItem('isPopularityEnabled') === 'true');
-    if (localStorage.getItem('isYoutubeEnabled'))
-      this.isYoutubeEnabled = (localStorage.getItem('isYoutubeEnabled') === 'true');
-
-    if (localStorage.getItem('isLabelLinksEnabled'))
-      this.isLabelLinksEnabled = (localStorage.getItem('isLabelLinksEnabled') === 'true');
+    // init settings
+    if (localStorage.length < 1) {
+      for (let setting of this.settingKeys)
+        localStorage.setItem(setting, 'true');
+    }
   }
 
-  writeSettings() {
-    localStorage.setItem('isWikipediaEnabled', this.isWikipediaEnabled.toString());
-    localStorage.setItem('isDiscographyEnabled', this.isDiscographyEnabled.toString());
-    localStorage.setItem('isPopularityEnabled', this.isPopularityEnabled.toString());
-    localStorage.setItem('isYoutubeEnabled', this.isYoutubeEnabled.toString());
+  setSetting(index: number) {
+    let key = this.settingKeys[index];
 
-    localStorage.setItem('isLabelLinksEnabled', this.isLabelLinksEnabled.toString());
+    let temp: boolean = localStorage.getItem(key) == 'true';
+    localStorage.setItem(key, (!temp).toString());
+    console.log('Setting was ' + temp + ', is now ' + localStorage.getItem(key));
+  }
+
+  getSetting(index: number) {
+    let key = this.settingKeys[index];
+    return (localStorage.getItem(key) == 'true');
   }
 }
