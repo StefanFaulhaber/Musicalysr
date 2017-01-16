@@ -5,6 +5,6 @@ export class AppConfig {
   public static MB_ENDPOINT : string = 'http://musicbrainz.org/ws/2/artist/';
   public static WIKI_ENDPOINT : string = 'https://en.wikipedia.org/w/api.php?action=parse&format=json&origin=*&redirects=true&prop=text&page=';
   public static YT_ARTIST_SEARCHURL : string = 'http://www.youtube.com/embed?listType=search&list=';
-  public static APP_CACHES_PAGESIZE : number = 500;
+  public static APP_CACHES_PAGESIZE : number = 200;
 
 }

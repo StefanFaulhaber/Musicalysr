@@ -4,7 +4,7 @@ var commandLineArgs = require('command-line-args');
 var express = require('express');
 var mysql = require('mysql');
 
-const DEFAULT_LIMIT = 100;
+const DEFAULT_LIMIT = 200;
 const DEFAULT_PORT = 2050;
 
 const optionDefinitions = [
@@ -164,7 +164,7 @@ app.get('/query/labels/:offset', function(req, res) {
     }
     else {
       var offset = req.params.offset;
-      var query = 'SELECT id, name FROM label ORDER BY name ASC ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
+      var query = 'SELECT id, name FROM label ORDER BY name ASC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
 
       connection.query(query, function(err, rows, fields) {
         if (err) {
