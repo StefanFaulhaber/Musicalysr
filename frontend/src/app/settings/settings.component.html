@@ -5,28 +5,28 @@
     <md-card-content>
       <h4>Künstlermodule</h4>
       <div class="settingsContainer1">
-        <div class="setting" (click)="sharedService.setWikipedia()">
-          <input type="checkbox" class="cb" name="wiki" [checked]="sharedService.isWikipediaEnabled">
+        <div class="setting" (click)="sharedService.setSetting(0)">
+          <input type="checkbox" class="cb" name="wiki" [checked]="sharedService.getSetting(0)">
           <span>Wikipedia-Modul anzeigen</span>
         </div>
-        <div class="setting" (click)="sharedService.setDiscography()">
-          <input type="checkbox" class="cb" name="disc" [checked]="sharedService.isDiscographyEnabled">
+        <div class="setting" (click)="sharedService.setSetting(1)">
+          <input type="checkbox" class="cb" name="disc" [checked]="sharedService.getSetting(1)">
           <span>Diskographie-Modul anzeigen</span>
         </div>
-        <div class="setting" (click)="sharedService.setPopularity()">
-          <input type="checkbox" class="cb" name="popu" [checked]="sharedService.isPopularityEnabled">
+        <div class="setting" (click)="sharedService.setSetting(2)">
+          <input type="checkbox" class="cb" name="popu" [checked]="sharedService.getSetting(2)">
           <span>Popularitäts-Modul anzeigen</span>
         </div>
-        <div class="setting" (click)="sharedService.setYoutube()">
-          <input type="checkbox" class="cb" name="disc" [checked]="sharedService.isYoutubeEnabled">
+        <div class="setting" (click)="sharedService.setSetting(3)">
+          <input type="checkbox" class="cb" name="disc" [checked]="sharedService.getSetting(3)">
           <span>Youtube-Modul anzeigen</span>
         </div>
       </div>
 
       <h4>Labelmodule</h4>
       <div class="settingsContainer1">
-        <div class="setting" (click)="sharedService.setLabelLinks()">
-          <input type="checkbox" class="cb" name="wiki" [checked]="sharedService.isLabelLinksEnabled">
+        <div class="setting" (click)="sharedService.setSetting(4)">
+          <input type="checkbox" class="cb" name="wiki" [checked]="sharedService.getSetting(4)">
           <span>Labellink-Modul anzeigen</span>
         </div>
       </div>

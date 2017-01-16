@@ -1,6 +1,6 @@
 <div class="modulecontainer">
 
-    <md-card class="module" *ngIf="sharedService.isLabelLinksEnabled">
+    <md-card class="module" *ngIf="sharedService.getSetting(4)">
       <md-card-title>Links</md-card-title>
       <md-card-content>
         <label-links [label]="label"></label-links>
