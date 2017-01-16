@@ -30,8 +30,16 @@ export class ArtistComponent implements OnInit {
         this.artistSubscription = this.browserService.getArtist(params['id'])
           .subscribe((artist : Artist) => {
             this.artist = artist;
+            this.popularityGraphData = sinAndCos(artist.name);
           });
-        this.popularityGraphData = sinAndCos(params['id']);
       })
   }
+
+  ngOnDestroy() {
+    if (this.subscription)
+      this.subscription.unsubscribe();
+    if (this.artistSubscription)
+      this.artistSubscription.unsubscribe();
+  }
+
 }

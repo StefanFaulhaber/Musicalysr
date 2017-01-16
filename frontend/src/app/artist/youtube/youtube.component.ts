@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 import { Artist } from '../../models/artist';
+import { AppConfig } from "../../shared/app.config";
 
 @Component({
   selector: 'app-youtube',
@@ -18,7 +19,7 @@ export class YoutubeComponent {
     private sanitizer: DomSanitizer) { }
 
   getUrl() {
-    return this.sanitizer.bypassSecurityTrustResourceUrl('http://www.youtube.com/embed?listType=search&list=' + this.artist.name);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(AppConfig.YT_ARTIST_SEARCHURL + this.artist.name);
   }
 
 }

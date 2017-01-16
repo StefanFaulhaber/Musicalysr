@@ -1,31 +1,39 @@
 import { Component, OnInit} from '@angular/core';
 import { SharedService } from '../shared.service';
-import { BrowserService } from './browser.service';
+import { Subscription } from 'rxjs/Subscription';
 import { Artist } from '../../models/artist';
 import { Label } from '../../models/label';
 import 'rxjs/add/operator/switchMap';
+import { ArtistService } from "../../artist/artist.service";
+import { LabelService } from "../../label/label.service";
 
 @Component({
   selector: 'app-browser',
   templateUrl: 'browser.component.html',
   styleUrls: ['browser.component.css'],
-  providers: [BrowserService]
 })
 export class BrowserComponent implements OnInit {
 
-  artists: Artist[] = new Array();
-  labels: Label[] = new Array();
+  private artists: Artist[] = [];
+  private artistSubscription: Subscription;
 
-  items: any[] = new Array();
-  selectedItem: any;
+  private labels: Label[] = [];
+  private labelSubscription: Subscription;
+
+  private items: any[] = [];
+  private selectedItem: any;
+
+  private isChoiceArtists: boolean = true;
+  private scrollPosition: number = 0;
 
   constructor(
-    private browserService: BrowserService,
+    private artistService: ArtistService,
+    private labelService: LabelService,
     private sharedService: SharedService) {}
 
   ngOnInit() {
     // get artists from backend
-    this.browserService
+    this.artistSubscription = this.artistService
         .getAllArtists()
         .subscribe(
           (res: Artist[]) => {
@@ -35,7 +43,7 @@ export class BrowserComponent implements OnInit {
           error => console.log(error));
 
     // get labels from backend
-    this.browserService
+    this.labelSubscription = this.labelService
         .getAllLabels()
         .subscribe(
           (res: Label[]) => {
@@ -43,22 +51,30 @@ export class BrowserComponent implements OnInit {
             this.displayItems();
           },
           error => console.log(error));
+    //
+    // // subscribe to artist changes
+    // this.artistSubscription = this.sharedService.artistItem
+    //   .subscribe(item => this.selectedItem = item);
+    //
+    // // subscribe to label changes
+    // this.labelSubscription = this.sharedService.labelItem
+    //   .subscribe(item => this.selectedItem = item);
+  }
 
-    // Mock Backend
-    // this.artists = this.browserService.getArtists();
-
-    this.sharedService.isChoiceArtists = true;
+  ngOnDestroy() {
+    this.artistSubscription.unsubscribe();
+    this.labelSubscription.unsubscribe();
   }
 
   displayItems() {
-    if (this.sharedService.isChoiceArtists)
+    if (this.isChoiceArtists)
       this.items = this.artists;
     else
       this.items = this.labels;
   }
 
   getArtists(query: string) {
-    this.browserService
+    this.artistService
         .getArtists(query)
         .subscribe(
           (res: Artist[]) => {
@@ -69,7 +85,7 @@ export class BrowserComponent implements OnInit {
   }
 
   getLabels(query: string) {
-    this.browserService
+    this.labelService
         .getLabels(query)
         .subscribe(
           (res: Label[]) => {
@@ -80,19 +96,39 @@ export class BrowserComponent implements OnInit {
   }
 
   searchQuery(query) {
-    if (this.sharedService.isChoiceArtists)
+    if (this.isChoiceArtists)
       this.getArtists(query);
     else
       this.getLabels(query);
   }
 
-  changeSearch(b: boolean) {
-    if (b) {
-      this.sharedService.isChoiceArtists = true;
-      this.items = this.artists;
+  changeSearch(isChoiceArtists : boolean) {
+    this.isChoiceArtists = isChoiceArtists;
+    this.displayItems();
+  }
+
+  onScroll() {
+    this.scrollPosition++;
+    if (this.isChoiceArtists) {
+      this.artistSubscription.unsubscribe();
+      this.artistSubscription = this.artistService
+        .getAllArtists(this.scrollPosition)
+        .subscribe(
+          (res: Artist[]) => {
+            this.artists = this.artists.concat(res);
+            this.displayItems();
+          },
+          error => console.log(error));
     } else {
-      this.sharedService.isChoiceArtists = false;
-      this.items = this.labels;
+      this.labelSubscription.unsubscribe();
+      this.labelSubscription = this.labelService
+        .getAllLabels(this.scrollPosition)
+        .subscribe(
+          (res: Label[]) => {
+            this.labels = this.labels.concat(res);
+            this.displayItems();
+          },
+          error => console.log(error));
     }
   }
 }
