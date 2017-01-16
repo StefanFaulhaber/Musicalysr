@@ -3,6 +3,7 @@ import { Http, Response, Headers } from '@angular/http';
 import 'rxjs/add/operator/map'
 import { Observable } from 'rxjs/Observable';
 import { WikipediaEntry } from '../../models/wikipediaentry';
+import { AppConfig } from "../../shared/app.config";
 
 @Injectable()
 export class WikipediaService {
@@ -11,12 +12,12 @@ export class WikipediaService {
   private headers: Headers;
 
   constructor(private _http: Http) {
-    this.actionUrl = 'https://en.wikipedia.org/w/api.php?action=parse&format=json&origin=*&redirects=true&prop=text&page=';
+    this.actionUrl = AppConfig.WIKI_ENDPOINT;
 
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/javascript');
     this.headers.append('Accept', 'application/javascript');
-    this.headers.append('Origin', 'http://10.20.30.40:4200');
+    this.headers.append('Origin', AppConfig.APP_BASEURL);
   }
 
   public getEntry = (query: string): Observable<WikipediaEntry> => {
