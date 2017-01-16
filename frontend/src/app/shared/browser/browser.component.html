@@ -23,7 +23,11 @@
   <!--  | search:query -->
   <!--(keyup.enter)="filterArtists(query)"-->
   <div id="scroll-container">
-    <md-list>
+    <md-list infinite-scroll
+             [infiniteScrollDistance]="2"
+             [infiniteScrollThrottle]="500"
+             (scrolled)="onScroll()"
+             [scrollWindow]="false">
       <md-list-item
         *ngFor="let item of items"
         [routerLink]="[sharedService.isChoiceArtists ? '/artist/' : '/label/', item.id]"

@@ -34,7 +34,7 @@ export class ReleasesComponent implements OnChanges {
       this.musicbrainzService
         .getMbReleases(this.artist.id)
         .subscribe(
-          (res: MB_Artist) => {
+          (res: MB_Release) => {
             this.filterReleases(res['releases']);
           },
           error => console.log(error));
@@ -47,7 +47,7 @@ export class ReleasesComponent implements OnChanges {
 
     for (let release of res) {
       if (seen.indexOf(release.title) < 0) {
-        seen.push(release.title)
+        seen.push(release.title);
         // format date
         if (release.date.length > 4)
           release.date = moment(release.date).format('DD.MM.YYYY');

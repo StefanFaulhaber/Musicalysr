@@ -7,6 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import 'hammerjs';
 import { nvD3 } from "ng2-nvd3";
+import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
 import { AppComponent } from './app.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -21,9 +22,10 @@ import { PlaceholderComponent } from "./shared/placeholder/placeholder.component
 import { ArtistComponent } from './artist/artist.component';
 import { LabelComponent } from './label/label.component';
 import { BrowserService } from "./shared/browser/browser.service";
+import { ArtistService } from "./artist/artist.service";
+import { LabelService } from "./label/label.service";
 
 // routes declarations
-
 const routes: Routes = [
   { path: '', redirectTo: '/artist', pathMatch: 'full' },
   { path: 'settings', component: SettingsComponent },
@@ -74,14 +76,17 @@ const routes: Routes = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    MaterialModule.forRoot()
+    MaterialModule.forRoot(),
+    InfiniteScrollModule
   ],
   exports: [
     RouterModule
   ],
   providers: [
     SharedService,
-    BrowserService
+    BrowserService,
+    ArtistService,
+    LabelService
   ],
   bootstrap: [
     AppComponent
