@@ -12,8 +12,8 @@ export class SharedService {
   isChoiceArtists: boolean = true;
 
   constructor() {
-    if (localStorage.getItem('isWikipediaEnabled'))
-      this.isWikipediaEnabled = (localStorage.getItem('isWikipediaEnabled') === 'true');
+    this.isWikipediaEnabled = (localStorage.getItem('isWikipediaEnabled') == 'true');
+
     if (localStorage.getItem('isDiscographyEnabled'))
       this.isDiscographyEnabled = (localStorage.getItem('isDiscographyEnabled') === 'true');
     if (localStorage.getItem('isPopularityEnabled'))
@@ -25,12 +25,28 @@ export class SharedService {
       this.isLabelLinksEnabled = (localStorage.getItem('isLabelLinksEnabled') === 'true');
   }
 
-  writeSettings() {
+  setWikipedia() {
+    this.isWikipediaEnabled = !this.isWikipediaEnabled;
     localStorage.setItem('isWikipediaEnabled', this.isWikipediaEnabled.toString());
-    localStorage.setItem('isDiscographyEnabled', this.isDiscographyEnabled.toString());
-    localStorage.setItem('isPopularityEnabled', this.isPopularityEnabled.toString());
-    localStorage.setItem('isYoutubeEnabled', this.isYoutubeEnabled.toString());
+  }
 
+  setDiscography() {
+    this.isDiscographyEnabled = !this.isDiscographyEnabled;
+    localStorage.setItem('isDiscographyEnabled', this.isDiscographyEnabled.toString());
+  }
+
+  setPopularity() {
+    this.isPopularityEnabled = !this.isPopularityEnabled;
+    localStorage.setItem('isPopularityEnabled', this.isPopularityEnabled.toString());
+  }
+
+  setYoutube() {
+    this.isYoutubeEnabled = !this.isYoutubeEnabled;
+    localStorage.setItem('isYoutubeEnabled', this.isYoutubeEnabled.toString());
+  }
+
+  setLabelLinks() {
+    this.isLabelLinksEnabled = !this.isLabelLinksEnabled;
     localStorage.setItem('isLabelLinksEnabled', this.isLabelLinksEnabled.toString());
   }
 }
