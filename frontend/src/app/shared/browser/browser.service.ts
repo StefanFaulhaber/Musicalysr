@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
+import { AppConfig } from '../app.config';
 
 import { Artist } from '../../models/artist';
 import { Label } from '../../models/label';
@@ -13,7 +14,7 @@ export class BrowserService {
   private headers: Headers;
 
   constructor(private _http: Http) {
-    this.actionUrl = 'http://10.20.30.40:2050/';
+    this.actionUrl = AppConfig.API_ENDPOINT;
     this.headers = new Headers();
     this.headers.append('Content-Type', 'application/json');
     this.headers.append('Accept', 'application/json');

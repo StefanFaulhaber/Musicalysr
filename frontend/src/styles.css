@@ -22,6 +22,8 @@ div.row {
     line-height: 30px;
     border-radius: 5px;
     background-color: #eeeeee;
+
+    cursor: pointer;
 }
 
 .chipActive {

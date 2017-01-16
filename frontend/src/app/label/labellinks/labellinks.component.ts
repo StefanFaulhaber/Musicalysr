@@ -14,7 +14,7 @@ export class LabelLinksComponent {
 
   @Input() label: Label = new Label();
   links = new Array();
-  linkSuffix: string = 'http://de.wikipedia.org';
+  linkSuffix: string = 'http://en.wikipedia.org';
 
   constructor(
     private musicbrainzService: MusicbrainzService) {}
