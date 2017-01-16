@@ -1,7 +1,6 @@
 #!/bin/python
 # -*- coding: UTF-8 -*-
 from TweetNLP import Tweet
-from nltk import FreqDist
 import itertools
 import json
 from socketIO_client import SocketIO
@@ -12,14 +11,14 @@ from Configuration import Configuration
 from itertools import chain
 import requests
 
+
 def aggregatedExtractions(aTweetArray=[]):
     """
-        Introduces a Loop to Agregate the results of a batch of tweets
+        Introduces a Loop to Aggregate the results of a batch of tweets
 
         Returns: A dictionary of results. Key => Entities , Values => Number of Occurences
     """
     fTweet = Tweet()
-    fAgregatedResults = dict()
     fAllExtractions = []
     fCooccurences = []
 
@@ -56,7 +55,7 @@ def process(*args):
     jsonObjDictionary["numberOfTweets"] = numOfTweets
 
     print(json.dumps(jsonObjDictionary),"\n")
-    r = requests.post(Configuration.mDatabaseEndpointURL, requests.urlencode(json.dumps(jsonObjDictionary)).encode())
+    r = requests.post(Configuration.mDatabaseEndpointURL, json=jsonObjDictionary)
 
 
 def main():
