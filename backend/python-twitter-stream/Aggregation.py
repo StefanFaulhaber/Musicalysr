@@ -55,7 +55,6 @@ def process(*args):
     tweetArray = json.loads(json.dumps(args[0]))
     numOfTweets = len(tweetArray['data'])
     f1,f2 = aggregatedExtractions(tweetArray['data'])
-    print(f2)
 
     jsonObjDictionary = {}
     jsonObjDictionary["timeStamp"] = helpers.createRoundedTimestamp(tweetArray["timeStamp"])
@@ -63,7 +62,7 @@ def process(*args):
     jsonObjDictionary["coocurences"] = f2
     jsonObjDictionary["numberOfTweets"] = numOfTweets
 
-    print(json.dumps(jsonObjDictionary),"\n")
+    #print(json.dumps(jsonObjDictionary),"\n")
     r = requests.post(Configuration.mDatabaseEndpointURL, json=jsonObjDictionary)
 
 
