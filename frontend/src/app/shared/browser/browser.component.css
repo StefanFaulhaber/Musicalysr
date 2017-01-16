@@ -6,7 +6,16 @@
     flex-direction: column;
 }
 
-.artistItem {
+.chipContainer {
+    margin-bottom: 5px;
+}
+
+#scroll-container {
+  position: relative;
+}
+
+.listItem {
+    min-width: 200px;
     max-width: 300px;
 }
 
@@ -18,9 +27,9 @@ md-input {
 
 .active {
     color: blue;
-    /*background-color: red;*/
 }
 
 md-list {
+    max-height: 80vh;
     overflow: auto;
 }

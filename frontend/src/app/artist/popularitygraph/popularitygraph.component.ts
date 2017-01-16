@@ -6,7 +6,6 @@ import {ViewChild} from "@angular/core/src/metadata/di";
 import {nvD3} from "ng2-nvd3";
 import {Input} from "@angular/core/src/metadata/directives";
 
-
 let options = {
   chart: {
     type: 'lineChart',
@@ -47,9 +46,9 @@ let options = {
 
 @Component({
   selector: 'app-popularitygraph',
-  templateUrl: './popularitygraph.component.html',
+  templateUrl: 'popularitygraph.component.html',
   styleUrls: [
-    './popularitygraph.component.css'
+    'popularitygraph.component.css'
   ]
 })
 export class PopularitygraphComponent implements OnInit, OnChanges {

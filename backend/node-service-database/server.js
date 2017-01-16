@@ -46,7 +46,7 @@ app.get('/query/artists/:offset', function(req, res) {
     }
     else {
       var offset = req.params.offset;
-      var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 500 OFFSET ?';
+      var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT 500 OFFSET ' + offset;
       var parameters = [offset];
       var sql = mysql.format(query, parameters);
 
@@ -96,6 +96,36 @@ app.post('/query/artists/autocomplete/name', function(req, res) {
 });
 
 /**
+ * Get artist for a given id.
+ */
+app.get('/query/artist/:id', function(req, res) {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    }
+    else {
+      var id = req.params.id;
+      var query = 'SELECT id, name FROM artist WHERE id = ?';
+      var parameters = [id];
+      var sql = mysql.format(query, parameters);
+
+      connection.query(sql, function(err, rows, fields) {
+        if (err) {
+          console.error(err);
+          res.sendStatus(500);
+        }
+        else {
+          res.setHeader('Content-Type', 'application/json');
+          res.send(rows[0]);
+        }
+        connection.release();
+      });
+    }
+  });
+});
+
+/**
  * Get labels from a given offset and limit.
  */
 app.get('/query/labels/:offset', function(req, res) {
@@ -106,7 +136,7 @@ app.get('/query/labels/:offset', function(req, res) {
     }
     else {
       var offset = req.params.offset;
-      var query = 'SELECT id, name FROM label ORDER BY name ASC LIMIT 500 OFFSET ?';
+      var query = 'SELECT id, name FROM label ORDER BY name ASC LIMIT 500 OFFSET ' + offset;
       var parameters = [offset];
       var sql = mysql.format(query, parameters);
 

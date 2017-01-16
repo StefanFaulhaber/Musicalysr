@@ -1,0 +1,22 @@
+<div class="modulecontainer">
+
+  <!--<md-card class="module">
+    {{artist.name}}<br>{{artist.id}}
+  </md-card>-->
+
+  <md-card class="module" *ngIf="sharedService.isWikipediaEnabled">
+    <app-wikipedia [artist]="artist"></app-wikipedia>
+  </md-card>
+
+  <md-card class="module" *ngIf="sharedService.isDiscographyEnabled">
+    <app-releases [artist]="artist"></app-releases>
+  </md-card>
+
+  <md-card class="module" *ngIf="sharedService.isPopularityEnabled">
+    <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
+  </md-card>
+
+  <md-card class="module" *ngIf="sharedService.isYoutubeEnabled">
+    <app-youtube [artist]="artist"></app-youtube>
+  </md-card>
+</div>
