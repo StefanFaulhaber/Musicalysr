@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-import { Subscription } from 'rxjs/Subscription';
 
 import { Artist } from '../../models/artist';
 
@@ -12,7 +11,6 @@ import { Artist } from '../../models/artist';
 export class YoutubeComponent {
 
   @Input() artist: Artist = new Artist();
-  subscription: Subscription;
   width: number;
   height: number;
 
@@ -23,7 +21,4 @@ export class YoutubeComponent {
     return this.sanitizer.bypassSecurityTrustResourceUrl('http://www.youtube.com/embed?listType=search&list=' + this.artist.name);
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 }
