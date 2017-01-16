@@ -110,19 +110,21 @@ Returns application/json array in the following form:
 }]
 ```
 
-### GET /query/artist/albums/:id
+### GET /query/artist/releases/:id
 
-Get all releases released by a given artists represented by its id.
+Get all releases by a given artists represented by its id.
 
 Returns application/json array in the following form:
 ```
 [{
   "id": 1,
-  "name": "Release 1"
+  "name": "Release 1",
+  "type": "Album"
 },
 {
   "id": 2,
-  "name": "Release 2"
+  "name": "Release 2",
+  "type": "Single"
 }]
 ```
 

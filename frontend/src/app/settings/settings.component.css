@@ -29,6 +29,7 @@
     align-content: flex-start;
 
     width: 100%;
+    cursor: pointer;
 }
 
 .cb {
