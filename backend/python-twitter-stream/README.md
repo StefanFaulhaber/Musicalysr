@@ -11,7 +11,7 @@
 
 
 ##JSON-Format
-'''
+```
 {
 	time: "YYYY-MM-DD hh:mm",   	# Timestamp in mysql format. already rounded UP to quarters
 	numberOfTweets: "N", 				# N Tweets were read in this intervall
@@ -40,4 +40,4 @@
 		release : {....}
 	}
 }
-'''
+```
