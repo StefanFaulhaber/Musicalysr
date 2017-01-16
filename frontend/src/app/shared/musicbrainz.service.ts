@@ -35,8 +35,8 @@ export class MusicbrainzService {
   };
 
   public getMbLabelData = (query: string): Observable<MB_Label> => {
-    return this._http.get(this.labelUrl + query + this.urlParameters, {})
-        .map((response: Response) => <MB_Label>response.json());
+    return this._http.get(this.labelUrl + query + this.UrlParameters, {})
+      .map((response: Response) => <MB_Label>response.json());
   };
 
   public getMbReleases = (query: string): Observable<MB_Release> => {

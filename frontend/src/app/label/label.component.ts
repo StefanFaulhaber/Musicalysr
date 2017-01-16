@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Label } from '../models/label';
 import { ActivatedRoute, Params } from "@angular/router";
-import { BrowserService } from "../shared/browser/browser.service";
 import { SharedService } from "../shared/shared.service";
+import { LabelService } from "./label.service";
 
 @Component({
   templateUrl: './label.component.html',
@@ -17,14 +17,14 @@ export class LabelComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private browserService: BrowserService,
+    private labelService: LabelService,
     private sharedService: SharedService) {}
 
   ngOnInit() {
     // subscribe to label changes
     this.subscription = this.route.params
       .subscribe((params: Params) => {
-        this.labelSubscription = this.browserService.getLabel(params['id'])
+        this.labelSubscription = this.labelService.getLabel(params['id'])
           .subscribe((label : Label) => {
             this.label = label;
           });

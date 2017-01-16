@@ -21,7 +21,6 @@ import { YoutubeComponent } from './artist/youtube/youtube.component';
 import { PlaceholderComponent } from "./shared/placeholder/placeholder.component";
 import { ArtistComponent } from './artist/artist.component';
 import { LabelComponent } from './label/label.component';
-import { BrowserService } from "./shared/browser/browser.service";
 import { LabelLinksComponent } from './label/labellinks/labellinks.component';
 import { ArtistService } from "./artist/artist.service";
 import { LabelService } from "./label/label.service";
@@ -86,7 +85,6 @@ const routes: Routes = [
   ],
   providers: [
     SharedService,
-    BrowserService,
     ArtistService,
     LabelService
   ],
