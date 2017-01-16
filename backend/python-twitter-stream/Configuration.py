@@ -32,4 +32,4 @@ class Configuration:
     mSizeOfNGramsForMatching= 5
 
     #Database Endpoint
-    mDatabaseEndpointURL = "http://localhost:3000"
+    mDatabaseEndpointURL = "http://localhost:2050/insert/twitter"

@@ -10,9 +10,11 @@
  After that, you can call Aggregation.py and it will connect to the socket 2049 opened by the twitter stream server
 
 
-JSON-Format
+##JSON-Format
 {
-	time-stamp: "YYYY-MM-DD hh:mm",   	# Timestamp in mysql format. already rounded UP to quarters
+
+{
+	time: "YYYY-MM-DD hh:mm",   	# Timestamp in mysql format. already rounded UP to quarters
 	numberOfTweets: "N", 				# N Tweets were read in this intervall
 
 	frequencies : {        				# Frequencies of single entities over all tweets
@@ -38,4 +40,5 @@ JSON-Format
 		artist : {....},
 		release : {....}
 	}
+}
 }
