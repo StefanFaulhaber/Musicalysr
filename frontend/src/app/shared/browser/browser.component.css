@@ -1,0 +1,35 @@
+.browsertree {
+    padding: 20px;
+    background-color: #FFFFFF;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chipContainer {
+    margin-bottom: 5px;
+}
+
+#scroll-container {
+  position: relative;
+}
+
+.listItem {
+    min-width: 200px;
+    max-width: 300px;
+}
+
+md-input {
+    width: auto;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.active {
+    color: blue;
+}
+
+md-list {
+    max-height: 80vh;
+    overflow: auto;
+}

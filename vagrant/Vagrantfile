@@ -11,18 +11,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.network "forwarded_port",
         guest: 27017,
-        host: 57016
+        host: 5701
 
     config.vm.network "forwarded_port",
         guest: 3306,
         host: 53306
+    config.vm.network "forwarded_port",
+        guest: 4200,
+        host: 4200
+    config.vm.network "forwarded_port",
+         guest: 2050,
+         host: 2050
+
 
     config.vm.synced_folder "../", "/opt/dev", owner: "vagrant", group: "www-data", mount_options: ['dmode=777', 'fmode=666'], fsnotify: true, exclude: ["*.git/", "*tmp/", "*cache/", "*node_modules/", "*bower_components/", "*.idea/", "*.vagrant", "vagrant", "meeting_notes"]
 
     config.vm.synced_folder ".", "/vagrant", disabled: true
 
     config.vm.provider :virtualbox do |vb|
-        vb.memory = 2048
+        vb.memory = 3072
         vb.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate//opt/dev/", "1"]
     end
 

@@ -1,0 +1,30 @@
+<div class="modulecontainer">
+
+  <md-card class="module" *ngIf="sharedService.isWikipediaEnabled">
+    <md-card-title>Wikipedia</md-card-title>
+      <md-card-content>
+        <app-wikipedia [artist]="artist"></app-wikipedia>
+      </md-card-content>
+  </md-card>
+
+  <md-card class="module" *ngIf="sharedService.isDiscographyEnabled">
+    <md-card-title>Diskographie</md-card-title>
+      <md-card-content>
+        <app-releases [artist]="artist"></app-releases>
+      </md-card-content>
+  </md-card>
+
+  <md-card class="module" *ngIf="sharedService.isPopularityEnabled">
+    <md-card-title>Popularität</md-card-title>
+      <md-card-content>
+        <app-popularitygraph [data]="popularityGraphData"></app-popularitygraph>
+      </md-card-content>
+  </md-card>
+
+  <md-card class="module" *ngIf="sharedService.isYoutubeEnabled">
+    <md-card-title>Youtube</md-card-title>
+      <md-card-content>
+        <app-youtube [artist]="artist"></app-youtube>
+      </md-card-content>
+  </md-card>
+</div>
