@@ -42,17 +42,15 @@ export class ReleasesComponent implements OnChanges {
   }
 
   private filterReleases(res: MB_Release[]) {
-    let seen: string[] = new Array();
-    let result: MB_Release[] = new Array();
+    let seen: string[] = [];
+    let result: MB_Release[] = [];
 
     for (let release of res) {
       if (seen.indexOf(release.title) < 0) {
         seen.push(release.title)
-
         // format date
         if (release.date.length > 4)
-          release.date = moment(release.date).format('DD.MM.YYYY')
-
+          release.date = moment(release.date).format('DD.MM.YYYY');
         result.push(release)
       }
     }

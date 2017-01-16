@@ -5,7 +5,6 @@ import { sinAndCos } from './popularitygraph/popularitygraph.component';
 import { ActivatedRoute, Params } from "@angular/router";
 import { BrowserService } from "../shared/browser/browser.service";
 import { SharedService } from "../shared/shared.service";
-import { browser } from "protractor";
 
 @Component({
   templateUrl: './artist.component.html',
@@ -30,16 +29,16 @@ export class ArtistComponent implements OnInit {
         this.artistSubscription = this.browserService.getArtist(params['id'])
           .subscribe((artist : Artist) => {
             this.artist = artist;
-            //debu
-            console.log(artist);
           });
         this.popularityGraphData = sinAndCos(params['id']);
       })
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-    this.artistSubscription.unsubscribe();
+    // if (this.subscription)
+    //   this.subscription.unsubscribe();
+    // if (this.artistSubscription)
+    //   this.artistSubscription.unsubscribe();
   }
 
 }

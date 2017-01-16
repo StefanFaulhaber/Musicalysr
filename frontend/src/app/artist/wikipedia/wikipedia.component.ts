@@ -1,5 +1,4 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
 
 import { MusicbrainzService } from '../../shared/musicbrainz.service';
 import { WikipediaService } from './wikipedia.service';
@@ -18,7 +17,6 @@ export class WikipediaComponent implements OnChanges {
   @Input() artist: Artist = new Artist();
   text: string = '';
   linkSuffix: string = 'http://de.wikipedia.org';
-  subscription: Subscription;
 
   constructor(
     private wikipediaService: WikipediaService,
@@ -84,7 +82,6 @@ export class WikipediaComponent implements OnChanges {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
 }
