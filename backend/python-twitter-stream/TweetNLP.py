@@ -244,8 +244,9 @@ def main():
     # print(fAllExtractions)
     fdist1 = Counter(list(chain.from_iterable(fAllExtractions)))
     fdist2 = Counter(fCooccurences)
+    print(fdist2)
 
-    # print(helpers.invertDict(dict(fdist1)),"\n\n",fdist2,"\n\n",helpers.generateCoocurenceJSONNew(helpers.convert(fdist2)))
+    print(helpers.invertDict(dict(fdist1)),"\n\n",fdist2,"\n\n",helpers.generateCoocurenceJSONNew(helpers.convert(fdist2)))
 
 if __name__ == "__main__":
     main()

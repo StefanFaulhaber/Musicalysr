@@ -93,7 +93,7 @@ def generateCoocurenceJSONNew( c = Counter ):
       :param c: Counter with a pair of Stringsd as key
       :return:  JSON like Dictionary With all ordered Coocurences
       """
-    jsonCoocurences = {"artist": {}, "work": {}, "release": {}}
+    jsonCoocurences = {"artist": [], "work": [], "release": []}
 
 
     for elem in c.keys():
@@ -103,17 +103,22 @@ def generateCoocurenceJSONNew( c = Counter ):
         type1   = elem[0][1]
         type2   = elem[1][1]
 
-        if entity1 not in jsonCoocurences[type1]:
-            jsonCoocurences[type1][entity1] = {}
-        if int(c[elem]) not in jsonCoocurences[type1][entity1]:
-            jsonCoocurences[type1][entity1][int(c[elem])] = []
-        jsonCoocurences[type1][entity1][int(c[elem])] += [elem[1]]
+        inst={}
+        inst["id1"] = entity1
+        inst["id2"] = entity2
+        inst["type"] = type2
+        inst["count"] = c[elem]
 
-        if entity2 not in jsonCoocurences[type2]:
-            jsonCoocurences[type2][entity2] = {}
-        if int(c[elem]) not in jsonCoocurences[type2][entity2]:
-            jsonCoocurences[type2][entity2][int(c[elem])] = []
-        jsonCoocurences[type2][entity2][int(c[elem])] += [elem[0]]
+        jsonCoocurences[type1].append(inst)
+
+        inst={}
+        inst["id1"] = entity2
+        inst["id2"] = entity1
+        inst["type"] = type1
+        inst["count"] = c[elem]
+
+        jsonCoocurences[type2].append(inst)
+
 
     return jsonCoocurences
 
