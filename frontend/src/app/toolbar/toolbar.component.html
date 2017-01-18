@@ -1,0 +1,12 @@
+<!-- Toolbar -->
+<nav>
+  <div id="nav-container">
+    <div id="brand" [routerLink]="['artist']">Musicalysr</div>
+    <div id="accountInfo">
+      <div id="loggedInItems">
+        <div class="loggedInItem" [routerLinkActive]="['active']" [routerLink]="['help']">Hilfe</div>
+        <div class="loggedInItem" [routerLinkActive]="['active']" [routerLink]="['settings']">Einstellungen</div>
+      </div>
+    </div>
+  </div>
+</nav>

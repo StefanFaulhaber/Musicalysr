@@ -1,13 +1,13 @@
 .browsertree {
-    padding: 20px;
     background-color: #FFFFFF;
     height: 100%;
     display: flex;
+    padding: 0;
     flex-direction: column;
 }
 
 .chipContainer {
-    margin-bottom: 5px;
+    margin: 16px;
 }
 
 #scroll-container {
@@ -15,8 +15,7 @@
 }
 
 .listItem {
-    min-width: 200px;
-    max-width: 300px;
+    width: 300px;
 }
 
 md-input {

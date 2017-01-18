@@ -10,6 +10,7 @@ import { nvD3 } from "ng2-nvd3";
 import { InfiniteScrollModule } from 'angular2-infinite-scroll';
 
 import { AppComponent } from './app.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SettingsComponent } from './settings/settings.component';
 import { BrowserComponent } from './shared/browser/browser.component';
 import { SearchPipe } from './pipes/search.pipe';
@@ -24,11 +25,13 @@ import { LabelComponent } from './label/label.component';
 import { LabelLinksComponent } from './label/labellinks/labellinks.component';
 import { ArtistService } from "./artist/artist.service";
 import { LabelService } from "./label/label.service";
+import { HelpComponent } from './help/help.component';
 
 // routes declarations
 const routes: Routes = [
   { path: '', redirectTo: '/artist', pathMatch: 'full' },
   { path: 'settings', component: SettingsComponent },
+  { path: 'help', component: HelpComponent },
   {
     path: 'artist',
     children: [
@@ -59,6 +62,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    ToolbarComponent,
     SettingsComponent,
     BrowserComponent,
     SearchPipe,
@@ -70,7 +74,8 @@ const routes: Routes = [
     YoutubeComponent,
     ArtistComponent,
     LabelComponent,
-    LabelLinksComponent
+    LabelLinksComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
