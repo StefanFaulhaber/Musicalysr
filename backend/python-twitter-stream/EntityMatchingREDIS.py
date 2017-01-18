@@ -74,9 +74,9 @@ class EntitySets:
         """
         fRedisResult = []
         for q in query:
-            redisReturnValue = self.mRedisConn_Usernames.get(q.upper())
-            if redisReturnValue != None:
-                fRedisResult.append(redisReturnValue.decode('utf8'))
+            redisReturnValue = self.mRedisConn_Usernames.smembers(q.upper())
+            if len(redisReturnValue) != 0:
+                fRedisResult.append(list(redisReturnValue)[0].decode('utf8'))
         return fRedisResult
 
     def recognizeAlias(self, query=[]):
@@ -147,8 +147,8 @@ class EntitySets:
         key= re.sub(r'[\W]+', '', key).upper()
 
         if type== "artist":
-            return self.mRedisConn_ArtistIDs.get(key)
+            return int(self.mRedisConn_ArtistIDs.get(key))
         if type== "work":
-            return self.mRedisConn_WorkIDs.get(key)
+            return int(self.mRedisConn_WorkIDs.get(key))
         if type== "release":
-            return self.mRedisConn_ReleaseIDs.get(key)
+            return int(self.mRedisConn_ReleaseIDs.get(key))
