@@ -365,100 +365,48 @@ app.post('/insert/twitter', function(req, res) {
         }
         else {
           var timeStampId = result.insertId;
-          var frequencyArtist = [];
-          var frequencyRelease = [];
-          var frequencyWork = [];
-          var cooccurencyArtist = [];
-          var cooccurencyRelease = [];
-          var cooccurencyWork = [];
+          var frequenciesArtist = [];
+          var frequenciesRelease = [];
+          var frequenciesWork = [];
+          var cooccurencesArtist = [];
+          var cooccurencesRelease = [];
+          var cooccurencesWork = [];
 
           frequencies.forEach(function(frequency) {
             if (frequency.type === "artist") {
-              frequencyArtist.push([timeStampId, frequency.id, frequency.count]);
+              frequenciesArtist.push([timeStampId, frequency.id, frequency.count]);
             }
             else if (frequency.type === "release") {
-              frequencyRelease.push([timeStampId, frequency.id, frequency.count]);
+              frequenciesRelease.push([timeStampId, frequency.id, frequency.count]);
             }
             else if (frequency.type === "work") {
-              frequencyWork.push([timeStampId, frequency.id, frequency.count]);
+              frequenciesWork.push([timeStampId, frequency.id, frequency.count]);
             }
           });
 
-          if (frequencyArtist.length > 0) {
-            var insertFrequencyArtist = "INSERT INTO frequency_artist(timestamp_id, artist_id, count) VALUES (?)";
-
-            connection.query(insertFrequencyArtist, frequencyArtist, function(err, result) {
-              if (err) {
-                console.log(err);
-              }
-            });
-          }
-
-          if (frequencyRelease.length > 0) {
-            var insertFrequencyRelease = "INSERT INTO frequency_release(timestamp_id, release_group_id, count) VALUES (?)";
-
-            connection.query(insertFrequencyRelease, frequencyRelease, function(err, result) {
-              if (err) {
-                console.log(err);
-              }
-            });
-          }
-
-          if (frequencyWork.length > 0) {
-            var insertFrequencyWork = "INSERT INTO frequency_work(timestamp_id, work_id, count) VALUES (?)";
-
-            connection.query(insertFrequencyWork, frequencyWork, function(err, result) {
-              if (err) {
-                console.log(err);
-              }
-            });
-          }
+          insertFrequenciesArtist(frequenciesArtist);
+          insertFrequenciesRelease(frequenciesRelease);
+          insertFrequenciesWork(frequenciesWork);
 
           if (cooccurences.artist) {
             cooccurences.artist.forEach(function(cooccurency) {
-              cooccurencyArtist.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
-              console.log(cooccurencyArtist[0]);
-
+              cooccurencesArtist.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
             });
-
-            var insertCooccurencesArtist = "INSERT INTO cooccurrence_artist(timestamp_id, artist_id, id_2, id_2_type, count) VALUES (?)";
-
-            connection.query(insertCooccurencesArtist, cooccurencyArtist, function(err, result) {
-              if (err) {
-                console.log(err);
-              }
-            });
+            insertCooccurencesArtist(cooccurencesArtist);
           }
 
           if (cooccurences.release) {
             cooccurences.release.forEach(function(cooccurency) {
-              cooccurencyRelease.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
-              console.log(cooccurency);
+              cooccurencesRelease.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
             });
-
-            var insertCooccurencesRelease = "INSERT INTO cooccurrence_release(timestamp_id, release_group_id, id_2, id_2_type, count) VALUES (?)";
-
-            connection.query(insertCooccurencesRelease, cooccurencyRelease, function(err, result) {
-              if (err) {
-                console.log(err);
-              }
-            });
+            insertCooccurencesRelease(cooccurencesRelease);
           }
 
           if (cooccurences.work) {
             cooccurences.work.forEach(function(cooccurency) {
-              cooccurencyWork.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
-              console.log(cooccurency);
+              cooccurencesWork.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
             });
-
-            var insertCooccurencesWork = "INSERT INTO cooccurrence_work(timestamp_id, work_id, id_2, id_2_type, count) VALUES (?)";
-
-            connection.query(insertCooccurencesWork, cooccurencyWork, function(err, result) {
-              if (err) {
-                console.log(err);
-              }
-            });
-
+            insertCooccurencesWork(cooccurencesWork);
           }
           res.sendStatus(200);
         }
@@ -572,17 +520,21 @@ function createTwitterTables() {
         createIndexFrequenciesWork +
         createIndexCooccurrencesArtist +
         createIndexCooccurrencesRelease +
-        createIndexCooccurrencesWork, function(err, result) {
+        createIndexCooccurrencesWork, function(err) {
         if (err) {
           console.log(err);
         }
-
         connection.release();
       });
     }
   });
 }
 
+/**
+ * Matches the type to an integer value.
+ * @param type artist, release or work
+ * @returns {number} artist = 0, release = 1, work = 2
+ */
 function getType(type) {
   if (type === "artist") {
     return 0;
@@ -594,4 +546,136 @@ function getType(type) {
     return 2;
   }
   return -1;
+}
+
+/**
+ * Insert frequencies for artists.
+ * @param frequencies artist frequencies
+ */
+function insertFrequenciesArtist(frequencies) {
+  if (frequencies.length > 0) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        console.error(err);
+      }
+      var insertFrequencyArtist = "INSERT INTO frequency_artist(timestamp_id, artist_id, count) VALUES (?)";
+
+      connection.query(insertFrequencyArtist, frequencies, function(err) {
+        if (err) {
+          console.log(err);
+        }
+        connection.release();
+      });
+    });
+  }
+}
+
+/**
+ * Insert frequencies for releases.
+ * @param frequencies release frequencies
+ */
+function insertFrequenciesRelease(frequencies) {
+  if (frequencies.length > 0) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        console.error(err);
+      }
+      var insertFrequencyRelease = "INSERT INTO frequency_release(timestamp_id, release_group_id, count) VALUES (?)";
+
+      connection.query(insertFrequencyRelease, frequencies, function(err) {
+        if (err) {
+          console.log(err);
+        }
+        connection.release();
+      });
+    });
+  }
+}
+
+/**
+ * Insert frequencies for work.
+ * @param frequencies work frequencies
+ */
+function insertFrequenciesWork(frequencies) {
+  if (frequencies.length > 0) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        console.error(err);
+      }
+      var insertFrequencyWork = "INSERT INTO frequency_work(timestamp_id, work_id, count) VALUES (?)";
+
+      connection.query(insertFrequencyWork, frequencies, function(err) {
+        if (err) {
+          console.log(err);
+        }
+        connection.release();
+      });
+    });
+  }
+}
+
+/**
+ * Insert cooccurences for artists.
+ * @param cooccurences artist cooccurences
+ */
+function insertCooccurencesArtist(cooccurences) {
+  if (cooccurences.length > 0) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        console.error(err);
+      }
+      var insertCooccurencesArtist = "INSERT INTO cooccurrence_artist(timestamp_id, artist_id, id_2, id_2_type, count) VALUES (?)";
+
+      connection.query(insertCooccurencesArtist, cooccurences, function(err) {
+        if (err) {
+          console.log(err);
+        }
+        connection.release();
+      });
+    });
+  }
+}
+
+/**
+ * Insert cooccurences for releases.
+ * @param cooccurences release cooccurences
+ */
+function insertCooccurencesRelease(cooccurences) {
+  if (cooccurences.length > 0) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        console.error(err);
+      }
+      var insertCooccurencesRelease = "INSERT INTO cooccurrence_release(timestamp_id, release_group_id, id_2, id_2_type, count) VALUES (?)";
+
+      connection.query(insertCooccurencesRelease, cooccurences, function(err) {
+        if (err) {
+          console.log(err);
+        }
+        connection.release();
+      });
+    });
+  }
+}
+
+/**
+ * Insert cooccurences for work.
+ * @param cooccurences work cooccurences
+ */
+function insertCooccurencesWork(cooccurences) {
+  if (cooccurences.length > 0) {
+    pool.getConnection(function(err, connection) {
+      if (err) {
+        console.error(err);
+      }
+      var insertCooccurencesWork = "INSERT INTO cooccurrence_work(timestamp_id, work_id, id_2, id_2_type, count) VALUES (?)";
+
+      connection.query(insertCooccurencesWork, cooccurences, function(err) {
+        if (err) {
+          console.log(err);
+        }
+        connection.release();
+      });
+    });
+  }
 }
