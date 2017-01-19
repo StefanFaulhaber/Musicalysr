@@ -36,7 +36,7 @@ var config = {
 
 var pool = mysql.createPool(config);
 
-//createTwitterTables(); // Create tables for Twitter data collection.
+createTwitterTables(); // Create tables for Twitter data collection.
 
 /**
  * Get artists from a given offset and limit.
@@ -501,12 +501,12 @@ function createTwitterTables() {
         "FOREIGN KEY (timestamp_id) REFERENCES timestamp(id)" +
         ");";
 
-      var createIndexFrequenciesArtist = "CREATE INDEX index_frequency_artist_id ON frequency_artist(artist_id);";
-      var createIndexFrequenciesRelease = "CREATE INDEX index_frequency_release_group_id ON frequency_release(release_group_id);";
-      var createIndexFrequenciesWork = "CREATE INDEX index_frequency_work_id ON frequency_work(work_id);";
-      var createIndexCooccurrencesArtist = "CREATE INDEX index_cooccurrences_artist_id ON cooccurrence_artist(artist_id);";
-      var createIndexCooccurrencesRelease = "CREATE INDEX index_cooccurrences_arelease_group_id ON cooccurrence_release(release_group_id);";
-      var createIndexCooccurrencesWork = "CREATE INDEX index_cooccurrences_work_id ON cooccurrence_work(work_id);";
+      var createIndexFrequenciesArtist = "CREATE INDEX IF NOT EXISTS index_frequency_artist_id ON frequency_artist(artist_id);";
+      var createIndexFrequenciesRelease = "CREATE INDEX IF NOT EXISTS index_frequency_release_group_id ON frequency_release(release_group_id);";
+      var createIndexFrequenciesWork = "CREATE INDEX IF NOT EXISTS index_frequency_work_id ON frequency_work(work_id);";
+      var createIndexCooccurrencesArtist = "CREATE INDEX IF NOT EXISTS index_cooccurrences_artist_id ON cooccurrence_artist(artist_id);";
+      var createIndexCooccurrencesRelease = "CREATE INDEX IF NOT EXISTS index_cooccurrences_arelease_group_id ON cooccurrence_release(release_group_id);";
+      var createIndexCooccurrencesWork = "CREATE INDEX IF NOT EXISTS index_cooccurrences_work_id ON cooccurrence_work(work_id);";
 
       connection.query(createTimeStampTable +
         createFrequenciesArtistTable +
