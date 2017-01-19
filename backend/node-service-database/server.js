@@ -51,7 +51,7 @@ app.get('/query/artists/:offset', function(req, res) {
       var offset = req.params.offset;
       var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
 
-      connection.query(query, function(err, rows, fields) {
+      connection.query(query, function(err, rows) {
         if (err) {
           console.error(err);
           res.sendStatus(500);
@@ -81,7 +81,7 @@ app.post('/query/artists/autocomplete/name', function(req, res) {
       var parameters = [name];
       var sql = mysql.format(query, parameters);
 
-      connection.query(sql, function(err, rows, fields) {
+      connection.query(sql, function(err, rows) {
         if (err) {
           console.error(err);
           res.sendStatus(500);
@@ -111,7 +111,7 @@ app.get('/query/artist/:id', function(req, res) {
       var parameters = [id];
       var sql = mysql.format(query, parameters);
 
-      connection.query(sql, function(err, rows, fields) {
+      connection.query(sql, function(err, rows) {
         if (err) {
           console.error(err);
           res.sendStatus(500);
@@ -199,7 +199,7 @@ app.post('/query/labels/autocomplete/name', function(req, res) {
       var parameters = [name];
       var sql = mysql.format(query, parameters);
 
-      connection.query(sql, function(err, rows, fields) {
+      connection.query(sql, function(err, rows) {
         if (err) {
           console.error(err);
           res.sendStatus(500);
@@ -241,7 +241,7 @@ app.get('/query/artist/labels/:id', function(req, res) {
         'ON artist_credit_name.artist = artist.id ' +
         'WHERE artist.id = ' + id;
 
-      connection.query(query, function(err, rows, fields) {
+      connection.query(query, function(err, rows) {
         if (err) {
           console.error(err);
           res.sendStatus(500);
@@ -501,30 +501,25 @@ function createTwitterTables() {
         "FOREIGN KEY (timestamp_id) REFERENCES timestamp(id)" +
         ");";
 
-      var createIndexFrequenciesArtist = "CREATE INDEX IF NOT EXISTS index_frequency_artist_id ON frequency_artist(artist_id);";
-      var createIndexFrequenciesRelease = "CREATE INDEX IF NOT EXISTS index_frequency_release_group_id ON frequency_release(release_group_id);";
-      var createIndexFrequenciesWork = "CREATE INDEX IF NOT EXISTS index_frequency_work_id ON frequency_work(work_id);";
-      var createIndexCooccurrencesArtist = "CREATE INDEX IF NOT EXISTS index_cooccurrences_artist_id ON cooccurrence_artist(artist_id);";
-      var createIndexCooccurrencesRelease = "CREATE INDEX IF NOT EXISTS index_cooccurrences_arelease_group_id ON cooccurrence_release(release_group_id);";
-      var createIndexCooccurrencesWork = "CREATE INDEX IF NOT EXISTS index_cooccurrences_work_id ON cooccurrence_work(work_id);";
-
       connection.query(createTimeStampTable +
         createFrequenciesArtistTable +
         createFrequenciesReleaseTable +
         createFrequenciesWorkTable +
         createCooccurrencesArtistTable +
         createCooccurrencesReleaseTable +
-        createCooccurrencesWorkTable +
-        createIndexFrequenciesArtist +
-        createIndexFrequenciesRelease +
-        createIndexFrequenciesWork +
-        createIndexCooccurrencesArtist +
-        createIndexCooccurrencesRelease +
-        createIndexCooccurrencesWork, function(err) {
+        createCooccurrencesWorkTable, function(err) {
         if (err) {
           console.log(err);
         }
         connection.release();
+
+        createIndexFrequenciesArtist();
+        createIndexFrequenciesRelease();
+        createIndexFrequenciesWork();
+        createIndexCooccurrencesArtist();
+        createIndexCooccurrencesRelease();
+        createIndexCooccurrencesWork();
+
       });
     }
   });
@@ -678,4 +673,190 @@ function insertCooccurencesWork(cooccurences) {
       });
     });
   }
+}
+
+/**
+ * Check if index index_frequency_artist_id for table frequency_artist exists. Create it if not.
+ */
+function createIndexFrequenciesArtist() {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+    }
+    var checkIndexFrequenciesArtist = "SHOW INDEX FROM frequency_artist WHERE KEY_NAME = 'index_frequency_artist_id'";
+
+    connection.query(checkIndexFrequenciesArtist, function(err, rows) {
+      if (err) {
+        console.log(err);
+      }
+      if (rows.length === 0) {
+        var createIndexFrequenciesArtist = "CREATE INDEX index_frequency_artist_id ON frequency_artist(artist_id);";
+
+        connection.query(createIndexFrequenciesArtist, function(err) {
+          if (err) {
+            console.log(err);
+          }
+          connection.release();
+        })
+      }
+      else {
+        connection.release();
+      }
+    });
+  });
+}
+
+/**
+ * Check if index index_frequency_release_group_id for table frequency_release exists. Create it if not.
+ */
+function createIndexFrequenciesRelease() {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+    }
+    var checkIndexFrequenciesRelease = "SHOW INDEX FROM frequency_release WHERE KEY_NAME = 'index_frequency_release_group_id'";
+
+    connection.query(checkIndexFrequenciesRelease, function(err, rows) {
+      if (err) {
+        console.log(err);
+      }
+      if (rows.length === 0) {
+        var createIndexFrequenciesRelease = "CREATE INDEX index_frequency_release_group_id ON frequency_release(release_group_id);";
+
+        connection.query(createIndexFrequenciesRelease, function(err) {
+          if (err) {
+            console.log(err);
+          }
+          connection.release();
+        })
+      }
+      else {
+        connection.release();
+      }
+    });
+  });
+}
+
+/**
+ * Check if index index_frequency_work_id for table frequency_work exists. Create it if not.
+ */
+function createIndexFrequenciesWork() {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+    }
+    var checkIndexFrequenciesWork = "SHOW INDEX FROM frequency_work WHERE KEY_NAME = 'index_frequency_work_id'";
+
+    connection.query(checkIndexFrequenciesWork, function(err, rows) {
+      if (err) {
+        console.log(err);
+      }
+      if (rows.length === 0) {
+        var createIndexFrequenciesWork = "CREATE INDEX index_frequency_work_id ON frequency_work(work_id);";
+
+        connection.query(createIndexFrequenciesWork, function(err) {
+          if (err) {
+            console.log(err);
+          }
+          connection.release();
+        })
+      }
+      else {
+        connection.release();
+      }
+    });
+  });
+}
+
+/**
+ * Check if index index_cooccurrences_artist_id for table cooccurrence_artist exists. Create it if not.
+ */
+function createIndexCooccurrencesArtist() {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+    }
+    var checkIndexCooccurrencesArtist = "SHOW INDEX FROM cooccurrence_artist WHERE KEY_NAME = 'index_cooccurrences_artist_id'";
+
+    connection.query(checkIndexCooccurrencesArtist, function(err, rows) {
+      if (err) {
+        console.log(err);
+      }
+      if (rows.length === 0) {
+        var createIndexCooccurrencesArtist = "CREATE INDEX index_cooccurrences_artist_id ON cooccurrence_artist(artist_id);";
+
+        connection.query(createIndexCooccurrencesArtist, function(err) {
+          if (err) {
+            console.log(err);
+          }
+          connection.release();
+        })
+      }
+      else {
+        connection.release();
+      }
+    });
+  });
+}
+
+/**
+ * Check if index index_cooccurrences_arelease_group_id for table cooccurrence_release exists. Create it if not.
+ */
+function createIndexCooccurrencesRelease() {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+    }
+    var checkIndexCooccurrencesRelease = "SHOW INDEX FROM cooccurrence_release WHERE KEY_NAME = 'index_cooccurrences_arelease_group_id'";
+
+    connection.query(checkIndexCooccurrencesRelease, function(err, rows) {
+      if (err) {
+        console.log(err);
+      }
+      if (rows.length === 0) {
+        var createIndexCooccurrencesRelease = "CREATE INDEX index_cooccurrences_arelease_group_id ON cooccurrence_release(release_group_id);";
+
+        connection.query(createIndexCooccurrencesRelease, function(err) {
+          if (err) {
+            console.log(err);
+          }
+          connection.release();
+        })
+      }
+      else {
+        connection.release();
+      }
+    });
+  });
+}
+
+/**
+ * Check if index index_cooccurrences_work_id for table cooccurrence_work exists. Create it if not.
+ */
+function createIndexCooccurrencesWork() {
+  pool.getConnection(function(err, connection) {
+    if (err) {
+      console.error(err);
+    }
+    var checkIndexCooccurrencesWork = "SHOW INDEX FROM cooccurrence_work WHERE KEY_NAME = 'index_cooccurrences_work_id'";
+
+    connection.query(checkIndexCooccurrencesWork, function(err, rows) {
+      if (err) {
+        console.log(err);
+      }
+      if (rows.length === 0) {
+        var createIndexCooccurrencesWork = "CREATE INDEX index_cooccurrences_work_id ON cooccurrence_work(work_id);";
+
+        connection.query(createIndexCooccurrencesWork, function(err) {
+          if (err) {
+            console.log(err);
+          }
+          connection.release();
+        })
+      }
+      else {
+        connection.release();
+      }
+    });
+  });
 }
