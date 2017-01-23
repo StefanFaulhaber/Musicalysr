@@ -22,11 +22,10 @@ export class ReleasesComponent implements OnChanges {
     private musicbrainzService: MusicbrainzService) { }
 
   ngOnChanges () {
-    // subscribe to artist changes
+    this.releases = new Array();
+
     if (this.artist != null)
       this.getReleases();
-    else
-      this.releases = [];
   }
 
   private getReleases() {
