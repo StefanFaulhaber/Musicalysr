@@ -390,21 +390,21 @@ app.post('/insert/twitter', function(req, res) {
 
           if (cooccurences.artist) {
             cooccurences.artist.forEach(function(cooccurency) {
-              cooccurencesArtist.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
+              cooccurencesArtist.push([timeStampId, cooccurency.id1, cooccurency.id2, getType(cooccurency.type), cooccurency.count]);
             });
             insertCooccurencesArtist(cooccurencesArtist);
           }
 
           if (cooccurences.release) {
             cooccurences.release.forEach(function(cooccurency) {
-              cooccurencesRelease.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
+              cooccurencesRelease.push([timeStampId, cooccurency.id1, cooccurency.id2, getType(cooccurency.type), cooccurency.count]);
             });
             insertCooccurencesRelease(cooccurencesRelease);
           }
 
           if (cooccurences.work) {
             cooccurences.work.forEach(function(cooccurency) {
-              cooccurencesWork.push([timeStampId, cooccurency.id_1, cooccurency.id_2, getType(cooccurency.type), cooccurency.count]);
+              cooccurencesWork.push([timeStampId, cooccurency.id1, cooccurency.id2, getType(cooccurency.type), cooccurency.count]);
             });
             insertCooccurencesWork(cooccurencesWork);
           }
