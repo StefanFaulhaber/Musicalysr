@@ -83,7 +83,7 @@ export function sinAndCos(name : string) {
     {
       values: sin,
       key: name,
-      color: '#7777ff',
+      color: '#607d8b',
       area: true      //area - set to true if you want this line to turn into a filled area chart.
     }
   ];

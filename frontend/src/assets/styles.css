@@ -35,7 +35,7 @@ html, body, app-root {
 }
 
 .chipActive {
-    background-color: steelblue;
+    background-color: #607d8b;
     color: white;
 }
 
