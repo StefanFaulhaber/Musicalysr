@@ -553,9 +553,9 @@ function insertFrequenciesArtist(frequencies) {
       if (err) {
         console.error(err);
       }
-      var insertFrequencyArtist = "INSERT INTO frequency_artist(timestamp_id, artist_id, count) VALUES (?)";
+      var insertFrequencyArtist = "INSERT INTO frequency_artist(timestamp_id, artist_id, count) VALUES ?";
 
-      connection.query(insertFrequencyArtist, frequencies, function(err) {
+      connection.query(insertFrequencyArtist, [frequencies], function(err) {
         if (err) {
           console.log(err);
         }
@@ -575,9 +575,9 @@ function insertFrequenciesRelease(frequencies) {
       if (err) {
         console.error(err);
       }
-      var insertFrequencyRelease = "INSERT INTO frequency_release(timestamp_id, release_group_id, count) VALUES (?)";
+      var insertFrequencyRelease = "INSERT INTO frequency_release(timestamp_id, release_group_id, count) VALUES ?";
 
-      connection.query(insertFrequencyRelease, frequencies, function(err) {
+      connection.query(insertFrequencyRelease, [frequencies], function(err) {
         if (err) {
           console.log(err);
         }
@@ -597,9 +597,9 @@ function insertFrequenciesWork(frequencies) {
       if (err) {
         console.error(err);
       }
-      var insertFrequencyWork = "INSERT INTO frequency_work(timestamp_id, work_id, count) VALUES (?)";
+      var insertFrequencyWork = "INSERT INTO frequency_work(timestamp_id, work_id, count) VALUES ?";
 
-      connection.query(insertFrequencyWork, frequencies, function(err) {
+      connection.query(insertFrequencyWork, [frequencies], function(err) {
         if (err) {
           console.log(err);
         }
@@ -619,9 +619,9 @@ function insertCooccurencesArtist(cooccurences) {
       if (err) {
         console.error(err);
       }
-      var insertCooccurencesArtist = "INSERT INTO cooccurrence_artist(timestamp_id, artist_id, id_2, id_2_type, count) VALUES (?)";
+      var insertCooccurencesArtist = "INSERT INTO cooccurrence_artist(timestamp_id, artist_id, id_2, id_2_type, count) VALUES ?";
 
-      connection.query(insertCooccurencesArtist, cooccurences, function(err) {
+      connection.query(insertCooccurencesArtist, [cooccurences], function(err) {
         if (err) {
           console.log(err);
         }
@@ -641,9 +641,9 @@ function insertCooccurencesRelease(cooccurences) {
       if (err) {
         console.error(err);
       }
-      var insertCooccurencesRelease = "INSERT INTO cooccurrence_release(timestamp_id, release_group_id, id_2, id_2_type, count) VALUES (?)";
+      var insertCooccurencesRelease = "INSERT INTO cooccurrence_release(timestamp_id, release_group_id, id_2, id_2_type, count) VALUES ?";
 
-      connection.query(insertCooccurencesRelease, cooccurences, function(err) {
+      connection.query(insertCooccurencesRelease, [cooccurences], function(err) {
         if (err) {
           console.log(err);
         }
@@ -663,9 +663,9 @@ function insertCooccurencesWork(cooccurences) {
       if (err) {
         console.error(err);
       }
-      var insertCooccurencesWork = "INSERT INTO cooccurrence_work(timestamp_id, work_id, id_2, id_2_type, count) VALUES (?)";
+      var insertCooccurencesWork = "INSERT INTO cooccurrence_work(timestamp_id, work_id, id_2, id_2_type, count) VALUES ?";
 
-      connection.query(insertCooccurencesWork, cooccurences, function(err) {
+      connection.query(insertCooccurencesWork, [cooccurences], function(err) {
         if (err) {
           console.log(err);
         }
