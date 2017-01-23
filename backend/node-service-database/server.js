@@ -38,47 +38,53 @@ var pool = mysql.createPool(config);
 /**
  * Get artists from a given offset and limit.
  */
-app.get('/query/artists/:offset', function(req, res) {
-  pool.getConnection(function(err, connection) {
-    if (err) {
-      console.error(err);
-      res.sendStatus(500);
-    }
-    else {
-      var offset = req.params.offset;
-      var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
-
-      connection.query(query, function(err, rows, fields) {
-        if (err) {
-          console.error(err);
-          res.sendStatus(500);
-        }
-        else {
-          res.setHeader('Content-Type', 'application/json');
-          res.send(rows);
-        }
-        connection.release();
-      });
-    }
-  });
-});
+// app.get('/query/artists/:offset', function(req, res) {
+//   pool.getConnection(function(err, connection) {
+//     if (err) {
+//       console.error(err);
+//       res.sendStatus(500);
+//     }
+//     else {
+//       var offset = req.params.offset;
+//       var query = 'SELECT id, name FROM artist ORDER BY name ASC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
+//
+//       connection.query(query, function(err, rows, fields) {
+//         if (err) {
+//           console.error(err);
+//           res.sendStatus(500);
+//         }
+//         else {
+//           res.setHeader('Content-Type', 'application/json');
+//           res.send(rows);
+//         }
+//         connection.release();
+//       });
+//     }
+//   });
+// });
 
 /**
  * Get artists where the name starts with a given string.
  */
-app.post('/query/artists/autocomplete/name', function(req, res) {
+app.post('/query/artists/', function(req, res) {
   pool.getConnection(function(err, connection) {
     if (err) {
       console.error(err);
       res.sendStatus(500);
     }
     else {
-      var name = req.body.name.toUpperCase() + '%';
-      var query = 'SELECT id, name FROM artist WHERE UPPER(name) LIKE ? ORDER BY name ASC LIMIT ' + DEFAULT_LIMIT;
-      var parameters = [name];
-      var sql = mysql.format(query, parameters);
-
-      connection.query(sql, function(err, rows, fields) {
+      var offset = req.body.offset || 0;
+      var query = 'SELECT id, name FROM artist ';
+      var queryEnd = 'ORDER BY name ASC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
+      if (req.body.name && req.body.name != '') {
+        var parameters = [req.body.name.toUpperCase() + '%'];
+        query += 'WHERE UPPER(name) LIKE ? ' + queryEnd;
+        query = mysql.format(query, parameters);
+      } else {
+        query += queryEnd;
+      }
+      console.log(query);
+      connection.query(query, function(err, rows, fields) {
         if (err) {
           console.error(err);
           res.sendStatus(500);

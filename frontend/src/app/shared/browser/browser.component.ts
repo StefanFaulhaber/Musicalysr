@@ -34,7 +34,7 @@ export class BrowserComponent implements OnInit {
   ngOnInit() {
     // get artists from backend
     this.artistSubscription = this.artistService
-        .getAllArtists()
+        .nextPage()
         .subscribe(
           (res: Artist[]) => {
             this.artists = res;
@@ -74,14 +74,7 @@ export class BrowserComponent implements OnInit {
   }
 
   getArtists(query: string) {
-    this.artistService
-        .getArtists(query)
-        .subscribe(
-          (res: Artist[]) => {
-            this.artists = res;
-            this.displayItems();
-          },
-          error => console.log(error));
+    this.artistService.filter = query;
   }
 
   getLabels(query: string) {
@@ -110,15 +103,7 @@ export class BrowserComponent implements OnInit {
   onScroll() {
     this.scrollPosition++;
     if (this.isChoiceArtists) {
-      this.artistSubscription.unsubscribe();
-      this.artistSubscription = this.artistService
-        .getAllArtists(this.scrollPosition)
-        .subscribe(
-          (res: Artist[]) => {
-            this.artists = this.artists.concat(res);
-            this.displayItems();
-          },
-          error => console.log(error));
+      this.artistService.nextPage();
     } else {
       this.labelSubscription.unsubscribe();
       this.labelSubscription = this.labelService
