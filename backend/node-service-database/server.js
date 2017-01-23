@@ -352,7 +352,7 @@ app.post('/insert/twitter', function(req, res) {
       var timeStamp = json.timeStamp;
       var numberOfTweets = json.numberOfTweets;
       var frequencies = json.frequencies;
-      var cooccurences = json.cooccurences;
+      var cooccurrences = json.cooccurences;
 
       var insertTimeStamp = "INSERT INTO timestamp(timestamp, number_of_tweets) VALUES (?, ?)";
       var parameters = [timeStamp, numberOfTweets];
@@ -368,9 +368,9 @@ app.post('/insert/twitter', function(req, res) {
           var frequenciesArtist = [];
           var frequenciesRelease = [];
           var frequenciesWork = [];
-          var cooccurencesArtist = [];
-          var cooccurencesRelease = [];
-          var cooccurencesWork = [];
+          var cooccurrencesArtist = [];
+          var cooccurrencesRelease = [];
+          var cooccurrencesWork = [];
 
           frequencies.forEach(function(frequency) {
             if (frequency.type === "artist") {
@@ -388,25 +388,25 @@ app.post('/insert/twitter', function(req, res) {
           insertFrequenciesRelease(frequenciesRelease);
           insertFrequenciesWork(frequenciesWork);
 
-          if (cooccurences.artist) {
-            cooccurences.artist.forEach(function(cooccurency) {
-              cooccurencesArtist.push([timeStampId, cooccurency.id1, cooccurency.id2, getType(cooccurency.type), cooccurency.count]);
+          if (cooccurrences.artist) {
+            cooccurrences.artist.forEach(function(cooccurrency) {
+              cooccurrencesArtist.push([timeStampId, cooccurrency.id1, cooccurrency.id2, getType(cooccurrency.type), cooccurrency.count]);
             });
-            insertCooccurencesArtist(cooccurencesArtist);
+            insertCooccurrencesArtist(cooccurrencesArtist);
           }
 
-          if (cooccurences.release) {
-            cooccurences.release.forEach(function(cooccurency) {
-              cooccurencesRelease.push([timeStampId, cooccurency.id1, cooccurency.id2, getType(cooccurency.type), cooccurency.count]);
+          if (cooccurrences.release) {
+            cooccurrences.release.forEach(function(cooccurrency) {
+              cooccurrencesRelease.push([timeStampId, cooccurrency.id1, cooccurrency.id2, getType(cooccurrency.type), cooccurrency.count]);
             });
-            insertCooccurencesRelease(cooccurencesRelease);
+            insertCooccurrencesRelease(cooccurrencesRelease);
           }
 
-          if (cooccurences.work) {
-            cooccurences.work.forEach(function(cooccurency) {
-              cooccurencesWork.push([timeStampId, cooccurency.id1, cooccurency.id2, getType(cooccurency.type), cooccurency.count]);
+          if (cooccurrences.work) {
+            cooccurrences.work.forEach(function(cooccurrency) {
+              cooccurrencesWork.push([timeStampId, cooccurrency.id1, cooccurrency.id2, getType(cooccurrency.type), cooccurrency.count]);
             });
-            insertCooccurencesWork(cooccurencesWork);
+            insertCooccurrencesWork(cooccurrencesWork);
           }
           res.sendStatus(200);
         }
@@ -610,18 +610,18 @@ function insertFrequenciesWork(frequencies) {
 }
 
 /**
- * Insert cooccurences for artists.
- * @param cooccurences artist cooccurences
+ * Insert cooccurrences for artists.
+ * @param cooccurrences artist cooccurrences
  */
-function insertCooccurencesArtist(cooccurences) {
-  if (cooccurences.length > 0) {
+function insertCooccurrencesArtist(cooccurrences) {
+  if (cooccurrences.length > 0) {
     pool.getConnection(function(err, connection) {
       if (err) {
         console.error(err);
       }
-      var insertCooccurencesArtist = "INSERT INTO cooccurrence_artist(timestamp_id, artist_id, id_2, id_2_type, count) VALUES ?";
+      var insertCooccurrencesArtist = "INSERT INTO cooccurrence_artist(timestamp_id, artist_id, id_2, id_2_type, count) VALUES ?";
 
-      connection.query(insertCooccurencesArtist, [cooccurences], function(err) {
+      connection.query(insertCooccurrencesArtist, [cooccurrences], function(err) {
         if (err) {
           console.log(err);
         }
@@ -632,18 +632,18 @@ function insertCooccurencesArtist(cooccurences) {
 }
 
 /**
- * Insert cooccurences for releases.
- * @param cooccurences release cooccurences
+ * Insert cooccurrences for releases.
+ * @param cooccurrences release cooccurrences
  */
-function insertCooccurencesRelease(cooccurences) {
-  if (cooccurences.length > 0) {
+function insertCooccurrencesRelease(cooccurrences) {
+  if (cooccurrences.length > 0) {
     pool.getConnection(function(err, connection) {
       if (err) {
         console.error(err);
       }
-      var insertCooccurencesRelease = "INSERT INTO cooccurrence_release(timestamp_id, release_group_id, id_2, id_2_type, count) VALUES ?";
+      var insertCooccurrencesRelease = "INSERT INTO cooccurrence_release(timestamp_id, release_group_id, id_2, id_2_type, count) VALUES ?";
 
-      connection.query(insertCooccurencesRelease, [cooccurences], function(err) {
+      connection.query(insertCooccurrencesRelease, [cooccurrences], function(err) {
         if (err) {
           console.log(err);
         }
@@ -654,18 +654,18 @@ function insertCooccurencesRelease(cooccurences) {
 }
 
 /**
- * Insert cooccurences for work.
- * @param cooccurences work cooccurences
+ * Insert cooccurrences for work.
+ * @param cooccurrences work cooccurrences
  */
-function insertCooccurencesWork(cooccurences) {
-  if (cooccurences.length > 0) {
+function insertCooccurrencesWork(cooccurrences) {
+  if (cooccurrences.length > 0) {
     pool.getConnection(function(err, connection) {
       if (err) {
         console.error(err);
       }
-      var insertCooccurencesWork = "INSERT INTO cooccurrence_work(timestamp_id, work_id, id_2, id_2_type, count) VALUES ?";
+      var insertCooccurrencesWork = "INSERT INTO cooccurrence_work(timestamp_id, work_id, id_2, id_2_type, count) VALUES ?";
 
-      connection.query(insertCooccurencesWork, [cooccurences], function(err) {
+      connection.query(insertCooccurrencesWork, [cooccurrences], function(err) {
         if (err) {
           console.log(err);
         }
