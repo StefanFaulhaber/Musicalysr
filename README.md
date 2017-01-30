@@ -22,6 +22,8 @@ In der Box laufen zur Zeit neben Node noch ein MySQL Server und ein MongoDB Serv
 4. `http://10.20.30.40:4200/`
 5. `vagrant halt`
 
-## useful links
+## SCSS problem
 
-- scss problem: https://github.com/sass/node-sass/issues/1579#issuecomment-227661284
+1. go to frontend directory
+2. `nodejs node_modules/node-sass/scripts/install.js`
+3. `npm rebuild node-sass`
