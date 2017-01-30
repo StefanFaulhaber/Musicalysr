@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import {ViewChild} from "@angular/core/src/metadata/di";
 import {nvD3} from "ng2-nvd3";
 import {Input} from "@angular/core/src/metadata/directives";
+import { Artist } from "../../models/artist";
 
 let options = {
   chart: {
@@ -85,6 +86,22 @@ export function sinAndCos(name : string) {
       key: name,
       color: '#607d8b',
       area: true      //area - set to true if you want this line to turn into a filled area chart.
+    }
+  ];
+}
+
+export function transformForNVD3(artist: Artist) {
+  let val = new Array(artist.popularityGraphData.length);
+  for (let i = 0; i < artist.popularityGraphData.length; i++) {
+    val[i]= {x: moment(artist.popularityGraphData[i]['i']), y: artist.popularityGraphData[i]['rNumFreq']};
+  }
+  val.push({x: moment(), y: 0.0002});
+  return [
+    {
+      values: val,
+      key: artist.name,
+      color: '#607d8b',
+      area: true
     }
   ];
 }

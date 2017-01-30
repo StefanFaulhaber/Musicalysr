@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { Artist } from '../models/artist';
-import { sinAndCos } from './popularitygraph/popularitygraph.component';
+import { transformForNVD3, sinAndCos } from './popularitygraph/popularitygraph.component';
 import { ActivatedRoute, Params } from "@angular/router";
 import { SharedService } from "../shared/shared.service";
 import { ArtistService } from "./artist.service";
@@ -29,7 +29,9 @@ export class ArtistComponent implements OnInit {
         this.artistSubscription = this.artistService.getArtist(params['id'])
           .subscribe((artist : Artist) => {
             this.artist = artist;
-            this.popularityGraphData = sinAndCos(artist.name);
+            this.popularityGraphData = transformForNVD3(artist);
+            console.log(transformForNVD3(artist));
+            console.log(sinAndCos(artist.name));
           });
       })
   }

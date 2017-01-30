@@ -77,8 +77,8 @@ app.post('/query/artists/', function(req, res) {
     }
     else {
       var offset = req.body.offset || 0;
-      var query = 'SELECT id, name FROM artist ';
-      var queryEnd = 'ORDER BY name ASC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
+      var query = 'SELECT a.id, a.name FROM artist a INNER JOIN popularity_measures p ON (p.artist_id = a.id) ';
+      var queryEnd = 'ORDER BY p.QuotaOfSeen ASC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
       if (req.body.name && req.body.name != '') {
         var parameters = [req.body.name.toUpperCase() + '%'];
         query += 'WHERE UPPER(name) LIKE ? ' + queryEnd;
@@ -86,7 +86,6 @@ app.post('/query/artists/', function(req, res) {
       } else {
         query += queryEnd;
       }
-      console.log(query);
       connection.query(query, function(err, rows, fields) {
         if (err) {
           console.error(err);
@@ -113,7 +112,10 @@ app.get('/query/artist/:id', function(req, res) {
     }
     else {
       var id = req.params.id;
-      var query = 'SELECT id, name FROM artist WHERE id = ?';
+      var query = 'SELECT ar.id, ar.name, t.i, ' +
+                  'SUM(a.count) /  SUM(t.number_of_tweets) rNumFreq, SUM(a.count) / 3600 rTimeFreq ' +
+                  'FROM artist ar LEFT JOIN (SELECT * FROM frequency_artist) a ON (ar.id = a.artist_id) LEFT JOIN (SELECT *, from_unixtime(FLOOR((UNIX_TIMESTAMP(timestamp)+(3600/2))/3600)*3600) i FROM timestamp WHERE timestamp >= DATE_SUB(NOW(), INTERVAL 1 DAY)) t ON (a.timestamp_id = t.id) ' +
+                  'WHERE ar.id = ? GROUP BY t.i';
       var parameters = [id];
       var sql = mysql.format(query, parameters);
 
@@ -124,7 +126,20 @@ app.get('/query/artist/:id', function(req, res) {
         }
         else {
           res.setHeader('Content-Type', 'application/json');
-          res.send(rows[0]);
+          var artist = {};
+          artist.id = rows[0].id;
+          artist.name = rows[0].name;
+          artist.popularityGraphData = new Array(rows.length);
+          for (var i = 0; i < rows.length; i++) {
+            artist.popularityGraphData[i] = {
+              'i' : rows[i].i,
+              'rNumFreq' : rows[i].rNumFreq,
+              'rTimeFreq' : rows[i].rTimeFreq
+            };
+          }
+          if (artist.popularityGraphData[0] == null)
+            artist.popularityGraphData = null;
+          res.send(artist);
         }
         connection.release();
       });
