@@ -25,8 +25,9 @@ from EntityMatchingREDIS import EntitySets
 
 import logging
 import sys
-from HashtagPlugins import HashtagPlugins
+#from HashtagPlugins import HashtagPlugins
 from helpers import generateCoocurenceJSONNew
+from NowPlaying import NowPlaying
 
 
 class Tweet:
@@ -47,7 +48,7 @@ class Tweet:
     mHashtags = []               # contained Hashtags from Twitter
     mAssociatedUsers = []        # Mentioned users from Twitter
     mEntityMatcher = EntitySets  # An Entitity Matcher Instance to Match de Candidates to the Database
-    mPluginManager = HashtagPlugins
+ #   mPluginManager = HashtagPlugins
 
     mCandidateList = []
     mNGrams = set()
@@ -66,7 +67,7 @@ class Tweet:
         self.mLogger = logging.getLogger("TweetNLP")
         self.mEntityMatcher = EntitySets()
         self.mLogger.setLevel(logging.WARN)
-        self.mPluginManager = HashtagPlugins()
+        #self.mPluginManager = HashtagPlugins()
         self.mLogger.info("Initialization of Tweet completed.")
 
     def reset(self):
@@ -130,7 +131,9 @@ class Tweet:
         """
 
         # Special Hashtags
-        self.mExtractedGoods += self.mPluginManager.extract(self.mHashtags, self.mTweet)
+        #Go back to pluginmanager if needed ! 
+        np = NowPlaying()
+        self.mExtractedGoods += np.getExtractions(self.mTweet) #self.mPluginManager.extract(self.mHashtags, self.mTweet)
         # if len(self.mExtractedGoods) > 0 :
         #     return "relevant"
 
@@ -244,8 +247,9 @@ def main():
     # print(fAllExtractions)
     fdist1 = Counter(list(chain.from_iterable(fAllExtractions)))
     fdist2 = Counter(fCooccurences)
+    print(fdist2)
 
-    # print(helpers.invertDict(dict(fdist1)),"\n\n",fdist2,"\n\n",helpers.generateCoocurenceJSONNew(helpers.convert(fdist2)))
+    print(helpers.invertDict(dict(fdist1)),"\n\n",fdist2,"\n\n",helpers.generateCoocurenceJSONNew(helpers.convert(fdist2)))
 
 if __name__ == "__main__":
     main()

@@ -28,14 +28,28 @@ def aggregatedExtractions(aTweetArray=[]):
         fTweet.extract()
 
         fExtraction = set(fTweet.getExtractedGoods())
+
         if fExtraction:
             fAllExtractions.append(fExtraction)
             fCooccurences += list(itertools.combinations(set(fExtraction), 2))
 
     fdist1 = Counter(list(chain.from_iterable(fAllExtractions)))
+    fdistList = []
+    for key in fdist1.keys():
+        inst = {}
+        if isinstance(str(key[0]), bytes):
+            print("This is a Byte String: ",str(key[0])) 
+
+        inst["id"] = key[0]
+        inst["type"] = key[1].encode('utf-8').decode('utf-8')
+        inst["count"] = str(fdist1[key]).encode('utf-8').decode('utf-8')
+        fdistList.append (inst)
+
+
     fdist2 = Counter(fCooccurences)
 
-    return helpers.invertDict(dict(fdist1)), helpers.generateCoocurenceJSONNew(helpers.convert(fdist2))
+
+    return fdistList, helpers.generateCoocurenceJSONNew(helpers.convert(fdist2))
 
 
 def process(*args):
@@ -47,16 +61,19 @@ def process(*args):
     tweetArray = json.loads(json.dumps(args[0]))
     numOfTweets = len(tweetArray['data'])
     f1,f2 = aggregatedExtractions(tweetArray['data'])
-    # print(f1,"\n",f2)
 
     jsonObjDictionary = {}
-    jsonObjDictionary["time"] = helpers.createRoundedTimestamp(tweetArray["timeStamp"])
+    jsonObjDictionary["timeStamp"] = helpers.createRoundedTimestamp(tweetArray["timeStamp"])
     jsonObjDictionary["frequencies"] = f1
-    jsonObjDictionary["coocurences"] = f2
+    jsonObjDictionary["cooccurences"] = f2
     jsonObjDictionary["numberOfTweets"] = numOfTweets
 
-    print(json.dumps(jsonObjDictionary),"\n")
-    r = requests.post(Configuration.mDatabaseEndpointURL, requests.urlencode(json.dumps(jsonObjDictionary)).encode())
+    print(jsonObjDictionary, "\n")
+
+    try:
+        r = requests.post(Configuration.mDatabaseEndpointURL, json=jsonObjDictionary)
+    except requests.exceptions.ConnectionError:
+        print("No connection. You should check that.")
 
 
 def main():
