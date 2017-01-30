@@ -16,22 +16,14 @@ In der Box laufen zur Zeit neben Node noch ein MySQL Server und ein MongoDB Serv
 
 ## Workflow
 
-### ohne Provisioning
-
-1. go to vagrant directory
-2. `vagrant up --no-provision`
-3. `vagrant ssh` (2 Tabs)
-4. `tmux`
-5. `cd /opt/dev/`
-6. Backend starten: `cd backend/node... node server.js`
-7. Frontend starten: `cd frontend ng serve --host 0.0.0.0`
-8. `http://10.20.30.40:4200/`
-9. `vagrant halt`
-
-### mit Provisioning
-
 1. go to vagrant directory
 2. `vagrant up`
 3. `vagrant fsnotify`
 4. `http://10.20.30.40:4200/`
 5. `vagrant halt`
+
+## SCSS problem
+
+1. go to frontend directory
+2. `nodejs node_modules/node-sass/scripts/install.js`
+3. `npm rebuild node-sass`

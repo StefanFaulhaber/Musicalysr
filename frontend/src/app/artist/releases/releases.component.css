@@ -31,3 +31,25 @@
 .status {
     width: auto;
 }
+
+/* Links */
+
+a {
+  text-decoration: none;
+}
+
+a:link {
+    color: #607d8b;
+}
+
+a:visited {
+    color: #607d8b;
+}
+
+a:hover {
+    color: #607d8b;
+}
+
+a:active {
+    color: #607d8b;
+}

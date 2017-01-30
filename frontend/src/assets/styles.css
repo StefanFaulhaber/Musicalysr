@@ -29,13 +29,13 @@ html, body, app-root {
     font-size: 12px;
     line-height: 32px;
     border-radius: 4px;
-    background-color: #eeeeee;
+    background-color: #fafafa;
 
     cursor: pointer;
 }
 
 .chipActive {
-    background-color: steelblue;
+    background-color: #607d8b;
     color: white;
 }
 
@@ -54,14 +54,13 @@ html, body, app-root {
 }
 
 #browser {
-  background-color: #EEEEEE;
+  background-color: #fafafa;
   flex-grow: 1;
   padding: 16px 8px 16px 16px;
 }
 
 #modules {
-  background-color: #EEEEEE;
-  /*min-height: 100%;*/
+  background-color: #fafafa;
   flex-grow: 5;
   padding: 16px 16px 16px 8px;
 }
@@ -81,7 +80,7 @@ html, body, app-root {
   min-height: 80px;
   margin-bottom: 16px;
   padding: 16px;
-  background-color: white;
+  background-color: #ffffff;
 }
 
 .module:last-child {

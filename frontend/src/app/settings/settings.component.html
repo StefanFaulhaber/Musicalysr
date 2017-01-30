@@ -4,7 +4,13 @@
     <md-card-title>Einstellungen</md-card-title>
     <md-card-content>
       <h4>Künstlermodule</h4>
-      <div class="settingsContainer1">
+
+      <md-slide-toggle [checked]="sharedService.getSetting(0)" (change)="sharedService.setSetting(0)">Wikipedia-Modul</md-slide-toggle>
+      <md-slide-toggle [checked]="sharedService.getSetting(1)" (change)="sharedService.setSetting(1)">Diskographie-Modul</md-slide-toggle>
+      <md-slide-toggle [checked]="sharedService.getSetting(2)" (change)="sharedService.setSetting(2)">Popularitäts-Modul</md-slide-toggle>
+      <md-slide-toggle [checked]="sharedService.getSetting(3)" (change)="sharedService.setSetting(3)">Youtube-Modul</md-slide-toggle>
+
+      <!--<div class="settingsContainer1">
         <div class="setting" (click)="sharedService.setSetting(0)">
           <input type="checkbox" class="cb" name="wiki" [checked]="sharedService.getSetting(0)">
           <span>Wikipedia-Modul anzeigen</span>
@@ -21,15 +27,17 @@
           <input type="checkbox" class="cb" name="disc" [checked]="sharedService.getSetting(3)">
           <span>Youtube-Modul anzeigen</span>
         </div>
-      </div>
+      </div>-->
 
       <h4>Labelmodule</h4>
-      <div class="settingsContainer1">
+
+      <md-slide-toggle [checked]="sharedService.getSetting(4)" (change)="sharedService.setSetting(4)">Labellink-Modul</md-slide-toggle>
+      <!--<div class="settingsContainer1">
         <div class="setting" (click)="sharedService.setSetting(4)">
           <input type="checkbox" class="cb" name="wiki" [checked]="sharedService.getSetting(4)">
           <span>Labellink-Modul anzeigen</span>
         </div>
-      </div>
+      </div>-->
     </md-card-content>
 
   </md-card>

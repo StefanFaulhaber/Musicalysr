@@ -25,7 +25,7 @@ export class SharedService {
 
     let temp: boolean = localStorage.getItem(key) == 'true';
     localStorage.setItem(key, (!temp).toString());
-    console.log('Setting was ' + temp + ', is now ' + localStorage.getItem(key));
+    // console.log('Setting was ' + temp + ', is now ' + localStorage.getItem(key));
   }
 
   getSetting(index: number) {

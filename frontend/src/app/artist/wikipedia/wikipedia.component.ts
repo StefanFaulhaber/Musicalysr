@@ -70,7 +70,11 @@ export class WikipediaComponent implements OnChanges {
               this.text = this.text.replace(/<\/?[^>]+(>|$)/g, "");
               this.text = this.text.replace(/\[(.*?)\]/g, "");
               this.text = this.text.replace(/\&(.*?)\;/g, " ");
-              this.text = this.text.substring(0,500)
+
+              if (this.text.length > 500) {
+                this.text = this.text.substring(0,500);
+                this.text = this.text + '...'
+              }
 
               this.linkSuffix = link;
             } catch (e) {

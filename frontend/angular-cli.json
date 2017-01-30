@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "assets/favicon.ico"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -18,7 +18,8 @@
       "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.css"
+        "assets/styles.css",
+        "assets/theme.scss"
       ],
       "scripts": [],
       "environments": {
