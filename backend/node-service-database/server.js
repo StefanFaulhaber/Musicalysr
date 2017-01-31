@@ -78,7 +78,7 @@ app.post('/query/artists/', function(req, res) {
     else {
       var offset = req.body.offset || 0;
       var query = 'SELECT a.id, a.name FROM artist a INNER JOIN popularity_measures p ON (p.artist_id = a.id) ';
-      var queryEnd = 'ORDER BY p.QuotaOfSeen ASC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
+      var queryEnd = 'ORDER BY p.QuotaOfSeen DESC LIMIT ' + DEFAULT_LIMIT + ' OFFSET ' + offset;
       if (req.body.name && req.body.name != '') {
         var parameters = [req.body.name.toUpperCase() + '%'];
         query += 'WHERE UPPER(name) LIKE ? ' + queryEnd;
